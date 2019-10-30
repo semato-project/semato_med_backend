@@ -1,4 +1,4 @@
-package semato.semato_med.model.user;
+package semato.semato_med.model;
 
 import org.hibernate.annotations.NaturalId;
 

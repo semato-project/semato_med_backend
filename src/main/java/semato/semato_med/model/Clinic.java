@@ -1,4 +1,4 @@
-package semato.semato_med.model.visit;
+package semato.semato_med.model;
 
 import lombok.*;
 

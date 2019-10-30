@@ -1,7 +1,6 @@
-package semato.semato_med.model.user.physician;
+package semato.semato_med.model;
 
 import lombok.*;
-import semato.semato_med.model.user.User;
 
 import javax.persistence.*;
 import java.util.Set;

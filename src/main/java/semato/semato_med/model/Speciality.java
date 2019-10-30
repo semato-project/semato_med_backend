@@ -1,10 +1,10 @@
-package semato.semato_med.model.user.physician;
+package semato.semato_med.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import semato.semato_med.model.user.physician.Physician;
+import semato.semato_med.model.Physician;
 
 import javax.persistence.*;
 import java.util.Set;
