@@ -1,4 +1,4 @@
-package semato.semato_med.models;
+package semato.semato_med.model.visit;
 
 public enum VisitStatus {
     RESERVED,

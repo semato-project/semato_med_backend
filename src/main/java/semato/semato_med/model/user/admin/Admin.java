@@ -1,7 +1,7 @@
-package semato.semato_med.models.admin;
+package semato.semato_med.model.user.admin;
 
 import lombok.*;
-import semato.semato_med.models.User;
+import semato.semato_med.model.user.User;
 
 import javax.persistence.*;
 

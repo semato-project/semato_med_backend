@@ -1,7 +1,7 @@
-package semato.semato_med.models;
+package semato.semato_med.model.user.admin;
 
 import lombok.*;
-import semato.semato_med.models.admin.Admin;
+import semato.semato_med.model.user.admin.Admin;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

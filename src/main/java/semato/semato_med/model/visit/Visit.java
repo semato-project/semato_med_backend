@@ -1,6 +1,8 @@
-package semato.semato_med.models;
+package semato.semato_med.model.visit;
 
 import lombok.*;
+import semato.semato_med.model.user.patient.Patient;
+import semato.semato_med.model.user.physician.Physician;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

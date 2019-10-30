@@ -3,9 +3,9 @@ package semato.semato_med;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import semato.semato_med.models.admin.Admin;
-import semato.semato_med.models.User;
-import semato.semato_med.models.admin.AdminRepository;
+import semato.semato_med.model.user.admin.Admin;
+import semato.semato_med.model.user.User;
+import semato.semato_med.model.user.admin.AdminRepository;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
