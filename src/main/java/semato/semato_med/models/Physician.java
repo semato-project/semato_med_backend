@@ -25,13 +25,13 @@ public class Physician {
 
     private String image_url;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn (name = "id", referencedColumnName = "id")
     @MapsId
     @NonNull
     private User user;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "physician_speciality",
             joinColumns = {@JoinColumn(name = "physician_id")},

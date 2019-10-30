@@ -14,7 +14,7 @@ public class Patient {
     @Id
     private long id;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn (name = "id", referencedColumnName = "id")
     @MapsId
     @NonNull
