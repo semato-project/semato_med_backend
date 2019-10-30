@@ -14,8 +14,8 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 public class Physician {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String medicalDegrees;
@@ -27,7 +27,8 @@ public class Physician {
     private String image_url;
 
     @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn (name = "id", referencedColumnName = "id")
+    @MapsId
     private User user;
 
     @ManyToMany

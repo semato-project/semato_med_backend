@@ -15,11 +15,11 @@ import java.time.LocalDate;
 @Entity
 public class Patient {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn (name = "id", referencedColumnName = "id")
+    @MapsId
     private User user;
 
     private String pesel;
@@ -33,5 +33,5 @@ public class Patient {
     private String street;
 
     private String houseNumber;
-    
+
 }

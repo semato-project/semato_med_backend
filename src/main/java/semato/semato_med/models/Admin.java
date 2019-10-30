@@ -13,11 +13,12 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 public class Admin {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn (name = "id", referencedColumnName = "id")
+    @MapsId
     private User user;
 }
