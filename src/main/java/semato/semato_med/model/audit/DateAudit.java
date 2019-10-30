@@ -1,4 +1,4 @@
-package semato.semato_med.model;
+package semato.semato_med.model.audit;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
@@ -21,7 +21,7 @@ import java.time.Instant;
         value = {"createdAt", "updatedAt", "deletedAt"},
         allowGetters = true
 )
-public class DateAudit implements Serializable {
+public abstract class DateAudit implements Serializable {
 
     @CreatedDate
     @Column(nullable = false, updatable = false)

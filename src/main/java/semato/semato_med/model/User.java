@@ -2,12 +2,12 @@ package semato.semato_med.model;
 
 import lombok.*;
 import org.hibernate.annotations.NaturalId;
+import semato.semato_med.model.audit.DateAudit;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
