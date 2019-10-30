@@ -1,6 +1,7 @@
 package semato.semato_med.models;
 
 import lombok.*;
+import semato.semato_med.models.admin.Admin;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
