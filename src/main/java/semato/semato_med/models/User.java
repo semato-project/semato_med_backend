@@ -1,9 +1,6 @@
 package semato.semato_med.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,7 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Entity
 public class User implements Serializable {
 
@@ -21,12 +18,16 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NonNull
     private String email;
 
+    @NonNull
     private String firstName;
 
+    @NonNull
     private String lastName;
 
+    @NonNull
     private String password;
 
     private String salt;

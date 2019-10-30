@@ -1,9 +1,6 @@
 package semato.semato_med.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -20,10 +17,13 @@ public class Patient {
     @OneToOne
     @JoinColumn (name = "id", referencedColumnName = "id")
     @MapsId
+    @NonNull
     private User user;
 
+    @NonNull
     private String pesel;
 
+    @NonNull
     private LocalDate birthDate;
 
     private String postalCode;

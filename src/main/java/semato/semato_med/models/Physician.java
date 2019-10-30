@@ -1,9 +1,6 @@
 package semato.semato_med.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -11,15 +8,17 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Entity
 public class Physician {
 
     @Id
     private long id;
 
+    @NonNull
     private String medicalDegrees;
 
+    @NonNull
     private String title;
 
     private String note;
@@ -29,6 +28,7 @@ public class Physician {
     @OneToOne
     @JoinColumn (name = "id", referencedColumnName = "id")
     @MapsId
+    @NonNull
     private User user;
 
     @ManyToMany
