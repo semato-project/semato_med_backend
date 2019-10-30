@@ -1,9 +1,6 @@
 package semato.semato_med.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,17 +8,19 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Entity
 public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NonNull
     private String note;
 
     @ManyToOne
     @JoinColumn(name="admin_id", referencedColumnName = "id", nullable = false)
+    @NonNull
     private Admin createdBy;
 
     private LocalDateTime createdAt;

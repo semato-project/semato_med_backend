@@ -1,9 +1,6 @@
 package semato.semato_med.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,21 +11,26 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Entity
 public class Clinic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NonNull
     private String city;
 
+    @NonNull
     private String country;
 
+    @NonNull
     private String postalCode;
 
+    @NonNull
     private String street;
 
+    @NonNull
     private String houseNumber;
 
     private float latitude;
