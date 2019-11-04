@@ -22,7 +22,7 @@ public class UserPrincipal implements UserDetails {
     private String email;
 
     @JsonIgnore
-    private String passowrd;
+    private String password;
 
     private Collection<? extends GrantedAuthority> authorities;
 
@@ -47,7 +47,7 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public String getPassword() {
-        return passowrd;
+        return password;
     }
 
     @Override

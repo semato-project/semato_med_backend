@@ -27,7 +27,6 @@ public class User extends DateAudit implements Serializable {
     @NonNull
     @NaturalId
     @Column(unique = true)
-    @Email
     private String email;
 
     @NonNull
@@ -39,8 +38,6 @@ public class User extends DateAudit implements Serializable {
     @NonNull
     @NotBlank
     private String password;
-
-    private String salt;
 
     private String phone;
 
