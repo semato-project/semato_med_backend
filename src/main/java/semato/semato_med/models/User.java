@@ -15,6 +15,10 @@ import java.time.LocalDateTime;
 @Entity
 public class User implements Serializable {
 
+    public enum Status {
+        PENDING, ACTIVE, INACTIVE, EXPIRED, LOCKED
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -33,6 +37,8 @@ public class User implements Serializable {
 
     private String salt;
 
+    private Status status;
+
     private String phone;
 
     private LocalDateTime deletedAt;
@@ -40,6 +46,52 @@ public class User implements Serializable {
     private LocalDateTime updatedAt;
 
     private LocalDateTime createdAt;
+
+    @Enumerated(EnumType.ORDINAL)
+    public Status getStatus() {
+        return status;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public LocalDateTime getDeletedAt() {
+        return deletedAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Admin admin;
