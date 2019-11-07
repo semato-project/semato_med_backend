@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDate;
 
 @Setter
 @Getter
@@ -23,4 +24,18 @@ public class SingUpRequest {
 
     @NotBlank
     private String password;
+
+    @NotBlank
+    private String pesel;
+
+    @NotBlank
+    private LocalDate birthDate;
+
+    private String postalCode;
+
+    private String city;
+
+    private String street;
+
+    private String houseNumber;
 }
