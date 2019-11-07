@@ -72,7 +72,7 @@ public class AuthController {
     @PostMapping("/singup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SingUpRequest singUpRequest) {
         if (userRepository.existsByEmail(singUpRequest.getEmail())) {
-            return new ResponseEntity(new ApiResponse(false, "Email is already taken!"),
+            return new ResponseEntity<>(new ApiResponse(false, "Email is already taken!"),
                     HttpStatus.BAD_REQUEST);
         }
 
