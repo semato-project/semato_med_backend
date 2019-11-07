@@ -1,6 +1,7 @@
 package semato.semato_med.model;
 
 import lombok.*;
+import semato.semato_med.model.audit.DateAudit;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -10,7 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Visit {
+public class Visit extends DateAudit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -30,9 +31,5 @@ public class Visit {
     private LocalDateTime dateTime;
 
     private VisitStatus status;
-
-    private LocalDateTime createdAt;
-
-    private LocalDateTime updatedAt;
 
 }

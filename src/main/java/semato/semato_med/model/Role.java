@@ -1,9 +1,6 @@
 package semato.semato_med.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
@@ -11,6 +8,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @AllArgsConstructor
+@RequiredArgsConstructor
 @NoArgsConstructor
 @Entity
 public class Role {
@@ -21,5 +19,6 @@ public class Role {
 
     @Enumerated(EnumType.STRING)
     @NaturalId
+    @NonNull
     private RoleName name;
 }

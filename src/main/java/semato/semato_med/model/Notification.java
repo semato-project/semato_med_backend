@@ -1,17 +1,16 @@
 package semato.semato_med.model;
 
 import lombok.*;
-import semato.semato_med.model.Admin;
+import semato.semato_med.model.audit.DateAudit;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Entity
-public class Notification {
+public class Notification extends DateAudit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -23,8 +22,4 @@ public class Notification {
     @JoinColumn(name="admin_id", referencedColumnName = "id", nullable = false)
     @NonNull
     private Admin createdBy;
-
-    private LocalDateTime createdAt;
-
-    private LocalDateTime deletedAt;
 }

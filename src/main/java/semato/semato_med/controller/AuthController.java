@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import semato.semato_med.exception.AppException;
+import semato.semato_med.model.Patient;
 import semato.semato_med.model.Role;
 import semato.semato_med.model.RoleName;
 import semato.semato_med.model.User;
@@ -21,6 +22,7 @@ import semato.semato_med.payload.ApiResponse;
 import semato.semato_med.payload.JwtAuthenticationResponse;
 import semato.semato_med.payload.LoginRequest;
 import semato.semato_med.payload.SingUpRequest;
+import semato.semato_med.repository.PatientRepository;
 import semato.semato_med.repository.RoleRepository;
 import semato.semato_med.repository.UserRepository;
 import semato.semato_med.security.JwtTokenProvider;
@@ -38,6 +40,9 @@ public class AuthController {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    PatientRepository patientRepository;
 
     @Autowired
     RoleRepository roleRepository;
@@ -66,12 +71,27 @@ public class AuthController {
 
     @PostMapping("/singup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SingUpRequest singUpRequest) {
-        if(userRepository.existsByEmail(singUpRequest.getEmail())) {
-            return new ResponseEntity(new ApiResponse(false, "Email is already taken!"),
+        if (userRepository.existsByEmail(singUpRequest.getEmail())) {
+            return new ResponseEntity<>(new ApiResponse(false, "Email is already taken!"),
                     HttpStatus.BAD_REQUEST);
         }
 
-        User user = new User(singUpRequest.getEmail(), singUpRequest.getFirstName(), singUpRequest.getLastName(), singUpRequest.getPassword());
+        User user = new User(
+                singUpRequest.getEmail(),
+                singUpRequest.getFirstName(),
+                singUpRequest.getLastName(),
+                singUpRequest.getPassword(),
+                singUpRequest.getPhone());
+
+        Patient patient = new Patient(
+                user,
+                singUpRequest.getPesel(),
+                singUpRequest.getBirthDate(),
+                singUpRequest.getCity(),
+                singUpRequest.getPostalCode(),
+                singUpRequest.getStreet(),
+                singUpRequest.getHouseNumber());
+
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
@@ -79,11 +99,11 @@ public class AuthController {
 
         user.setRoles(Collections.singleton(userRole));
 
-        User result = userRepository.save(user);
+        Patient result = patientRepository.save(patient);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath().path("/api/users/{username}")
-                .buildAndExpand(result.getEmail()).toUri();
+                .buildAndExpand(result.getUser().getEmail()).toUri();
 
         return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
     }

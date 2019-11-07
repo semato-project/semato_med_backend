@@ -2,6 +2,7 @@ package semato.semato_med.model;
 
 import lombok.*;
 import org.hibernate.annotations.NaturalId;
+import org.springframework.lang.Nullable;
 import semato.semato_med.model.audit.DateAudit;
 
 import javax.persistence.*;
@@ -26,7 +27,6 @@ public class User extends DateAudit implements Serializable {
 
     @NonNull
     @NaturalId
-    @Column(unique = true)
     private String email;
 
     @NonNull
@@ -39,13 +39,16 @@ public class User extends DateAudit implements Serializable {
     @NotBlank
     private String password;
 
+    @Nullable
     private String phone;
 
-//    private LocalDateTime deletedAt;
-//
-//    private LocalDateTime updatedAt;
-//
-//    private LocalDateTime createdAt;
+    public User(@NonNull String email, @NonNull String firstName, @NonNull String lastName, @NonNull @NotBlank String password, @Nullable String phone) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.phone = phone;
+    }
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",
@@ -53,13 +56,13 @@ public class User extends DateAudit implements Serializable {
     inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Admin admin;
-
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Patient patient;
-
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Physician physician;
+//    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private Admin admin;
+//
+//    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private Patient patient;
+//
+//    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private Physician physician;
 
 }
