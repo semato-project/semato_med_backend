@@ -17,9 +17,6 @@ public class SingUpRequest {
     private String lastName;
 
     @NotBlank
-    private String phone;
-
-    @NotBlank
     private String email;
 
     @NotBlank
@@ -30,6 +27,10 @@ public class SingUpRequest {
 
     @NotBlank
     private LocalDate birthDate;
+
+
+    //Nie wymagane:
+    private String phone;
 
     private String postalCode;
 
