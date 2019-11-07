@@ -76,29 +76,21 @@ public class AuthController {
                     HttpStatus.BAD_REQUEST);
         }
 
-        User user = new User(singUpRequest.getEmail(), singUpRequest.getFirstName(), singUpRequest.getLastName(), singUpRequest.getPassword());
+        User user = new User(
+                singUpRequest.getEmail(),
+                singUpRequest.getFirstName(),
+                singUpRequest.getLastName(),
+                singUpRequest.getPassword(),
+                singUpRequest.getPhone());
 
-        if (!singUpRequest.getPhone().isEmpty()) {
-            user.setPhone(singUpRequest.getPhone());
-        }
-
-        Patient patient = new Patient(user, singUpRequest.getPesel(), singUpRequest.getBirthDate());
-
-        if (!singUpRequest.getCity().isEmpty()) {
-            patient.setCity(singUpRequest.getCity());
-        }
-
-        if (!singUpRequest.getPostalCode().isEmpty()) {
-            patient.setPostalCode(singUpRequest.getPostalCode());
-        }
-
-        if (!singUpRequest.getStreet().isEmpty()) {
-            patient.setStreet(singUpRequest.getStreet());
-        }
-
-        if (!singUpRequest.getHouseNumber().isEmpty()) {
-            patient.setHouseNumber(singUpRequest.getHouseNumber());
-        }
+        Patient patient = new Patient(
+                user,
+                singUpRequest.getPesel(),
+                singUpRequest.getBirthDate(),
+                singUpRequest.getCity(),
+                singUpRequest.getPostalCode(),
+                singUpRequest.getStreet(),
+                singUpRequest.getHouseNumber());
 
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));

@@ -1,5 +1,6 @@
 package semato.semato_med.payload;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,9 +26,8 @@ public class SingUpRequest {
     @NotBlank
     private String pesel;
 
-    @NotBlank
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
-
 
     //Nie wymagane:
     private String phone;
