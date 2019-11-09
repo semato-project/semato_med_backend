@@ -5,17 +5,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import semato.semato_med.model.PasswordResetToken;
 import semato.semato_med.model.User;
 import semato.semato_med.payload.ApiResponse;
 import semato.semato_med.payload.ChangePasswordRequest;
 import semato.semato_med.payload.UserInfo;
+import semato.semato_med.repository.PasswordResetTokenRepository;
 import semato.semato_med.repository.UserRepository;
 import semato.semato_med.security.CurrentUser;
 import semato.semato_med.security.UserPrincipal;
 
 import java.util.Optional;
+import java.util.UUID;
 
 
 @RestController
@@ -26,7 +30,26 @@ public class UserController {
     UserRepository userRepository;
 
     @Autowired
+    PasswordResetTokenRepository passwordResetTokenRepository;
+
+    @Autowired
     PasswordEncoder passwordEncoder;
+
+
+
+    @PostMapping("/user/forgotPassword")
+    public ResponseEntity<?> resetPassword(@RequestParam("email") String userEmail) {
+
+        Optional<User> user = userRepository.findByEmail(userEmail);
+        if (!user.isPresent()) {
+            return new ResponseEntity<>(new ApiResponse(false, "Email is not in database"), HttpStatus.NOT_FOUND);
+        }
+
+        String token = UUID.randomUUID().toString();
+        passwordResetTokenRepository.save(new PasswordResetToken(token, user.get()));
+
+        return ResponseEntity.ok(new ApiResponse(true, "Email is send, token: " + token));
+    }
 
     @GetMapping("/user/me")
     @PreAuthorize("hasRole('PATIENT')")
@@ -57,4 +80,6 @@ public class UserController {
         return ResponseEntity.ok(new ApiResponse(true, "Password change successfully"));
 
     }
+
+
 }
