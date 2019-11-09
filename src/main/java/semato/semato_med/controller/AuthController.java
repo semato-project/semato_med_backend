@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import semato.semato_med.exception.AppException;
 import semato.semato_med.model.Patient;
 import semato.semato_med.model.Role;
@@ -28,7 +27,6 @@ import semato.semato_med.repository.UserRepository;
 import semato.semato_med.security.JwtTokenProvider;
 
 import javax.validation.Valid;
-import java.net.URI;
 import java.util.Collections;
 
 @RestController
@@ -99,12 +97,8 @@ public class AuthController {
 
         user.setRoles(Collections.singleton(userRole));
 
-        Patient result = patientRepository.save(patient);
+        patientRepository.save(patient);
 
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentContextPath().path("/api/users/{username}")
-                .buildAndExpand(result.getUser().getEmail()).toUri();
-
-        return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
+        return new ResponseEntity<>(new ApiResponse(true, "User registered successfully"), HttpStatus.CREATED);
     }
 }

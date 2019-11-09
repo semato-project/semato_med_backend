@@ -13,16 +13,18 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-@Getter
 @AllArgsConstructor
 public class UserPrincipal implements UserDetails {
     private Long id;
 
-    @JsonIgnore
     private String email;
 
     @JsonIgnore
     private String password;
+
+    private String name;
+
+    private String surname;
 
     private Collection<? extends GrantedAuthority> authorities;
 
@@ -35,6 +37,8 @@ public class UserPrincipal implements UserDetails {
                 user.getId(),
                 user.getEmail(),
                 user.getPassword(),
+                user.getFirstName(),
+                user.getLastName(),
                 authorities
         );
     }
@@ -86,5 +90,21 @@ public class UserPrincipal implements UserDetails {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
     }
 }
