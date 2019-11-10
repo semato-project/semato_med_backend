@@ -43,10 +43,10 @@ public class PasswordChanger {
 
     public SimpleMailMessage constructResetTokenEmail(String contextPath, String token, User user) {
         SimpleMailMessage email = new SimpleMailMessage();
-        email.setSubject("Reset Password");
-        email.setText("Link do resetu hasła: " + contextPath + "/api/user/confirmPassword?id=" + user.getId() + "&token=" + token);
+        email.setSubject("Password reset");
+        email.setText("To reset password click link below: " + System.getProperty("line.separator") + contextPath + "/api/user/confirmPassword?id=" + user.getId() + "&token=" + token);
         email.setTo(user.getEmail());
-        email.setFrom("sematomed@gmail.com");
+        email.setFrom("SematoMedClinic");
         return email;
     }
 
@@ -68,7 +68,6 @@ public class PasswordChanger {
             return "Token is expired";
         }
 
-
         Authentication authentication =
                 new UsernamePasswordAuthenticationToken(
                         UserPrincipal.create(user.get()),
@@ -79,6 +78,7 @@ public class PasswordChanger {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return null;
     }
+
 
     public void expiryPasswordToken(PasswordResetToken passwordResetToken){
         passwordResetToken.setExpiryDate(LocalDateTime.now());

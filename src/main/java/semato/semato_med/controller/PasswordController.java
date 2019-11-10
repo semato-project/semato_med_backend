@@ -69,10 +69,6 @@ public class PasswordController {
         return ResponseEntity.ok(new ApiResponse(true, "Confirm successfully"));
     }
 
-
-
-    //TODO: poprawić resetowanie hasła, dostęp tylko dla osób które dostaną confirm w metodzie wyżej.
-
     @PostMapping("/user/resetPassword")
     public ResponseEntity<?> resetPassword(@RequestBody ResetPasswordRequest resetPasswordRequest) {
 
