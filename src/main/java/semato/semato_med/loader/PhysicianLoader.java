@@ -8,12 +8,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import semato.semato_med.exception.AppException;
 import semato.semato_med.model.*;
-import semato.semato_med.repository.PhysicianRepository;
-import semato.semato_med.repository.RoleRepository;
-import semato.semato_med.repository.SpecialityRepository;
-import semato.semato_med.repository.UserRepository;
+import semato.semato_med.repository.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.*;
 
 @Component
@@ -31,6 +30,12 @@ public class PhysicianLoader implements ApplicationRunner {
 
     @Autowired
     private SpecialityRepository specialityRepository;
+
+    @Autowired
+    private ClinicRepository clinicRepository;
+
+    @Autowired
+    private WorkScheduleRepository workScheduleRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -62,10 +67,18 @@ public class PhysicianLoader implements ApplicationRunner {
             Set<Speciality> specialitySet = new HashSet<Speciality>();
 
             specialitySet.add(speciality);
-            physician.setSpecialities(specialitySet);
+            physician.setSpecialityList(specialitySet);
 
             physician.setUser(user);
             physicianRepository.save(physician);
+
+            WorkSchedule workScheduleEntry = new WorkSchedule();
+            workScheduleEntry.setPhysician(physician);
+            workScheduleEntry.setClinic(clinicRepository.findByEmail(ClinicLoader.EMAIL).get());
+            workScheduleEntry.setDateStart(LocalDateTime.of(LocalDate.now().plusDays(1), LocalTime.NOON.minusHours(4)));
+            workScheduleEntry.setDateEnd(LocalDateTime.of(LocalDate.now().plusDays(1), LocalTime.NOON.plusHours(4)));
+
+            workScheduleRepository.save(workScheduleEntry);
 
         }
     }

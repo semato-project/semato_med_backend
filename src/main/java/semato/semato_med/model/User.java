@@ -29,7 +29,6 @@ public class User extends DateAudit implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-
     @NonNull
     @NaturalId
     private String email;

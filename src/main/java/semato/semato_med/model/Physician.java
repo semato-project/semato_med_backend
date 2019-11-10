@@ -37,6 +37,7 @@ public class Physician {
             joinColumns = {@JoinColumn(name = "physician_id")},
             inverseJoinColumns = {@JoinColumn(name = "speciality_id")}
     )
-    private Set<Speciality> specialities;
+
+    private Set<Speciality> specialityList;
 
 }
