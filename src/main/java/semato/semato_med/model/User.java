@@ -18,6 +18,11 @@ import java.util.Set;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Entity
+@Table(name = "user", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {
+                "email"
+        })
+})
 public class User extends DateAudit implements Serializable {
 
     @Id
