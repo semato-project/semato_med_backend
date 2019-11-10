@@ -27,9 +27,6 @@ public class PasswordController {
     UserRepository userRepository;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
-
-    @Autowired
     PasswordChanger passwordChanger;
 
     @Autowired
@@ -46,7 +43,13 @@ public class PasswordController {
             return new ResponseEntity<>(new ApiResponse(false, "Email is not in database"), HttpStatus.NOT_FOUND);
         }
 
-        emailSender.send(passwordChanger.constructResetTokenEmail("localhost", passwordChanger.createPasswordResetToken(user.get()), user.get()));
+        emailSender.send(
+                passwordChanger.constructResetTokenEmail(
+                        "http://localhost:5000",
+                        passwordChanger.createPasswordResetToken(user.get()),
+                        user.get()
+                )
+        );
 
 
         return ResponseEntity.ok(new ApiResponse(true, "Email is send"));
@@ -57,15 +60,16 @@ public class PasswordController {
             @RequestParam("id") Long id,
             @RequestParam("token") String token) {
 
-
         String result = passwordChanger.validatePasswordResetToken(id, token);
 
-        if ( result != null) {
+        if (result != null) {
             return new ResponseEntity<>(new ApiResponse(false, result), HttpStatus.UNAUTHORIZED);
         }
 
         return ResponseEntity.ok(new ApiResponse(true, "Confirm successfully"));
     }
+
+
 
     //TODO: poprawić resetowanie hasła, dostęp tylko dla osób które dostaną confirm w metodzie wyżej.
 
@@ -88,11 +92,8 @@ public class PasswordController {
             return new ResponseEntity<>(new ApiResponse(false, "Token is expired"), HttpStatus.BAD_REQUEST);
         }
 
-        user.get().setPassword(passwordEncoder.encode(resetPasswordRequest.getNewPassword()));
-        userRepository.save(user.get());
-
-        passwordResetToken.get().setExpiryDate(LocalDateTime.now());
-        passwordResetTokenRepository.save(passwordResetToken.get());
+        passwordChanger.saveNewPassword(user.get(), resetPasswordRequest.getNewPassword());
+        passwordChanger.expiryPasswordToken(passwordResetToken.get());
 
         return ResponseEntity.ok(new ApiResponse(true, "Password reset successfully"));
     }
@@ -101,7 +102,7 @@ public class PasswordController {
     @Secured({"ROLE_PATIENT", "ROLE_PHYSICIAN"})
     public ResponseEntity<?> changePassword(@CurrentUser UserPrincipal currentUser, @RequestBody ChangePasswordRequest changePasswordRequest) {
 
-        if (!passwordEncoder.matches(changePasswordRequest.getOldPassword(), currentUser.getPassword())) {
+        if (!passwordChanger.isOldPasswordIsValid(changePasswordRequest.getOldPassword(), currentUser.getPassword())) {
             return new ResponseEntity<>(new ApiResponse(false, "Incorrect old password"), HttpStatus.BAD_REQUEST);
         }
 
@@ -111,12 +112,11 @@ public class PasswordController {
 
         Optional<User> user = userRepository.findByEmail(currentUser.getEmail());
 
-        if (user.isPresent()) {
+        if (!user.isPresent()) {
             return new ResponseEntity<>(new ApiResponse(false, "User not found"), HttpStatus.BAD_REQUEST);
         }
 
-        user.get().setPassword(passwordEncoder.encode(changePasswordRequest.getNewPassword()));
-        userRepository.save(user.get());
+        passwordChanger.saveNewPassword(user.get(), changePasswordRequest.getNewPassword());
 
         return ResponseEntity.ok(new ApiResponse(true, "Password change successfully"));
 

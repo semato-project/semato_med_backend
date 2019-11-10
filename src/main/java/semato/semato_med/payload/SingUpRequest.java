@@ -2,7 +2,6 @@ package semato.semato_med.payload;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;

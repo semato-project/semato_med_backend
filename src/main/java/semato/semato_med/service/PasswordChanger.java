@@ -2,11 +2,11 @@ package semato.semato_med.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import semato.semato_med.model.PasswordResetToken;
 import semato.semato_med.model.User;
@@ -30,7 +30,7 @@ public class PasswordChanger {
     UserRepository userRepository;
 
     @Autowired
-    AuthenticationManager authenticationManager;
+    PasswordEncoder passwordEncoder;
 
     @Autowired
     JwtTokenProvider tokenProvider;
@@ -44,9 +44,9 @@ public class PasswordChanger {
     public SimpleMailMessage constructResetTokenEmail(String contextPath, String token, User user) {
         SimpleMailMessage email = new SimpleMailMessage();
         email.setSubject("Reset Password");
-        email.setText(contextPath + "/user/confirmPassword?id=" + user.getId() + "&token=" + token);
+        email.setText("Link do resetu hasła: " + contextPath + "/api/user/confirmPassword?id=" + user.getId() + "&token=" + token);
         email.setTo(user.getEmail());
-        email.setFrom("${service.email}");
+        email.setFrom("sematomed@gmail.com");
         return email;
     }
 
@@ -80,4 +80,17 @@ public class PasswordChanger {
         return null;
     }
 
+    public void expiryPasswordToken(PasswordResetToken passwordResetToken){
+        passwordResetToken.setExpiryDate(LocalDateTime.now());
+        passwordResetTokenRepository.save(passwordResetToken);
+    }
+
+    public void saveNewPassword(User user, String newPassword){
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+    }
+
+    public boolean isOldPasswordIsValid(String introducedPassword, String oldPassword){
+        return passwordEncoder.matches(introducedPassword, oldPassword);
+    }
 }

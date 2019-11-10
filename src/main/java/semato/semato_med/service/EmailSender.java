@@ -1,15 +1,24 @@
 package semato.semato_med.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-//TODO: zbudować system mailowy
+import javax.mail.internet.MimeMessage;
 
 @Service
 public class EmailSender {
 
-    public void send(SimpleMailMessage msg){
+    @Autowired
+    private JavaMailSender javaMailSender;
 
+    public void send(SimpleMailMessage msg){
+        javaMailSender.send(msg);
+    }
+
+    public void send(MimeMessage msg){
+        javaMailSender.send(msg);
     }
 
 }
