@@ -1,16 +1,20 @@
 package semato.semato_med.payload;
 
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 
+
 @Getter
-public class LoginRequest {
+public class ResetPasswordRequest {
 
     @NotBlank
-    private String email;
+    private long id;
 
     @NotBlank
-    private String password;
+    private String token;
+
+    @NotBlank
+    private String newPassword;
+
 }
