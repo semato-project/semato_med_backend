@@ -1,12 +1,14 @@
 package semato.semato_med.model;
 
 import lombok.*;
+import org.hibernate.annotations.NaturalId;
+import org.hibernate.jdbc.Work;
+import org.hibernate.validator.constraints.UniqueElements;
+import semato.semato_med.repository.ClinicRepository;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,6 +19,9 @@ public class Clinic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @NonNull
+    private String name;
 
     @NonNull
     private String city;
@@ -33,6 +38,10 @@ public class Clinic {
     @NonNull
     private String houseNumber;
 
+    @NonNull
+    @NaturalId
+    private String email;
+
     private float latitude;
 
     private float longitude;
@@ -40,4 +49,8 @@ public class Clinic {
     private String imageUrl;
 
     private LocalDateTime deletedAt;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "clinic_id")
+    private List<WorkSchedule> workScheduleList;
 }
