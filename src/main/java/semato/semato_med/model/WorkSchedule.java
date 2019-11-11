@@ -27,8 +27,8 @@ public class WorkSchedule extends DateAudit {
     @JoinColumn (name = "clinic_id", referencedColumnName = "id")
     private Clinic clinic;
 
-    private LocalDateTime dateStart;
+    private LocalDateTime dateTimeStart;
 
-    private LocalDateTime dateEnd;
+    private LocalDateTime dateTimeEnd;
 
 }

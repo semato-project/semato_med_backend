@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import semato.semato_med.model.Physician;
 
 @Repository
-public interface PhysicianRepository extends JpaRepository<Physician, Integer> {
+public interface PhysicianRepository extends JpaRepository<Physician, Long> {
 }

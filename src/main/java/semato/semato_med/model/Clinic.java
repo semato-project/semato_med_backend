@@ -9,6 +9,7 @@ import semato.semato_med.repository.ClinicRepository;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -52,5 +53,6 @@ public class Clinic {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "clinic_id")
-    private List<WorkSchedule> workScheduleList;
+    private Set<WorkSchedule> workScheduleList;
+
 }
