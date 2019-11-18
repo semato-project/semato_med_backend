@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import semato.semato_med.model.Visit;
 import semato.semato_med.model.WorkSchedule;
+import semato.semato_med.util.Slotable;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
@@ -18,14 +19,14 @@ public class WorkScheduleService {
     EntityManager entityManager;
 
     @Getter
-    public class Slot {
+    public class Slot implements Slotable {
 
-        private LocalDateTime start;
-        private LocalDateTime end;
+        private LocalDateTime dateTimeStart;
+        private LocalDateTime dateTimeEnd;
 
         public Slot(LocalDateTime start, LocalDateTime end) {
-            this.start = start;
-            this.end = end;
+            this.dateTimeStart = start;
+            this.dateTimeEnd = end;
         }
      }
 
@@ -77,35 +78,42 @@ public class WorkScheduleService {
         return false;
     }
 
-    private List<Slot> getAvailableSlotList(WorkSchedule workSchedule) {
+    public List<Slot> getAvailableSlotList(WorkSchedule workSchedule) {
 
-        List<Slot> availableSlotList = new LinkedList<Slot>();
 
-        List<Slot> allPossibleSlotList = getAllPossibleSlotList(workSchedule);
+        List<Slot> slotList = getAllPossibleSlotList(workSchedule);
         List<Visit> existingVisitList = getExistingVisitListForWorkScheduleEntry(workSchedule);
 
-        for (Slot slotCandidate: allPossibleSlotList) {
+        for (Slot slotCandidate: slotList) {
 
-            for (Visit existingVisit: existingVisitList) {
-
-                if (isBeforeOrEquals(slotCandidate.getStart(), existingVisit.getDateTimeStart()) && slotCandidate.getEnd().isAfter(existingVisit.getDateTimeStart())) {
-                    break;
-                }
-
-                if (slotCandidate.getStart().isBefore(existingVisit.getDateTimeEnd()) && isAfterOrEquals(slotCandidate.getEnd(), existingVisit.getDateTimeEnd())) {
-                    break;
-                }
-
-                if (isBeforeOrEquals(slotCandidate.getStart(), existingVisit.getDateTimeStart()) && isAfterOrEquals(slotCandidate.getEnd(), existingVisit.getDateTimeEnd())) {
-                    break;
-                }
-
-                availableSlotList.add(slotCandidate);
+            if (slotableFits(slotCandidate, existingVisitList)) {
+                slotList.add(slotCandidate);
             }
-
         }
 
-        return availableSlotList;
+        return slotList;
+    }
+
+    private boolean slotableFits(Slotable slotable, List<Visit> existingVisitList) {
+
+        for (Visit existingVisit: existingVisitList) {
+
+            if (isBeforeOrEquals(slotable.getDateTimeStart(), existingVisit.getDateTimeStart()) && slotable.getDateTimeEnd().isAfter(existingVisit.getDateTimeStart())) {
+                break;
+            }
+
+            if (slotable.getDateTimeStart().isBefore(existingVisit.getDateTimeEnd()) && isAfterOrEquals(slotable.getDateTimeEnd(), existingVisit.getDateTimeEnd())) {
+                break;
+            }
+
+            if (isBeforeOrEquals(slotable.getDateTimeStart(), existingVisit.getDateTimeStart()) && isAfterOrEquals(slotable.getDateTimeEnd(), existingVisit.getDateTimeEnd())) {
+                break;
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
 }

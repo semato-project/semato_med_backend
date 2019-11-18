@@ -13,7 +13,7 @@ public class PhysicianListResponse {
         this.physicianList = physicianList;
     }
 
-    public List<PhysicianResponse> getClinicList() {
+    public List<PhysicianResponse> getPhysicianList() {
 
         List<PhysicianResponse> response = new LinkedList<PhysicianResponse>();
 

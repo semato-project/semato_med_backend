@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class VisitService {
                         "inner join fetch ws.physician p " +
                         "inner join fetch p.specialityList s " +
                         "where s.id = :specialityId " +
-                        "and ws.dateEnd > :now",
+                        "and ws.dateTimeEnd > :now",
                 Clinic.class)
                 .setParameter("specialityId", speciality.getId())
                 .setParameter("now", LocalDateTime.now())
@@ -48,7 +49,7 @@ public class VisitService {
                 "inner join fetch ws.clinic c " +
                 "inner join fetch p.specialityList s " +
                 "where s.id = :specialityId " +
-                "and ws.dateEnd > :now "
+                "and ws.dateTimeEnd > :now "
                 ;
 
         if (clinic != null) {
@@ -80,9 +81,9 @@ public class VisitService {
                         "inner join fetch p.specialityList s " +
                         "inner join fetch ws.clinic c " +
                         "where s.id = :specialityId " +
-                        "and ws.dateEnd > :now " +
-                        "and ws.dateEnd <= :periodEnd " +
-                        "and ws.dateStart >= :periodStart "
+                        "and ws.dateTimeEnd > :now " +
+                        "and ws.dateTimeEnd <= :periodEnd " +
+                        "and ws.dateTimeStart >= :periodStart "
                 ;
 
         if (clinic != null) {
@@ -94,13 +95,14 @@ public class VisitService {
         }
 
         TypedQuery<WorkSchedule> query = entityManager.createQuery(
-                hql,
-                WorkSchedule.class)
-                .setParameter("specialityId", speciality.getId())
-                .setParameter("now", LocalDateTime.now())
-                .setParameter("periodEnd", periodEnd)
-                .setParameter("periodStart", periodStart)
-                ;
+            hql,
+            WorkSchedule.class
+        )
+            .setParameter("specialityId", speciality.getId())
+            .setParameter("now", LocalDateTime.now())
+            .setParameter("periodEnd", LocalDateTime.of(periodEnd, LocalTime.MAX))
+            .setParameter("periodStart", LocalDateTime.of(periodStart, LocalTime.MIN))
+        ;
 
         if (clinic != null) {
             query.setParameter("clinicId", clinic.getId());
@@ -116,9 +118,39 @@ public class VisitService {
 
         for (WorkSchedule workSchedule: workScheduleList) {
 
+            List<WorkScheduleService.Slot> availableSlotList = workScheduleService.getAvailableSlotList(workSchedule);
+
+            for (WorkScheduleService.Slot slot: availableSlotList) {
+
+                Visit virtualVisit = new Visit();
+                virtualVisit.setClinic(clinic);
+                virtualVisit.setDateTimeStart(slot.getDateTimeStart());
+                virtualVisit.setDateTimeEnd(slot.getDateTimeEnd());
+                virtualVisit.setPhysician(physician);
+                virtualVisit.setSpeciality(speciality);
+                virtualVisit.setStatus(VisitStatus.AVAILABLE);
+                availableVisitList.add(virtualVisit);
+            }
         }
 
         return availableVisitList;
+    }
+
+    private boolean visitFits(LocalDateTime dateTimeStart, LocalDateTime dateTimeEnd, Clinic clinic, Physician physician) {
+
+//        String hql =
+//                "select ws " +
+//                        "from WorkSchedule ws " +
+//                        "and ws.dateTimeEnd <= :periodEnd " +
+//                        "and ws.dateTimeStart >= :periodStart " +
+//                        "and
+//                ;
+
+
+    }
+
+    public void bookVisit(Speciality speciality, LocalDateTime dateTimeStart, LocalDateTime dateTimeEnd, Clinic clinic, Physician physician) {
+
     }
 
 }

@@ -75,8 +75,8 @@ public class PhysicianLoader implements ApplicationRunner {
             WorkSchedule workScheduleEntry = new WorkSchedule();
             workScheduleEntry.setPhysician(physician);
             workScheduleEntry.setClinic(clinicRepository.findByEmail(ClinicLoader.EMAIL).get());
-            workScheduleEntry.setDateStart(LocalDateTime.of(LocalDate.now().plusDays(1), LocalTime.NOON.minusHours(4)));
-            workScheduleEntry.setDateEnd(LocalDateTime.of(LocalDate.now().plusDays(1), LocalTime.NOON.plusHours(4)));
+            workScheduleEntry.setDateTimeStart(LocalDateTime.of(LocalDate.now().plusDays(1), LocalTime.NOON.minusHours(4)));
+            workScheduleEntry.setDateTimeEnd(LocalDateTime.of(LocalDate.now().plusDays(1), LocalTime.NOON.plusHours(4)));
 
             workScheduleRepository.save(workScheduleEntry);
 

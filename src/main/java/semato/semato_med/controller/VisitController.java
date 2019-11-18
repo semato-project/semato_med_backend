@@ -1,10 +1,12 @@
 package semato.semato_med.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import semato.semato_med.model.Clinic;
 import semato.semato_med.model.Physician;
+import semato.semato_med.model.Speciality;
 import semato.semato_med.payload.visit.*;
 import semato.semato_med.repository.ClinicRepository;
 import semato.semato_med.repository.PhysicianRepository;
@@ -60,7 +62,7 @@ public class VisitController {
         );
     }
 
-    @GetMapping("/available/visit/list/get")
+    @GetMapping("/available/list/get")
     @PreAuthorize("hasRole('PATIENT')")
     public VisitListResponse getAvailableVisitList(@Valid @RequestBody AvailableVisitListRequest request) {
 
@@ -88,5 +90,18 @@ public class VisitController {
                 )
         );
     }
+
+    @PutMapping("/book")
+    @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasRole('PATIENT')")
+    public void bookVisit(@Valid @RequestBody BookVisitRequest request) {
+
+        Clinic clinic = clinicRepository.findById(request.getClinicId()).get();
+        Physician physician = physicianRepository.findById(request.getPhysicianId()).get();
+        Speciality speciality = specialityRepository.findById(request.getSpecialityId();
+
+        visitService.bookVisit(speciality, request.getDateTimeStart(), request.getDateTimeEnd(), clinic, physician);
+    }
+
 
 }
