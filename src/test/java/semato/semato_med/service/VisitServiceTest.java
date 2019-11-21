@@ -3,11 +3,12 @@ package semato.semato_med.service;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import semato.semato_med.exception.BookingException;
 import semato.semato_med.loader.ClinicLoader;
-import semato.semato_med.model.Clinic;
-import semato.semato_med.model.Physician;
-import semato.semato_med.repository.ClinicRepository;
-import semato.semato_med.repository.SpecialityRepository;
+import semato.semato_med.loader.PatientLoader;
+import semato.semato_med.loader.PhysicianLoader;
+import semato.semato_med.model.*;
+import semato.semato_med.repository.*;
 
 import java.util.List;
 
@@ -24,6 +25,18 @@ class VisitServiceTest {
 
     @Autowired
     VisitService visitService;
+
+    @Autowired
+    PhysicianRepository physicianRepository;
+
+    @Autowired
+    PatientRepository patientRepository;
+
+    @Autowired
+    WorkScheduleRepository workScheduleRepository;
+
+    @Autowired
+    VisitRepository visitRepository;
 
     @Test
     void getClinicListBySpeciality() {
@@ -45,6 +58,77 @@ class VisitServiceTest {
         );
         assertEquals( 1, physicianList.size());
 
+    }
+
+    @Test
+    void bookVisitWithParams() {
+        Visit visit = visitRepository.findAll().get(0);
+
+        assertThrows(BookingException.class, () -> {
+            visitService.bookVisitWithParams(
+                    visit.getSpeciality(),
+                    visit.getDateTimeStart(),
+                    visit.getDateTimeEnd(),
+                    visit.getClinic(),
+                    visit.getPhysician(),
+                    visit.getPatient()
+            );
+        });
+
+        assertThrows(BookingException.class, () -> {
+            visitService.bookVisitWithParams(
+                    visit.getSpeciality(),
+                    visit.getDateTimeStart().minusSeconds(Visit.VISIT_LENGHT_SECONDS / 2),
+                    visit.getDateTimeEnd().minusSeconds(Visit.VISIT_LENGHT_SECONDS / 2),
+                    visit.getClinic(),
+                    visit.getPhysician(),
+                    visit.getPatient()
+            );
+        });
+
+        assertThrows(BookingException.class, () -> {
+            visitService.bookVisitWithParams(
+                    visit.getSpeciality(),
+                    visit.getDateTimeStart().plusSeconds(Visit.VISIT_LENGHT_SECONDS / 2),
+                    visit.getDateTimeEnd().plusSeconds(Visit.VISIT_LENGHT_SECONDS / 2),
+                    visit.getClinic(),
+                    visit.getPhysician(),
+                    visit.getPatient()
+            );
+        });
+
+        Visit bookedVisit1 = visitService.bookVisitWithParams(
+                visit.getSpeciality(),
+                visit.getDateTimeStart().minusSeconds(Visit.VISIT_LENGHT_SECONDS),
+                visit.getDateTimeEnd().minusSeconds(Visit.VISIT_LENGHT_SECONDS),
+                visit.getClinic(),
+                visit.getPhysician(),
+                visit.getPatient()
+        );
+
+        assertTrue(bookedVisit1 instanceof Visit);
+
+        Visit bookedVisit2 = visitService.bookVisitWithParams(
+                visit.getSpeciality(),
+                visit.getDateTimeStart().plusSeconds(Visit.VISIT_LENGHT_SECONDS),
+                visit.getDateTimeEnd().plusSeconds(Visit.VISIT_LENGHT_SECONDS),
+                visit.getClinic(),
+                visit.getPhysician(),
+                visit.getPatient()
+        );
+
+        assertTrue(bookedVisit2 instanceof Visit);
+
+        Visit bookedVisit3 = visitService.bookVisitWithParams(
+                visit.getSpeciality(),
+                visit.getDateTimeStart().plusSeconds(Visit.VISIT_LENGHT_SECONDS * 4),
+                visit.getDateTimeEnd().plusSeconds(Visit.VISIT_LENGHT_SECONDS * 4),
+                visit.getClinic(),
+                visit.getPhysician(),
+                visit.getPatient()
+        );
+
+        assertTrue(bookedVisit3 instanceof Visit);
     }
 
 }

@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import semato.semato_med.model.Clinic;
+import semato.semato_med.model.Patient;
 import semato.semato_med.model.Physician;
 import semato.semato_med.model.Speciality;
 import semato.semato_med.payload.visit.*;
@@ -98,9 +99,11 @@ public class VisitController {
 
         Clinic clinic = clinicRepository.findById(request.getClinicId()).get();
         Physician physician = physicianRepository.findById(request.getPhysicianId()).get();
-        Speciality speciality = specialityRepository.findById(request.getSpecialityId();
+        Speciality speciality = specialityRepository.findById(request.getSpecialityId()).get();
 
-        visitService.bookVisit(speciality, request.getDateTimeStart(), request.getDateTimeEnd(), clinic, physician);
+        Patient patient = new Patient();
+
+        visitService.bookVisitWithParams(speciality, request.getDateTimeStart(), request.getDateTimeEnd(), clinic, physician, patient);
     }
 
 

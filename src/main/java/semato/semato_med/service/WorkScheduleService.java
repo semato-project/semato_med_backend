@@ -94,6 +94,11 @@ public class WorkScheduleService {
         return slotList;
     }
 
+    public boolean slotableFits(Slotable slotable, WorkSchedule workSchedule) {
+        List<Visit> existingVisitList = getExistingVisitListForWorkScheduleEntry(workSchedule);
+        return slotableFits(slotable, existingVisitList);
+    }
+
     private boolean slotableFits(Slotable slotable, List<Visit> existingVisitList) {
 
         for (Visit existingVisit: existingVisitList) {

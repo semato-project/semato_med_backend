@@ -1,12 +1,20 @@
 package semato.semato_med.service;
 
+
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
+import semato.semato_med.exception.BookingException;
 import semato.semato_med.model.*;
+import semato.semato_med.repository.VisitRepository;
+import semato.semato_med.security.CurrentUser;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -22,14 +30,17 @@ public class VisitService {
     @Autowired
     WorkScheduleService workScheduleService;
 
+    @Autowired
+    VisitRepository visitRepository;
+
     public List<Clinic> getClinicListBySpeciality(Speciality speciality) {
 
         List<Clinic> clinicList = entityManager.createQuery(
                 "select c " +
                         "from Clinic c " +
-                        "inner join fetch c.workScheduleList ws " +
+                        "inner join fetch c.workScheduleSet ws " +
                         "inner join fetch ws.physician p " +
-                        "inner join fetch p.specialityList s " +
+                        "inner join fetch p.specialitySet s " +
                         "where s.id = :specialityId " +
                         "and ws.dateTimeEnd > :now",
                 Clinic.class)
@@ -42,22 +53,22 @@ public class VisitService {
 
     public List<Physician> getPhysicianListBySpecialityAndClinic(Speciality speciality, @Nullable Clinic clinic) {
 
-        String hql =
+        String jpql =
                 "select p " +
                 "from Physician p " +
-                "inner join fetch p.workScheduleList ws " +
+                "inner join fetch p.workScheduleSet ws " +
                 "inner join fetch ws.clinic c " +
-                "inner join fetch p.specialityList s " +
+                "inner join fetch p.specialitySet s " +
                 "where s.id = :specialityId " +
                 "and ws.dateTimeEnd > :now "
                 ;
 
         if (clinic != null) {
-            hql += "and c.id = :clinicId ";
+            jpql += "and c.id = :clinicId ";
         }
 
         TypedQuery<Physician> query = entityManager.createQuery(
-                hql,
+                jpql,
                 Physician.class)
                 .setParameter("specialityId", speciality.getId())
                 .setParameter("now", LocalDateTime.now()
@@ -74,7 +85,7 @@ public class VisitService {
 
     public List<Visit> getAvailableVisitList(Speciality speciality, LocalDate periodStart, LocalDate periodEnd, @Nullable Clinic clinic, @Nullable Physician physician) {
 
-        String hql =
+        String jpql =
                 "select ws " +
                         "from WorkSchedule ws " +
                         "inner join fetch ws.physician p " +
@@ -87,15 +98,15 @@ public class VisitService {
                 ;
 
         if (clinic != null) {
-            hql += "and c.id = :clinicId ";
+            jpql += "and c.id = :clinicId ";
         }
 
         if (physician != null) {
-            hql += "and p.id = :physicianId ";
+            jpql += "and p.id = :physicianId ";
         }
 
         TypedQuery<WorkSchedule> query = entityManager.createQuery(
-            hql,
+            jpql,
             WorkSchedule.class
         )
             .setParameter("specialityId", speciality.getId())
@@ -136,21 +147,51 @@ public class VisitService {
         return availableVisitList;
     }
 
-    private boolean visitFits(LocalDateTime dateTimeStart, LocalDateTime dateTimeEnd, Clinic clinic, Physician physician) {
+    private boolean visitFits(Visit visit) {
 
-//        String hql =
-//                "select ws " +
-//                        "from WorkSchedule ws " +
-//                        "and ws.dateTimeEnd <= :periodEnd " +
-//                        "and ws.dateTimeStart >= :periodStart " +
-//                        "and
-//                ;
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<WorkSchedule> criteriaQuery = criteriaBuilder.createQuery(WorkSchedule.class);
 
+        Root<WorkSchedule> root = criteriaQuery.from(WorkSchedule.class);
 
+        criteriaQuery
+                .select(root)
+                .where(criteriaBuilder.lessThanOrEqualTo(root.get("dateTimeStart"), visit.getDateTimeStart()))
+                .where(criteriaBuilder.greaterThanOrEqualTo(root.get("dateTimeEnd"), visit.getDateTimeEnd()))
+                .where(criteriaBuilder.equal(root.get("physician"), visit.getPhysician()))
+                .where(criteriaBuilder.equal(root.get("clinic"), visit.getClinic()))
+        ;
+
+        TypedQuery<WorkSchedule> query = entityManager.createQuery(criteriaQuery);
+        List<WorkSchedule> workScheduleList = query.getResultList(); // @Todo na prawdę niema getOneResult()??1
+        WorkSchedule workSchedule = workScheduleList.get(0);
+
+        return workScheduleService.slotableFits(visit, workSchedule);
     }
 
-    public void bookVisit(Speciality speciality, LocalDateTime dateTimeStart, LocalDateTime dateTimeEnd, Clinic clinic, Physician physician) {
+    public Visit bookVisitWithParams(Speciality speciality, LocalDateTime dateTimeStart, LocalDateTime dateTimeEnd, Clinic clinic, Physician physician, Patient patient) {
 
+        Visit virtualVisit = createVirtualVisit(speciality, dateTimeStart, dateTimeEnd, clinic, physician, patient);
+
+        if (! visitFits(virtualVisit)) {
+            throw new BookingException();
+        }
+
+        visitRepository.save(virtualVisit);
+        return virtualVisit;
+    }
+
+    protected Visit createVirtualVisit(Speciality speciality, LocalDateTime dateTimeStart, LocalDateTime dateTimeEnd, Clinic clinic, Physician physician, Patient patient) {
+
+        Visit visit = new Visit();
+        visit.setDateTimeStart(dateTimeStart);
+        visit.setDateTimeEnd(dateTimeEnd);
+        visit.setClinic(clinic);
+        visit.setPhysician(physician);
+        visit.setSpeciality(speciality);
+        visit.setPatient(patient);
+
+        return visit;
     }
 
 }

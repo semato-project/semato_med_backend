@@ -53,6 +53,6 @@ public class Clinic {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "clinic_id")
-    private Set<WorkSchedule> workScheduleList;
+    private Set<WorkSchedule> workScheduleSet;
 
 }

@@ -22,7 +22,7 @@ public class Speciality {
 
     private String name;
 
-    @ManyToMany(mappedBy = "specialityList", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "specialitySet", fetch = FetchType.LAZY)
     private Set<Physician> physicians;
 
 }

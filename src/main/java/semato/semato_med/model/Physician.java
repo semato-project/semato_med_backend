@@ -1,8 +1,10 @@
 package semato.semato_med.model;
 
 import lombok.*;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -37,11 +39,11 @@ public class Physician {
             joinColumns = {@JoinColumn(name = "physician_id")},
             inverseJoinColumns = {@JoinColumn(name = "speciality_id")}
     )
-    private Set<Speciality> specialityList;
+    private Set<Speciality> specialitySet;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "physician_id")
-    private Set<WorkSchedule> workScheduleList;
+    private Set<WorkSchedule> workScheduleSet;
 
     public String getFullName() {
         return

@@ -1,13 +1,9 @@
 package semato.semato_med.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.sun.xml.internal.ws.developer.Serialization;
 import lombok.*;
 import semato.semato_med.model.audit.DateAudit;
 import semato.semato_med.util.Slotable;
-
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Getter
