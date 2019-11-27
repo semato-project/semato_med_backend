@@ -80,11 +80,11 @@ public class WorkScheduleService {
 
     public List<Slot> getAvailableSlotList(WorkSchedule workSchedule) {
 
-
-        List<Slot> slotList = getAllPossibleSlotList(workSchedule);
+        List<Slot> allPossibleSlotList = getAllPossibleSlotList(workSchedule);
         List<Visit> existingVisitList = getExistingVisitListForWorkScheduleEntry(workSchedule);
+        List<Slot> slotList = new LinkedList<Slot>();
 
-        for (Slot slotCandidate: slotList) {
+        for (Slot slotCandidate: allPossibleSlotList) {
 
             if (slotableFits(slotCandidate, existingVisitList)) {
                 slotList.add(slotCandidate);

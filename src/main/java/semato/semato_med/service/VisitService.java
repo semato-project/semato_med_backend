@@ -89,7 +89,7 @@ public class VisitService {
                 "select ws " +
                         "from WorkSchedule ws " +
                         "inner join fetch ws.physician p " +
-                        "inner join fetch p.specialityList s " +
+                        "inner join fetch p.specialitySet s " +
                         "inner join fetch ws.clinic c " +
                         "where s.id = :specialityId " +
                         "and ws.dateTimeEnd > :now " +
