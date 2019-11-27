@@ -64,10 +64,10 @@ public class PhysicianLoader implements ApplicationRunner {
             physician.setImage_url("https://upload.wikimedia.org/wikipedia/en/0/0a/Benedict_Cumberbatch_as_Doctor_Strange.jpg");
 
             Speciality speciality = specialityRepository.findByName("Neurochirurgia").get();
-            Set<Speciality> specialitySet = new HashSet<Speciality>();
+            Set<Speciality> specialitySet = new HashSet<>();
 
             specialitySet.add(speciality);
-            physician.setSpecialityList(specialitySet);
+            physician.setSpecialitySet(specialitySet);
 
             physician.setUser(user);
             physicianRepository.save(physician);
@@ -75,8 +75,8 @@ public class PhysicianLoader implements ApplicationRunner {
             WorkSchedule workScheduleEntry = new WorkSchedule();
             workScheduleEntry.setPhysician(physician);
             workScheduleEntry.setClinic(clinicRepository.findByEmail(ClinicLoader.EMAIL).get());
-            workScheduleEntry.setDateStart(LocalDateTime.of(LocalDate.now().plusDays(1), LocalTime.NOON.minusHours(4)));
-            workScheduleEntry.setDateEnd(LocalDateTime.of(LocalDate.now().plusDays(1), LocalTime.NOON.plusHours(4)));
+            workScheduleEntry.setDateTimeStart(LocalDateTime.of(LocalDate.now().plusDays(1), LocalTime.NOON.minusHours(4)));
+            workScheduleEntry.setDateTimeEnd(LocalDateTime.of(LocalDate.now().plusDays(1), LocalTime.NOON.plusHours(4)));
 
             workScheduleRepository.save(workScheduleEntry);
 

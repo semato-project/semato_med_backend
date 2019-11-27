@@ -5,11 +5,11 @@ import semato.semato_med.model.Clinic;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ClinicListBySpecialityResponse {
+public class ClinicListResponse {
 
     private List<Clinic> clinicList;
 
-    public ClinicListBySpecialityResponse(List<Clinic> clinicList) {
+    public ClinicListResponse(List<Clinic> clinicList) {
         this.clinicList = clinicList;
     }
 
