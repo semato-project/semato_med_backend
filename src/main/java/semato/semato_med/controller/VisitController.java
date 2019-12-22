@@ -11,6 +11,7 @@ import semato.semato_med.repository.PhysicianRepository;
 import semato.semato_med.repository.SpecialityRepository;
 import semato.semato_med.security.CurrentUser;
 import semato.semato_med.security.UserPrincipal;
+import semato.semato_med.service.EmailSender;
 import semato.semato_med.service.VisitService;
 
 import javax.validation.Valid;
@@ -30,6 +31,9 @@ public class VisitController {
 
     @Autowired
     private VisitService visitService;
+
+    @Autowired
+    private EmailSender emailSender;
 
     @GetMapping("/speciality/list/get")
     @PreAuthorize("hasRole('PATIENT')")
@@ -102,7 +106,8 @@ public class VisitController {
 
         Patient patient = userPrincipal.getUser().getPatient();
 
-        visitService.bookVisitWithParams(speciality, request.getDateTimeStart(), request.getDateTimeEnd(), clinic, physician, patient);
+        Visit visit = visitService.bookVisitWithParams(speciality, request.getDateTimeStart(), request.getDateTimeEnd(), clinic, physician, patient);
+        emailSender.send(visitService.constructConfirmationVisitEmail(patient, visit));
     }
 
 
