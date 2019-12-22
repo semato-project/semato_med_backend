@@ -34,7 +34,7 @@ public class PatientLoader implements ApplicationRunner {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public static final String EMAIL = "mrt.wonsik@gmail.com";
+    public static final String EMAIL = "aleklolek@example.com";
     public static final String PASSWORD = "qwerty";
 
     @Override
