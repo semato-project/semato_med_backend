@@ -18,4 +18,8 @@ public class Admin {
     @MapsId
     @NonNull
     private User user;
+
+    public Admin(){
+
+    }
 }
