@@ -4,14 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import semato.semato_med.model.Clinic;
-import semato.semato_med.model.Patient;
-import semato.semato_med.model.Physician;
-import semato.semato_med.model.Speciality;
+import semato.semato_med.model.*;
 import semato.semato_med.payload.visit.*;
 import semato.semato_med.repository.ClinicRepository;
 import semato.semato_med.repository.PhysicianRepository;
 import semato.semato_med.repository.SpecialityRepository;
+import semato.semato_med.service.EmailSender;
 import semato.semato_med.service.VisitService;
 
 import javax.validation.Valid;
@@ -31,6 +29,9 @@ public class VisitController {
 
     @Autowired
     private VisitService visitService;
+
+    @Autowired
+    private EmailSender emailSender;
 
     @GetMapping("/speciality/list/get")
     @PreAuthorize("hasRole('PATIENT')")
@@ -103,7 +104,8 @@ public class VisitController {
 
         Patient patient = new Patient();
 
-        visitService.bookVisitWithParams(speciality, request.getDateTimeStart(), request.getDateTimeEnd(), clinic, physician, patient);
+        Visit visit = visitService.bookVisitWithParams(speciality, request.getDateTimeStart(), request.getDateTimeEnd(), clinic, physician, patient);
+        emailSender.send(visitService.constructConfirmationVisitEmail(patient, visit));
     }
 
 

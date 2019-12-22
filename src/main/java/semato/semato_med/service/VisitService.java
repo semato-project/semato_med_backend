@@ -4,6 +4,7 @@ package semato.semato_med.service;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 import semato.semato_med.exception.BookingException;
 import semato.semato_med.model.*;
@@ -32,6 +33,7 @@ public class VisitService {
 
     @Autowired
     VisitRepository visitRepository;
+
 
     public List<Clinic> getClinicListBySpeciality(Speciality speciality) {
 
@@ -194,4 +196,31 @@ public class VisitService {
         return visit;
     }
 
+    public SimpleMailMessage constructConfirmationVisitEmail(Patient patient, Visit visit){
+        SimpleMailMessage email = new SimpleMailMessage();
+        email.setSubject("Confirmation visit");
+        email.setText("You reserved visit successfully: " + System.getProperty("line.separator") +
+                "Doctor: " + visit.getPhysician().getFullName() + System.getProperty("line.separator") +
+                "Date and time: " + visit.getDateTimeStart() + System.getProperty("line.separator") +
+                "Clinic: " + visit.getClinic().getName() + System.getProperty("line.separator") +
+                "Localization: " + visit.getClinic().getCountry() + " " + visit.getClinic().getCity() + " "
+                + visit.getClinic().getStreet() + " " + visit.getClinic().getHouseNumber());
+        email.setTo(patient.getUser().getEmail());
+        email.setFrom("SematoMedClinic");
+        return email;
+    }
+
+    public SimpleMailMessage constructCancelVisitEmail(Patient patient, Visit visit){
+        SimpleMailMessage email = new SimpleMailMessage();
+        email.setSubject("Cancel visit");
+        email.setText("You cancel a visit: " + System.getProperty("line.separator") +
+                "Doctor: " + visit.getPhysician().getFullName() + System.getProperty("line.separator") +
+                "Date and time: " + visit.getDateTimeStart() + System.getProperty("line.separator") +
+                "Clinic: " + visit.getClinic().getName() + System.getProperty("line.separator") +
+                "Localization: " + visit.getClinic().getCountry() + " " + visit.getClinic().getCity() + " "
+                + visit.getClinic().getStreet() + " " + visit.getClinic().getHouseNumber());
+        email.setTo(patient.getUser().getEmail());
+        email.setFrom("SematoMedClinic");
+        return email;
+    }
 }
