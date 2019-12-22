@@ -104,21 +104,20 @@ public class WorkScheduleService {
         for (Visit existingVisit: existingVisitList) {
 
             if (isBeforeOrEquals(slotable.getDateTimeStart(), existingVisit.getDateTimeStart()) && slotable.getDateTimeEnd().isAfter(existingVisit.getDateTimeStart())) {
-                break;
+                return false;
             }
 
             if (slotable.getDateTimeStart().isBefore(existingVisit.getDateTimeEnd()) && isAfterOrEquals(slotable.getDateTimeEnd(), existingVisit.getDateTimeEnd())) {
-                break;
+                return false;
             }
 
             if (isBeforeOrEquals(slotable.getDateTimeStart(), existingVisit.getDateTimeStart()) && isAfterOrEquals(slotable.getDateTimeEnd(), existingVisit.getDateTimeEnd())) {
-                break;
+                return false;
             }
 
-            return true;
         }
 
-        return false;
+        return true;
     }
 
 }
