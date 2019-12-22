@@ -9,6 +9,8 @@ import semato.semato_med.payload.visit.*;
 import semato.semato_med.repository.ClinicRepository;
 import semato.semato_med.repository.PhysicianRepository;
 import semato.semato_med.repository.SpecialityRepository;
+import semato.semato_med.security.CurrentUser;
+import semato.semato_med.security.UserPrincipal;
 import semato.semato_med.service.EmailSender;
 import semato.semato_med.service.VisitService;
 
@@ -96,13 +98,13 @@ public class VisitController {
     @PutMapping("/book")
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('PATIENT')")
-    public void bookVisit(@Valid @RequestBody BookVisitRequest request) {
+    public void bookVisit(@Valid @RequestBody BookVisitRequest request, @CurrentUser UserPrincipal userPrincipal) {
 
         Clinic clinic = clinicRepository.findById(request.getClinicId()).get();
         Physician physician = physicianRepository.findById(request.getPhysicianId()).get();
         Speciality speciality = specialityRepository.findById(request.getSpecialityId()).get();
 
-        Patient patient = new Patient();
+        Patient patient = userPrincipal.getUser().getPatient();
 
         Visit visit = visitService.bookVisitWithParams(speciality, request.getDateTimeStart(), request.getDateTimeEnd(), clinic, physician, patient);
         emailSender.send(visitService.constructConfirmationVisitEmail(patient, visit));
