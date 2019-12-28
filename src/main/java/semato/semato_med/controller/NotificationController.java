@@ -23,7 +23,7 @@ import java.util.Optional;
 @RestController
 @Secured({"ROLE_ADMIN"})
 @RequestMapping("/api/notification")
-public class NotificiationController {
+public class NotificationController {
 
     @Autowired
     private NotificationService notificationService;
@@ -61,6 +61,17 @@ public class NotificiationController {
         List<Notification> notifications = notificationRepository.findAll();
         List<NotificationResponse> notificationResponseList = notificationService.createNotificationResponseList(notifications);
         return new ResponseEntity<>(notificationResponseList, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/del/{notificationId}")
+    public ResponseEntity<?> deleteNotyficationById(@PathVariable Long notificationId){
+        Optional<Notification> notification = notificationRepository.findById(notificationId);
+        if(notification.isPresent()){
+            notificationService.deleteNotification(notification.get());
+            return ResponseEntity.ok().build();
+        }
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 }
 

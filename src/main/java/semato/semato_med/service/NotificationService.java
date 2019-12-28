@@ -42,5 +42,10 @@ public class NotificationService {
         for (Notification notification : notifications) {
             notificationResponseList.add(createNotificationResponse(notification));
         }
+        return notificationResponseList;
+    }
+
+    public void deleteNotification(Notification notification) {
+        notificationRepository.delete(notification);
     }
 }
