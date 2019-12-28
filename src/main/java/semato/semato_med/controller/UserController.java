@@ -14,10 +14,7 @@ public class UserController {
     @GetMapping("/user/me")
     @PreAuthorize("hasRole('PATIENT')")
     public UserInfo getCurrentUser(@CurrentUser UserPrincipal currentUser) {
-        return new UserInfo(currentUser.getEmail(), currentUser.getName(), currentUser.getSurname());
+        return new UserInfo(currentUser.getEmail(), currentUser.getName(), currentUser.getSurname(), currentUser.getUser().getRoles());
     }
-
-
-
 
 }
