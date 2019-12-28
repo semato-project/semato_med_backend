@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import semato.semato_med.model.Admin;
 
 @Repository
-public interface AdminRepository extends JpaRepository<Admin, Integer> {
+public interface AdminRepository extends JpaRepository<Admin, Long> {
 
 }

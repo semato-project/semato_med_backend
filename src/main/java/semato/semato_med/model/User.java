@@ -62,7 +62,7 @@ public class User extends DateAudit implements Serializable {
 
 //    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    private Admin admin;
-//
+
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Patient patient;
 //
