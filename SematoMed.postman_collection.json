@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "1175e2c7-e666-4ba0-92d3-0605a5987bac",
+		"_postman_id": "77608316-db1b-4e2d-9bd9-e20d1b943dd4",
 		"name": "SematoMed",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -9,7 +9,7 @@
 			"name": "auth",
 			"item": [
 				{
-					"name": "http://localhost:5000/api/auth/singup",
+					"name": "Rejestracja",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -22,7 +22,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"firstName\" : \"Tomasz\",\n\t\"lastName\" : \"Wasacz\",\n\t\"phone\" : \"998111333\",\n\t\"name\" : \"Tomasz Wasacz\",\n\t\"email\" : \"mrt.wonsik@gmail.com\",\n\t\"password\" : \"Haselko\",\n\t\"pesel\" : \"1234\",\n\t\"birthDate\" : \"2001-03-03\"\n}",
+							"raw": "{\n\t\"firstName\" : \"Stanisław\",\n\t\"lastName\" : \"Tajny\",\n\t\"phone\" : \"000-333-111\",\n\t\"name\" : \"Stanislaw Tajny\",\n\t\"email\" : \"tajniak@example.com\",\n\t\"password\" : \"TajneHaslo111!\",\n\t\"pesel\" : \"930722332233\",\n\t\"birthDate\" : \"2001-03-03\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -46,7 +46,7 @@
 					"response": []
 				},
 				{
-					"name": "http://localhost:5000/api/auth/signin",
+					"name": "Logowanie",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -77,6 +77,189 @@
 								"api",
 								"auth",
 								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetInfoAboutUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTc3NTM0NzYzLCJleHAiOjE1Nzk1MzQ3NjN9.KtTROBHCrEm5_-xWuLVbvRFqM2ZJ3GTveAivK8BtkGxFh-ZnWJPKeCl34rtysMXrwKoHc9_X2Pv9vqZMV2IiMA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/user/me",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "changePassword",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTczMzE4MjAwLCJleHAiOjE1NzQzMTgyMDB9.haG8_SxIlYeIjQs9-1j0IKcJ0xEjmhUEVaMXGUVZt8fsj_tvL5IJTxWqykimFMZ6cWJVdSzdyDeeQWyNNfw_eg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"oldPassword\" : \"123\",\n\t\"newPassword\" : \"123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/user/changePassword",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user",
+								"changePassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5000/api/user/forgotPassword?email=mrt.wonsik@gmail.com",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/user/forgotPassword?email=tajniak@example.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user",
+								"forgotPassword"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "tajniak@example.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5000/api/user/confirmPassword?id=1&token=bc1b325a-c095-4600-b358-f841e180c367",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/user/confirmPassword?id=1&token=",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user",
+								"confirmPassword"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								},
+								{
+									"key": "token",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5000/api/user/resetPassword",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTczMzI5MjE4LCJleHAiOjE1NzQzMjkyMTh9.WVOqhoOEoF4ZBm-nsN4p1AY6mvco8mv9AT_bDhV8wBcTl2FQZcy93Rapei5VT7bv73tkxZZh15LIximC3AQAuw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\" : 1,\n\t\"token\": \"07df511a-e27a-4486-88f4-7fc3cb4e926e\",\n\t\"newPassword\" : \"dupaJasia\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/user/resetPassword",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user",
+								"resetPassword"
 							]
 						}
 					},
@@ -319,6 +502,149 @@
 								"api",
 								"visit",
 								"book"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "notifications",
+			"item": [
+				{
+					"name": "adminLogin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\t\"email\" : \"superadmin@example.com\",\n\t\"password\" : \"TajneHaslo!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth/signin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addNotification",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNTc3NDQ2MDM1LCJleHAiOjE1Nzk0NDYwMzV9.P8O4NfjTIZRww7RAg8Swl24nCuiRNNnCpXkvEa3Nb6lvzyllBhjKCDGdP_qqXcHkASVs62My_whzQMu111tvPw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"note\": \"Super tajna notka!!!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/notification/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"notification",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOneNotific",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNTc3NDQ2MDM1LCJleHAiOjE1Nzk0NDYwMzV9.P8O4NfjTIZRww7RAg8Swl24nCuiRNNnCpXkvEa3Nb6lvzyllBhjKCDGdP_qqXcHkASVs62My_whzQMu111tvPw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/notification/get/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"notification",
+								"get",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllNotification",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/notification/get",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"notification",
+								"get"
 							]
 						}
 					},
