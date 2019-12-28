@@ -36,5 +36,6 @@ public class PhysicianRequest {
 
     private String image_url;
 
+    @NotBlank
     private List<Long> specialitiesIds;
 }

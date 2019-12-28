@@ -49,7 +49,7 @@ public class UserController {
     }
 
     //TODO: check IT!!!
-    @GetMapping("/user/physician/add")
+    @PutMapping("/user/physician/add")
     @Secured({"ROLE_ADMIN"})
     public ResponseEntity<?> addPhysician(@RequestBody PhysicianRequest request){
         if (userRepository.existsByEmail(request.getEmail())) {
