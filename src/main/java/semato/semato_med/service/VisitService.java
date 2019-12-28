@@ -179,6 +179,8 @@ public class VisitService {
             throw new BookingException();
         }
 
+        virtualVisit.setStatus(VisitStatus.RESERVED);
+
         visitRepository.save(virtualVisit);
         return virtualVisit;
     }

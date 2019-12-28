@@ -109,6 +109,4 @@ public class VisitController {
         Visit visit = visitService.bookVisitWithParams(speciality, request.getDateTimeStart(), request.getDateTimeEnd(), clinic, physician, patient);
         emailSender.send(visitService.constructConfirmationVisitEmail(patient, visit));
     }
-
-
 }

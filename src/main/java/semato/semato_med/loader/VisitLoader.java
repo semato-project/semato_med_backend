@@ -71,6 +71,7 @@ public class VisitLoader implements ApplicationRunner {
         visit.setSpeciality(physician.getSpecialitySet().iterator().next());
         visit.setPatient(patient);
         visit.setClinic(clinicRepository.findByEmail(ClinicLoader.EMAIL).get());
+        visit.setStatus(VisitStatus.RESERVED);
 
         visitRepository.save(visit);
     }
