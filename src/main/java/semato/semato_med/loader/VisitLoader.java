@@ -64,13 +64,47 @@ public class VisitLoader implements ApplicationRunner {
 
         WorkSchedule workSchedule = workScheduleRepository.findOneByPhysician(physician).get();
 
+        addVisit(
+                workSchedule.getDateTimeStart().plusSeconds(Visit.VISIT_LENGHT_SECONDS),
+                physician,
+                physician.getSpecialitySet().iterator().next(),
+                patient,
+                clinicRepository.findByEmail(ClinicLoader.EMAIL).get()
+        );
+
+        addVisit(
+                workSchedule.getDateTimeStart().plusSeconds(4 * Visit.VISIT_LENGHT_SECONDS),
+                physician,
+                physician.getSpecialitySet().iterator().next(),
+                patient,
+                clinicRepository.findByEmail(ClinicLoader.EMAIL).get()
+        );
+
+        addVisit(
+                workSchedule.getDateTimeStart().plusSeconds(7 * Visit.VISIT_LENGHT_SECONDS),
+                physician,
+                physician.getSpecialitySet().iterator().next(),
+                patient,
+                clinicRepository.findByEmail(ClinicLoader.EMAIL).get()
+        );
+
+    }
+
+    private void addVisit(
+            LocalDateTime dateTimeStart,
+            Physician physician,
+            Speciality speciality,
+            Patient patient,
+            Clinic clinic
+    ) {
+
         Visit visit = new Visit();
-        visit.setDateTimeStart(workSchedule.getDateTimeStart().plusSeconds(Visit.VISIT_LENGHT_SECONDS));
-        visit.setDateTimeEnd(workSchedule.getDateTimeStart().plusSeconds(2 * Visit.VISIT_LENGHT_SECONDS));
-        visit.setPhysician(workSchedule.getPhysician());
-        visit.setSpeciality(physician.getSpecialitySet().iterator().next());
+        visit.setDateTimeStart(dateTimeStart);
+        visit.setDateTimeEnd(dateTimeStart.plusSeconds(Visit.VISIT_LENGHT_SECONDS));
+        visit.setPhysician(physician);
+        visit.setSpeciality(speciality);
         visit.setPatient(patient);
-        visit.setClinic(clinicRepository.findByEmail(ClinicLoader.EMAIL).get());
+        visit.setClinic(clinic);
         visit.setStatus(VisitStatus.RESERVED);
 
         visitRepository.save(visit);
