@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class NotificationService {
@@ -47,5 +48,17 @@ public class NotificationService {
 
     public void deleteNotification(Notification notification) {
         notificationRepository.delete(notification);
+    }
+
+    public Notification updateNote(String note, Long notificationId) {
+        Optional<Notification> notificationOptional = notificationRepository.findById(notificationId);
+        if(notificationOptional.isPresent()){
+            Notification notification = notificationOptional.get();
+            notification.setNote(note);
+            notificationRepository.save(notification);
+            return notification;
+        }
+
+        return null;
     }
 }

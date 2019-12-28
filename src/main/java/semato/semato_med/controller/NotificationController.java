@@ -7,7 +7,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import semato.semato_med.model.Admin;
 import semato.semato_med.model.Notification;
-import semato.semato_med.payload.notification.AddNotificationRequest;
+import semato.semato_med.payload.notification.NotificationRequest;
 import semato.semato_med.payload.notification.NotificationResponse;
 import semato.semato_med.repository.AdminRepository;
 import semato.semato_med.repository.NotificationRepository;
@@ -15,7 +15,6 @@ import semato.semato_med.security.CurrentUser;
 import semato.semato_med.security.UserPrincipal;
 import semato.semato_med.service.NotificationService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,7 +34,7 @@ public class NotificationController {
     private AdminRepository adminRepository;
 
     @PutMapping("/add")
-    public ResponseEntity<?> addNotification(@RequestBody AddNotificationRequest notificationRequest, @CurrentUser UserPrincipal userPrincipal) {
+    public ResponseEntity<?> addNotification(@RequestBody NotificationRequest notificationRequest, @CurrentUser UserPrincipal userPrincipal) {
         Optional<Admin> admin = adminRepository.findById(userPrincipal.getUser().getId());
         Notification notification = notificationService.addNote(notificationRequest.getNote(), admin.get());
         if(notification != null) {
@@ -72,6 +71,19 @@ public class NotificationController {
         }
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
+    @PostMapping("/update/{notificationId}")
+    public ResponseEntity<?> updateNotification(
+            @PathVariable Long notificationId,
+            @RequestBody NotificationRequest notificationRequest){
+
+        Notification notification = notificationService.updateNote(notificationRequest.getNote(), notificationId);
+        if(notification != null) {
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 }
 
