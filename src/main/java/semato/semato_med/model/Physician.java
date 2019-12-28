@@ -1,6 +1,7 @@
 package semato.semato_med.model;
 
 import lombok.*;
+import org.springframework.lang.Nullable;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
@@ -44,6 +45,14 @@ public class Physician {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "physician_id")
     private Set<WorkSchedule> workScheduleSet;
+
+     public Physician(@NonNull User user, @NonNull String medicalDegrees, @NonNull String title, @Nullable String note, @Nullable String image_url) {
+        this.user = user;
+        this.medicalDegrees = medicalDegrees;
+        this.title = title;
+        this.note = note;
+        this.image_url = image_url;
+    }
 
     public String getFullName() {
         return
