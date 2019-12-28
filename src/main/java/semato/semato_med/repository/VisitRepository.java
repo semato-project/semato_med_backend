@@ -2,6 +2,7 @@ package semato.semato_med.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import semato.semato_med.model.Physician;
 import semato.semato_med.model.User;
 import semato.semato_med.model.Visit;
 
@@ -14,5 +15,6 @@ import java.util.Optional;
 public interface VisitRepository extends JpaRepository<Visit, Long> {
 
     Optional<ArrayList<Visit>> findByPatientId(Long patientId);
+    Optional<ArrayList<Visit>> findByPhysician(Physician physician);
 
 }

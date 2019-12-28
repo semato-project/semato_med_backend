@@ -97,7 +97,7 @@ public class VisitController {
 
     @PutMapping("/book")
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasRole('PATIENT')")
+    @PreAuthorize("hasRole('ROLE_PATIENT')")
     public void bookVisit(@Valid @RequestBody BookVisitRequest request, @CurrentUser UserPrincipal userPrincipal) {
 
         Clinic clinic = clinicRepository.findById(request.getClinicId()).get();
