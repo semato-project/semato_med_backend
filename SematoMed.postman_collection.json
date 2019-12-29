@@ -411,6 +411,54 @@
 					"response": []
 				},
 				{
+					"name": "cancel visit",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTc3MDEyMzYxLCJleHAiOjE1NzkwMTIzNjF9.6cZ5lYpaYfWnTcwmfUAbVNslSNHacg2eKr-p8g0_rD6Z7DcyuTlehG72rgcQOAGPXJt_wTuGyOs6Sb9G4zivNA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/visit/cancel?visitId=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"visit",
+								"cancel"
+							],
+							"query": [
+								{
+									"key": "visitId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "physician list by speciality and clinic",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -836,7 +884,156 @@
 					"response": []
 				},
 				{
-					"name": "visit list - patient",
+					"name": "delete account",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTc3MDEyMzYxLCJleHAiOjE1NzkwMTIzNjF9.6cZ5lYpaYfWnTcwmfUAbVNslSNHacg2eKr-p8g0_rD6Z7DcyuTlehG72rgcQOAGPXJt_wTuGyOs6Sb9G4zivNA"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/patient/account/delete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"patient",
+								"account",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "visit list past - patient",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTc3MDEyMzYxLCJleHAiOjE1NzkwMTIzNjF9.6cZ5lYpaYfWnTcwmfUAbVNslSNHacg2eKr-p8g0_rD6Z7DcyuTlehG72rgcQOAGPXJt_wTuGyOs6Sb9G4zivNA"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/patient/visit/list/get?mode=past",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"patient",
+								"visit",
+								"list",
+								"get"
+							],
+							"query": [
+								{
+									"key": "mode",
+									"value": "past"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "visit list future - patient",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTc3MDEyMzYxLCJleHAiOjE1NzkwMTIzNjF9.6cZ5lYpaYfWnTcwmfUAbVNslSNHacg2eKr-p8g0_rD6Z7DcyuTlehG72rgcQOAGPXJt_wTuGyOs6Sb9G4zivNA"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/patient/visit/list/get?mode=future",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"patient",
+								"visit",
+								"list",
+								"get"
+							],
+							"query": [
+								{
+									"key": "mode",
+									"value": "future"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "visit list all - patient",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
