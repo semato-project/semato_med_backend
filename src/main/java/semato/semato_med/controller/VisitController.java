@@ -71,7 +71,7 @@ public class VisitController {
 
     @GetMapping("/available/list/get")
     @PreAuthorize("hasRole('PATIENT')")
-    public VisitListResponse getAvailableVisitList(
+    public AvailableVisitListResponse getAvailableVisitList(
             @RequestParam Long specialityId,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate periodStart,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate periodEnd,
@@ -82,9 +82,6 @@ public class VisitController {
         Clinic clinic = null;
         Physician physician = null;
 
-//        Long clinicId = request.getClinicId();
-//        Long physicianId = request.getPhysicianId();
-
         if (clinicId.isPresent()) {
             clinic = clinicRepository.findById(clinicId.get()).get();
         }
@@ -93,7 +90,7 @@ public class VisitController {
             physician = physicianRepository.findById(physicianId.get()).get();
         }
 
-        return new VisitListResponse(
+        return new AvailableVisitListResponse(
                 visitService.getAvailableVisitList(
                         specialityRepository.findById(specialityId).get(),
                         periodStart,

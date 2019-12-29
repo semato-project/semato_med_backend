@@ -30,7 +30,7 @@ public class VisitResponse {
         return visit.getPhysician().getId();
     }
 
-    public String getPhysicianFullName() {
+    public String getPhysicianName() {
         return visit.getPhysician().getFullName();
     }
 

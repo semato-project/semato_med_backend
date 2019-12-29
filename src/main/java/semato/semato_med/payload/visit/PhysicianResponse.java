@@ -11,7 +11,7 @@ public class PhysicianResponse {
         return physician.getId();
     }
 
-    public String getFullName() {
+    public String getName() {
         return physician.getFullName();
     }
 
