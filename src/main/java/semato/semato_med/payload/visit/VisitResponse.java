@@ -7,6 +7,8 @@ import semato.semato_med.model.VisitStatus;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 @AllArgsConstructor
 public class VisitResponse {
@@ -40,8 +42,8 @@ public class VisitResponse {
         return visit.getDateTimeEnd();
     }
 
-    public DayOfWeek getDayOfWeek() {
-        return visit.getDateTimeStart().getDayOfWeek();
+    public String getDayOfWeek() {
+        return visit.getDateTimeStart().format(DateTimeFormatter.ofPattern("EEEE", new Locale.Builder().setLanguage("pl").build()));
     }
 
     public Long getSpecialityId() {
