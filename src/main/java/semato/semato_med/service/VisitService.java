@@ -136,10 +136,10 @@ public class VisitService {
             for (WorkScheduleService.Slot slot: availableSlotList) {
 
                 Visit virtualVisit = new Visit();
-                virtualVisit.setClinic(clinic);
+                virtualVisit.setClinic(workSchedule.getClinic());
                 virtualVisit.setDateTimeStart(slot.getDateTimeStart());
                 virtualVisit.setDateTimeEnd(slot.getDateTimeEnd());
-                virtualVisit.setPhysician(physician);
+                virtualVisit.setPhysician(workSchedule.getPhysician());
                 virtualVisit.setSpeciality(speciality);
                 virtualVisit.setStatus(VisitStatus.AVAILABLE);
                 availableVisitList.add(virtualVisit);
@@ -224,5 +224,10 @@ public class VisitService {
         email.setTo(patient.getUser().getEmail());
         email.setFrom("SematoMedClinic");
         return email;
+    }
+
+    public void cancel(Visit visit) {
+        visit.setStatus(VisitStatus.CANCELED);
+        visitRepository.save(visit);
     }
 }
