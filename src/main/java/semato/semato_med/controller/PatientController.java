@@ -12,6 +12,7 @@ import semato.semato_med.repository.VisitRepository;
 import semato.semato_med.security.CurrentUser;
 import semato.semato_med.security.UserPrincipal;
 import semato.semato_med.service.EmailSender;
+import semato.semato_med.service.SoftDeleteService;
 import semato.semato_med.service.VisitService;
 
 import javax.validation.Valid;
@@ -34,6 +35,9 @@ public class PatientController {
 
     @Autowired
     private ClinicRepository clinicRepository;
+
+    @Autowired
+    private SoftDeleteService softDeleteService;
 
     @GetMapping("/visit/list/get")
     @PreAuthorize("hasRole('PATIENT')")
@@ -76,6 +80,15 @@ public class PatientController {
     @PreAuthorize("hasRole('PATIENT')")
     public ClinicListResponse getClinicList() {
         return new ClinicListResponse(clinicRepository.findAll());
+    }
+
+    @DeleteMapping("/account/delete")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasRole('PATIENT')")
+    public void deleteAccount(@CurrentUser UserPrincipal userPrincipal) {
+
+        Patient patient = userPrincipal.getUser().getPatient();
+        softDeleteService.deletePatient(patient);
     }
 
 

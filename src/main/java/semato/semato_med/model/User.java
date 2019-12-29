@@ -1,14 +1,13 @@
 package semato.semato_med.model;
 
 import lombok.*;
-import org.hibernate.annotations.NaturalId;
 import org.springframework.lang.Nullable;
 import semato.semato_med.model.audit.DateAudit;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,7 +29,6 @@ public class User extends DateAudit implements Serializable {
     private long id;
 
     @NonNull
-    @NaturalId
     private String email;
 
     @NonNull
@@ -45,6 +43,9 @@ public class User extends DateAudit implements Serializable {
 
     @Nullable
     private String phone;
+
+    @Nullable
+    private LocalDateTime deletedAt;
 
     public User(@NonNull String email, @NonNull String firstName, @NonNull String lastName, @NonNull @NotBlank String password, @Nullable String phone) {
         this.email = email;
