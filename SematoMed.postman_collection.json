@@ -377,7 +377,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"specialityId\" : 5\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -385,7 +385,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/visit/clinic/list/by/speciality/get",
+							"raw": "http://localhost:5000/api/visit/clinic/list/by/speciality/get?specialityId=5",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -399,6 +399,12 @@
 								"by",
 								"speciality",
 								"get"
+							],
+							"query": [
+								{
+									"key": "specialityId",
+									"value": "5"
+								}
 							]
 						}
 					},
@@ -426,7 +432,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"specialityId\" : 5,\n\t\"clinicId\" : 1\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -434,7 +440,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/visit/physician/list/by/speciality/and/clinic/get",
+							"raw": "http://localhost:5000/api/visit/physician/list/by/speciality/and/clinic/get?specialityId=5&clinicId=1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -450,6 +456,16 @@
 								"and",
 								"clinic",
 								"get"
+							],
+							"query": [
+								{
+									"key": "specialityId",
+									"value": "5"
+								},
+								{
+									"key": "clinicId",
+									"value": "1"
+								}
 							]
 						}
 					},
@@ -477,7 +493,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"specialityId\" : 5,\n\t\"clinicId\" : 1,\n\t\"physicianId\" : 2,\n\t\"periodStart\" : \"2019-11-27\",\n\t\"periodEnd\" : \"2019-12-31\"\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -485,7 +501,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/visit/available/list/get",
+							"raw": "http://localhost:5000/api/visit/available/list/get?specialityId=5&clinicId=1&physicianId=2&periodStart=2019-11-27&periodEnd=2019-12-31",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -497,6 +513,28 @@
 								"available",
 								"list",
 								"get"
+							],
+							"query": [
+								{
+									"key": "specialityId",
+									"value": "5"
+								},
+								{
+									"key": "clinicId",
+									"value": "1"
+								},
+								{
+									"key": "physicianId",
+									"value": "2"
+								},
+								{
+									"key": "periodStart",
+									"value": "2019-11-27"
+								},
+								{
+									"key": "periodEnd",
+									"value": "2019-12-31"
+								}
 							]
 						}
 					},
@@ -715,7 +753,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"specialityId\" : 5\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -723,7 +761,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/visit/physician/list/by/speciality/and/clinic/get",
+							"raw": "http://localhost:5000/api/visit/physician/list/by/speciality/and/clinic/get?specialityId=5",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -739,6 +777,12 @@
 								"and",
 								"clinic",
 								"get"
+							],
+							"query": [
+								{
+									"key": "specialityId",
+									"value": "5"
+								}
 							]
 						}
 					},
