@@ -14,8 +14,8 @@ import semato.semato_med.service.ClinicManagementService;
 
 @RestController
 @Secured({"ROLE_ADMIN"})
-@RequestMapping("/api/clinic")
-public class ClinicController {
+@RequestMapping("/api/mgmt/clinic")
+public class ClinicManagamentController {
 
 
     @Autowired

@@ -82,36 +82,16 @@ public class ClinicManagementService {
     public Clinic update(ClinicUpdateRequest clinicUpdateRequest, Long clinicId){
         Optional<Clinic> clinic = clinicRepository.findById(clinicId);
         if(clinic.isPresent()){
-            if(clinicUpdateRequest.getName() != null){
-                clinic.get().setName(clinicUpdateRequest.getName());
-            }
-            if(clinicUpdateRequest.getCity() != null){
-                clinic.get().setCity(clinicUpdateRequest.getCity());
-            }
-            if(clinicUpdateRequest.getCountry() != null){
-                clinic.get().setCountry(clinicUpdateRequest.getCountry());
-            }
-            if(clinicUpdateRequest.getPostalCode() != null){
-                clinic.get().setPostalCode(clinicUpdateRequest.getPostalCode());
-            }
-            if(clinicUpdateRequest.getStreet() != null){
-                clinic.get().setStreet(clinicUpdateRequest.getStreet());
-            }
-            if(clinicUpdateRequest.getHouseNumber() != null){
-                clinic.get().setHouseNumber(clinicUpdateRequest.getHouseNumber());
-            }
-            if(clinicUpdateRequest.getEmail() != null){
-                clinic.get().setEmail(clinicUpdateRequest.getEmail());
-            }
-            if(clinicUpdateRequest.getLatitude() != null){
-                clinic.get().setLatitude(clinicUpdateRequest.getLatitude());
-            }
-            if(clinicUpdateRequest.getLongitude() != null){
-                clinic.get().setLongitude(clinicUpdateRequest.getLongitude());
-            }
-            if(clinicUpdateRequest.getImageUrl() != null){
-                clinic.get().setImageUrl(clinicUpdateRequest.getImageUrl());
-            }
+            Optional.ofNullable(clinicUpdateRequest.getName()).ifPresent(clinic.get()::setName);
+            Optional.ofNullable(clinicUpdateRequest.getCity()).ifPresent(clinic.get()::setCity);
+            Optional.ofNullable(clinicUpdateRequest.getCountry()).ifPresent(clinic.get()::setCountry);
+            Optional.ofNullable(clinicUpdateRequest.getPostalCode()).ifPresent(clinic.get()::setPostalCode);
+            Optional.ofNullable(clinicUpdateRequest.getStreet()).ifPresent(clinic.get()::setStreet);
+            Optional.ofNullable(clinicUpdateRequest.getHouseNumber()).ifPresent(clinic.get()::setHouseNumber);
+            Optional.ofNullable(clinicUpdateRequest.getEmail()).ifPresent(clinic.get()::setEmail);
+            Optional.ofNullable(clinicUpdateRequest.getLatitude()).ifPresent(clinic.get()::setLatitude);
+            Optional.ofNullable(clinicUpdateRequest.getLongitude()).ifPresent(clinic.get()::setLongitude);
+            Optional.ofNullable(clinicUpdateRequest.getImageUrl()).ifPresent(clinic.get()::setImageUrl);
             clinicRepository.save(clinic.get());
             return clinic.get();
         }

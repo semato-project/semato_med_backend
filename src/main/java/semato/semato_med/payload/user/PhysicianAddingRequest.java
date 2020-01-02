@@ -1,8 +1,6 @@
-package semato.semato_med.payload.crud;
+package semato.semato_med.payload.user;
 
 import lombok.Getter;
-import lombok.NonNull;
-import semato.semato_med.model.Speciality;
 
 import javax.validation.constraints.NotBlank;
 import java.util.List;

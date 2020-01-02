@@ -21,8 +21,8 @@ import java.util.Optional;
 
 @RestController
 @Secured({"ROLE_ADMIN"})
-@RequestMapping("/api/notification")
-public class NotificationController {
+@RequestMapping("/api/mgmt/notification")
+public class NotificationManagementController {
 
     @Autowired
     private NotificationManagementService notificationService;
