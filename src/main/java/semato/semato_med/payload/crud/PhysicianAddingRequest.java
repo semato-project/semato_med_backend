@@ -9,7 +9,7 @@ import java.util.List;
 
 
 @Getter
-public class PhysicianRequest {
+public class PhysicianAddingRequest {
 
     @NotBlank
     private String firstName;

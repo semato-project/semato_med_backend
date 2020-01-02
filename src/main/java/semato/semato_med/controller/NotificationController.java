@@ -13,7 +13,7 @@ import semato.semato_med.repository.AdminRepository;
 import semato.semato_med.repository.NotificationRepository;
 import semato.semato_med.security.CurrentUser;
 import semato.semato_med.security.UserPrincipal;
-import semato.semato_med.service.NotificationService;
+import semato.semato_med.service.NotificationManagementService;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +25,7 @@ import java.util.Optional;
 public class NotificationController {
 
     @Autowired
-    private NotificationService notificationService;
+    private NotificationManagementService notificationService;
 
     @Autowired
     private NotificationRepository notificationRepository;
