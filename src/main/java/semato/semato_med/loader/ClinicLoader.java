@@ -20,19 +20,72 @@ public class ClinicLoader implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) {
 
-        if (! clinicRepository.findByEmail(EMAIL).isPresent()) {
+        addClinic(
+                "Kraków",
+                "Polska",
+                EMAIL,
+                "Centrum zdrowia, szczęścia i pomyślności w Krakowie",
+                "22",
+                "Ofiar służby zdrowia",
+                "https://upload.wikimedia.org/wikipedia/commons/6/69/The_Westminster_Hospital%2C_London._Engraving._Wellcome_V0013809.jpg",
+                50.0532811F,
+                19.9437568F,
+                "33-333"
+        );
+
+        addClinic(
+                "Kraków",
+                "Polska",
+                "arkham@example.com",
+                "Azyl Arkham",
+                "66",
+                "Jamesa Gordona",
+                "https://upload.wikimedia.org/wikipedia/en/b/b0/Arkham-Asylum.jpg",
+                50.0368691F,
+                19.9395649F,
+                "55-555"
+        );
+
+        addClinic(
+                "Kraków",
+                "Polska",
+                "szpitalwlesnejgorzeoddzialkrakow@example.com",
+                "Szpital w Leśnej Górze oddział Kraków",
+                "67",
+                "Leśnogórska",
+                "https://i.iplsc.com/elewacja-po-zmianach-tak-wyglada-szpital-kliniczny-w-lesnej-/0004E6OPAJUPXL78-C122-F4.jpg",
+                50.0394343F,
+                19.9414305F,
+                "77-777"
+        );
+    }
+
+    private void addClinic(
+            String city,
+            String country,
+            String email,
+            String name,
+            String houseNumber,
+            String street,
+            String imageUrl,
+            float latitude,
+            float longitude,
+            String postalCode
+
+    ) {
+        if (! clinicRepository.findByEmail(email).isPresent()) {
 
             Clinic clinic = new Clinic();
-            clinic.setCity("Kraków");
-            clinic.setCountry("Polska");
-            clinic.setEmail(EMAIL);
-            clinic.setName("Centrum zdrowia, szczęścia i pomyślności w Krakowie");
-            clinic.setHouseNumber("22");
-            clinic.setStreet("Ofiar słóżby zdrowia");
-            clinic.setImageUrl("https://upload.wikimedia.org/wikipedia/commons/6/69/The_Westminster_Hospital%2C_London._Engraving._Wellcome_V0013809.jpg");
-            clinic.setLatitude(50.0532811F);
-            clinic.setLongitude(19.9437568F);
-            clinic.setPostalCode("33-333");
+            clinic.setCity(city);
+            clinic.setCountry(country);
+            clinic.setEmail(email);
+            clinic.setName(name);
+            clinic.setHouseNumber(houseNumber);
+            clinic.setStreet(street);
+            clinic.setImageUrl(imageUrl);
+            clinic.setLatitude(latitude);
+            clinic.setLongitude(longitude);
+            clinic.setPostalCode(postalCode);
 
             clinicRepository.save(clinic);
         }

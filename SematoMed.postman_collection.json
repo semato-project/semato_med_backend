@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "77608316-db1b-4e2d-9bd9-e20d1b943dd4",
+		"_postman_id": "5f99aacf-90a6-4695-8d6f-cd6042c33573",
 		"name": "SematoMed",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -46,7 +46,7 @@
 					"response": []
 				},
 				{
-					"name": "Logowanie",
+					"name": "Login - patient",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -55,6 +55,43 @@
 								"name": "Content-Type",
 								"value": "application/json",
 								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\" : \"aleklolek@example.com\",\n\t\"password\" : \"qwerty\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth/signin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login - physician",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
 							}
 						],
 						"body": {
@@ -272,7 +309,7 @@
 			"name": "visit",
 			"item": [
 				{
-					"name": "http://localhost:5000/api/visit/speciality/list/get",
+					"name": "speciality list",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -319,7 +356,7 @@
 					"response": []
 				},
 				{
-					"name": "http://localhost:5000/api/visit/clinic/list/by/speciality/get",
+					"name": "clinic list by speciality",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -340,7 +377,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"specialityId\" : 5\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -348,7 +385,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/visit/clinic/list/by/speciality/get",
+							"raw": "http://localhost:5000/api/visit/clinic/list/by/speciality/get?specialityId=5",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -362,13 +399,19 @@
 								"by",
 								"speciality",
 								"get"
+							],
+							"query": [
+								{
+									"key": "specialityId",
+									"value": "5"
+								}
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "http://localhost:5000/api/visit/physician/list/by/speciality/and/clinic/get",
+					"name": "physician list by speciality and clinic",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -378,18 +421,18 @@
 							{
 								"key": "Content-Type",
 								"name": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"type": "text",
+								"value": "application/json"
 							},
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTc3MDEyMzYxLCJleHAiOjE1NzkwMTIzNjF9.6cZ5lYpaYfWnTcwmfUAbVNslSNHacg2eKr-p8g0_rD6Z7DcyuTlehG72rgcQOAGPXJt_wTuGyOs6Sb9G4zivNA",
-								"type": "text"
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTc3MDEyMzYxLCJleHAiOjE1NzkwMTIzNjF9.6cZ5lYpaYfWnTcwmfUAbVNslSNHacg2eKr-p8g0_rD6Z7DcyuTlehG72rgcQOAGPXJt_wTuGyOs6Sb9G4zivNA"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"specialityId\" : 5,\n\t\"clinicId\" : 1\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -397,7 +440,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/visit/physician/list/by/speciality/and/clinic/get",
+							"raw": "http://localhost:5000/api/visit/physician/list/by/speciality/and/clinic/get?specialityId=5&clinicId=1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -413,13 +456,23 @@
 								"and",
 								"clinic",
 								"get"
+							],
+							"query": [
+								{
+									"key": "specialityId",
+									"value": "5"
+								},
+								{
+									"key": "clinicId",
+									"value": "1"
+								}
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "http://localhost:5000/api/visit/available/visit/list/get",
+					"name": "available visit list by speciality, clinic, physician and time perod (remember to adjust time period in body section - tommorow should give some results)",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -440,7 +493,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"specialityId\" : 5,\n\t\"clinicId\" : 1,\n\t\"physicianId\" : 2,\n\t\"periodStart\" : \"2019-11-27\",\n\t\"periodEnd\" : \"2019-12-29\"\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -448,7 +501,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/visit/available/list/get",
+							"raw": "http://localhost:5000/api/visit/available/list/get?specialityId=5&clinicId=1&physicianId=2&periodStart=2019-11-27&periodEnd=2019-12-31",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -460,13 +513,35 @@
 								"available",
 								"list",
 								"get"
+							],
+							"query": [
+								{
+									"key": "specialityId",
+									"value": "5"
+								},
+								{
+									"key": "clinicId",
+									"value": "1"
+								},
+								{
+									"key": "physicianId",
+									"value": "2"
+								},
+								{
+									"key": "periodStart",
+									"value": "2019-11-27"
+								},
+								{
+									"key": "periodEnd",
+									"value": "2019-12-31"
+								}
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "http://localhost:5000/api/visit/book",
+					"name": "book visit",
 					"request": {
 						"method": "PUT",
 						"header": [
@@ -479,7 +554,7 @@
 							{
 								"key": "Authorization",
 								"type": "text",
-								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTc3MDEyMzYxLCJleHAiOjE1NzkwMTIzNjF9.6cZ5lYpaYfWnTcwmfUAbVNslSNHacg2eKr-p8g0_rD6Z7DcyuTlehG72rgcQOAGPXJt_wTuGyOs6Sb9G4zivNA"
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTc3NTQ2MzUyLCJleHAiOjE1Nzk1NDYzNTJ9.OBZWTIV2lQWFBHJYyFToe29b_8RSLj5eazvkOopxb94C3fjbUdKoxWKoMITsamqCyWS-JNeEDlhi-SsjUKenDw"
 							}
 						],
 						"body": {
@@ -644,6 +719,216 @@
 							"path": [
 								"api",
 								"notification",
+								"get"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "patient",
+			"item": [
+				{
+					"name": "physician list by speciality",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTc3MDEyMzYxLCJleHAiOjE1NzkwMTIzNjF9.6cZ5lYpaYfWnTcwmfUAbVNslSNHacg2eKr-p8g0_rD6Z7DcyuTlehG72rgcQOAGPXJt_wTuGyOs6Sb9G4zivNA"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/visit/physician/list/by/speciality/and/clinic/get?specialityId=5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"visit",
+								"physician",
+								"list",
+								"by",
+								"speciality",
+								"and",
+								"clinic",
+								"get"
+							],
+							"query": [
+								{
+									"key": "specialityId",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "clinic list",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTc3MDEyMzYxLCJleHAiOjE1NzkwMTIzNjF9.6cZ5lYpaYfWnTcwmfUAbVNslSNHacg2eKr-p8g0_rD6Z7DcyuTlehG72rgcQOAGPXJt_wTuGyOs6Sb9G4zivNA"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/patient/clinic/list/get",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"patient",
+								"clinic",
+								"list",
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "visit list - patient",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTc3MDEyMzYxLCJleHAiOjE1NzkwMTIzNjF9.6cZ5lYpaYfWnTcwmfUAbVNslSNHacg2eKr-p8g0_rD6Z7DcyuTlehG72rgcQOAGPXJt_wTuGyOs6Sb9G4zivNA"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/patient/visit/list/get",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"patient",
+								"visit",
+								"list",
+								"get"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "physician",
+			"item": [
+				{
+					"name": "visit list - physician",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiaWF0IjoxNTc3NTQ1NTkyLCJleHAiOjE1Nzk1NDU1OTJ9.adJOlHJk5HPwpk01_ESbqX4jW5ZsXHuoEjOos70jH2Stjb2uLP6WuX5WH6CcIu_iQSZF_bi89UxvB6iKoTe8kQ"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/physician/visit/list/get",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"physician",
+								"visit",
+								"list",
 								"get"
 							]
 						}

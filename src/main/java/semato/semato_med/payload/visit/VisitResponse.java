@@ -5,7 +5,10 @@ import semato.semato_med.model.Clinic;
 import semato.semato_med.model.Visit;
 import semato.semato_med.model.VisitStatus;
 
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 @AllArgsConstructor
 public class VisitResponse {
@@ -19,8 +22,16 @@ public class VisitResponse {
         return visit.getClinic().getId();
     }
 
+    public String getClinicName() {
+        return visit.getClinic().getName();
+    }
+
     public Long getPhysicianId() {
         return visit.getPhysician().getId();
+    }
+
+    public String getPhysicianName() {
+        return visit.getPhysician().getFullName();
     }
 
     public LocalDateTime getDateTimeStart() {
@@ -31,8 +42,16 @@ public class VisitResponse {
         return visit.getDateTimeEnd();
     }
 
+    public String getDayOfWeek() {
+        return visit.getDateTimeStart().format(DateTimeFormatter.ofPattern("EEEE", new Locale.Builder().setLanguage("pl").build()));
+    }
+
     public Long getSpecialityId() {
         return visit.getSpeciality().getId();
+    }
+
+    public String getSpecialityName() {
+        return visit.getSpeciality().getName();
     }
 
     public VisitStatus getStatus() {

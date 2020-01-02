@@ -7,17 +7,17 @@ import java.util.List;
 
 public class VisitListResponse {
 
-    private List<Visit> visitList;
+    private List<Visit> visitListInternal;
 
     public VisitListResponse(List<Visit> visitList) {
-        this.visitList = visitList;
+        this.visitListInternal = visitList;
     }
 
     public List<VisitResponse> getVisitList() {
 
         List<VisitResponse> response = new LinkedList<VisitResponse>();
 
-        for (Visit visit: visitList) {
+        for (Visit visit: visitListInternal) {
             response.add(new VisitResponse(visit));
         }
 

@@ -10,6 +10,7 @@ import semato.semato_med.exception.AppException;
 import semato.semato_med.model.*;
 import semato.semato_med.repository.*;
 
+import java.awt.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -46,24 +47,86 @@ public class PhysicianLoader implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) {
 
-        if(! userRepository.findByEmail(EMAIL).isPresent()) {
+        Speciality speciality = specialityRepository.findByName("Neurochirurgia").get();
+
+        addPhysician(
+                EMAIL,
+                PASSWORD,
+                "Stephen",
+                "Strange",
+                "123-123-123",
+                "doktor",
+                "Stephen Strange (Benedict Cumberbatch) jest aroganckim i ambitnym neurochirurgiem.",
+                "Dr",
+                "https://upload.wikimedia.org/wikipedia/en/0/0a/Benedict_Cumberbatch_as_Doctor_Strange.jpg",
+                speciality,
+                1
+        );
+
+        speciality = specialityRepository.findByName("Stomatologia").get();
+
+        addPhysician(
+                "lecter@example.com",
+                PASSWORD,
+                "Hannibal",
+                "Lecter",
+                "111-222-333",
+                "doktor",
+                "Hannibal Lecter przeżył piekło wojny, w czasie której został sierotą.",
+                "Dr",
+                "https://upload.wikimedia.org/wikipedia/commons/c/c6/Anthony_Hopkins_cropped_2009.jpg",
+                speciality,
+                2
+        );
+
+        speciality = specialityRepository.findByName("Ortopedia").get();
+
+        addPhysician(
+                "lecter@example.com",
+                PASSWORD,
+                "Gregory",
+                "House",
+                "444-555-666",
+                "doktor",
+                "House jest synem zawodowego wojskowego, Johna House'a, który służył jako pilot US Marines oraz Blythe House, która zajmowała się domem.",
+                "Dr",
+                "https://upload.wikimedia.org/wikipedia/commons/b/bb/Hugh_Laurie_Actors_Guild.jpg",
+                speciality,
+                3
+        );
+
+    }
+
+    private void addPhysician(
+            String email,
+            String password,
+            String firstName,
+            String lastName,
+            String phoneNumber,
+            String medicalDegrees,
+            String note,
+            String title,
+            String imageUrl,
+            Speciality speciality,
+            int workDayAfterDays // po ilu dniach licząc od dzisiaj dodać mu dzień pracy w grafiku
+    ) {
+        if(! userRepository.findByEmail(email).isPresent()) {
 
             User user = new User();
-            user.setFirstName("Stephen");
-            user.setLastName("Strange");
-            user.setEmail(EMAIL);
-            user.setPhone("123-123-123");
-            user.setPassword(passwordEncoder.encode(PASSWORD));
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            user.setEmail(email);
+            user.setPhone(phoneNumber);
+            user.setPassword(passwordEncoder.encode(password));
             Role userRole = roleRepository.findByName(RoleName.ROLE_PHYSICIAN).orElseThrow(() -> new AppException("Phisician Role not set."));
             user.setRoles(Collections.singleton(userRole));
 
             Physician physician = new Physician();
-            physician.setMedicalDegrees("doktor");
-            physician.setNote("Stephen Strange (Benedict Cumberbatch) jest aroganckim i ambitnym neurochirurgiem.");
-            physician.setTitle("Dr");
-            physician.setImage_url("https://upload.wikimedia.org/wikipedia/en/0/0a/Benedict_Cumberbatch_as_Doctor_Strange.jpg");
+            physician.setMedicalDegrees(medicalDegrees);
+            physician.setNote(note);
+            physician.setTitle(title);
+            physician.setImage_url(imageUrl);
 
-            Speciality speciality = specialityRepository.findByName("Neurochirurgia").get();
             Set<Speciality> specialitySet = new HashSet<>();
 
             specialitySet.add(speciality);
@@ -75,11 +138,10 @@ public class PhysicianLoader implements ApplicationRunner {
             WorkSchedule workScheduleEntry = new WorkSchedule();
             workScheduleEntry.setPhysician(physician);
             workScheduleEntry.setClinic(clinicRepository.findByEmail(ClinicLoader.EMAIL).get());
-            workScheduleEntry.setDateTimeStart(LocalDateTime.of(LocalDate.now().plusDays(1), LocalTime.NOON.minusHours(4)));
-            workScheduleEntry.setDateTimeEnd(LocalDateTime.of(LocalDate.now().plusDays(1), LocalTime.NOON.plusHours(4)));
+            workScheduleEntry.setDateTimeStart(LocalDateTime.of(LocalDate.now().plusDays(workDayAfterDays), LocalTime.NOON.minusHours(4)));
+            workScheduleEntry.setDateTimeEnd(LocalDateTime.of(LocalDate.now().plusDays(workDayAfterDays), LocalTime.NOON.plusHours(4)));
 
             workScheduleRepository.save(workScheduleEntry);
-
         }
     }
 }

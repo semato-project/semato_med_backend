@@ -1,6 +1,8 @@
 package semato.semato_med.controller;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,8 @@ import semato.semato_med.service.EmailSender;
 import semato.semato_med.service.VisitService;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/visit")
@@ -43,24 +47,23 @@ public class VisitController {
 
     @GetMapping("/clinic/list/by/speciality/get")
     @PreAuthorize("hasRole('PATIENT')")
-    public ClinicListResponse getClinicListBySpeciality(@Valid @RequestBody ClinicListBySpecialityRequest request) {
-        return new ClinicListResponse(visitService.getClinicListBySpeciality(specialityRepository.findById(request.getSpecialityId()).get()));
+    public ClinicListResponse getClinicListBySpeciality(@RequestParam Long specialityId) {
+        return new ClinicListResponse(visitService.getClinicListBySpeciality(specialityRepository.findById(specialityId).get()));
     }
 
     @GetMapping("/physician/list/by/speciality/and/clinic/get")
     @PreAuthorize("hasRole('PATIENT')")
-    public PhysicianListResponse getPhysicianListBySpecialityAndClinic(@Valid @RequestBody PhysicianListBySpecialityAndClinicRequest request) {
+    public PhysicianListResponse getPhysicianListBySpecialityAndClinic(@RequestParam Long specialityId, @RequestParam Optional<Long> clinicId) {
 
         Clinic clinic = null;
-        Long clinicId = request.getClinicId();
 
-        if (clinicId != null) {
-            clinic = clinicRepository.findById(clinicId).get();
+        if (clinicId.isPresent()) {
+            clinic = clinicRepository.findById(clinicId.get()).get();
         }
 
         return new PhysicianListResponse(
             visitService.getPhysicianListBySpecialityAndClinic(
-                specialityRepository.findById(request.getSpecialityId()).get(),
+                specialityRepository.findById(specialityId).get(),
                 clinic
             )
         );
@@ -68,27 +71,30 @@ public class VisitController {
 
     @GetMapping("/available/list/get")
     @PreAuthorize("hasRole('PATIENT')")
-    public VisitListResponse getAvailableVisitList(@Valid @RequestBody AvailableVisitListRequest request) {
+    public AvailableVisitListResponse getAvailableVisitList(
+            @RequestParam Long specialityId,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate periodStart,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate periodEnd,
+            @RequestParam Optional<Long> clinicId,
+            @RequestParam Optional<Long> physicianId
+    ) {
 
         Clinic clinic = null;
         Physician physician = null;
 
-        Long clinicId = request.getClinicId();
-        Long physicianId = request.getPhysicianId();
-
-        if (clinicId != null) {
-            clinic = clinicRepository.findById(clinicId).get();
+        if (clinicId.isPresent()) {
+            clinic = clinicRepository.findById(clinicId.get()).get();
         }
 
-        if (physicianId != null) {
-            physician = physicianRepository.findById(physicianId).get();
+        if (physicianId.isPresent()) {
+            physician = physicianRepository.findById(physicianId.get()).get();
         }
 
-        return new VisitListResponse(
+        return new AvailableVisitListResponse(
                 visitService.getAvailableVisitList(
-                        specialityRepository.findById(request.getSpecialityId()).get(),
-                        request.getPeriodStart(),
-                        request.getPeriodEnd(),
+                        specialityRepository.findById(specialityId).get(),
+                        periodStart,
+                        periodEnd,
                         clinic,
                         physician
                 )
@@ -97,7 +103,7 @@ public class VisitController {
 
     @PutMapping("/book")
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasRole('PATIENT')")
+    @PreAuthorize("hasRole('ROLE_PATIENT')")
     public void bookVisit(@Valid @RequestBody BookVisitRequest request, @CurrentUser UserPrincipal userPrincipal) {
 
         Clinic clinic = clinicRepository.findById(request.getClinicId()).get();
@@ -109,6 +115,4 @@ public class VisitController {
         Visit visit = visitService.bookVisitWithParams(speciality, request.getDateTimeStart(), request.getDateTimeEnd(), clinic, physician, patient);
         emailSender.send(visitService.constructConfirmationVisitEmail(patient, visit));
     }
-
-
 }
