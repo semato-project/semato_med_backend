@@ -1,4 +1,4 @@
-package semato.semato_med.payload.notification;
+package semato.semato_med.payload.notificationMgmt;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

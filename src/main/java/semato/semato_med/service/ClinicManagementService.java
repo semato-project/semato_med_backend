@@ -3,9 +3,9 @@ package semato.semato_med.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import semato.semato_med.model.Clinic;
-import semato.semato_med.payload.clinic.ClinicAddingRequest;
-import semato.semato_med.payload.clinic.ClinicResponse;
-import semato.semato_med.payload.clinic.ClinicUpdateRequest;
+import semato.semato_med.payload.clinicMgmt.ClinicAddingRequest;
+import semato.semato_med.payload.clinicMgmt.ClinicResponse;
+import semato.semato_med.payload.clinicMgmt.ClinicUpdateRequest;
 import semato.semato_med.repository.ClinicRepository;
 
 import java.time.LocalDateTime;

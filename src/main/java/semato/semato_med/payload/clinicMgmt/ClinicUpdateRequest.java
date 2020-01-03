@@ -1,17 +1,15 @@
-package semato.semato_med.payload.clinic;
+package semato.semato_med.payload.clinicMgmt;
 
-import lombok.AllArgsConstructor;
+
 import lombok.Getter;
-import lombok.Setter;
+import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Getter
-@Setter
-@AllArgsConstructor
-public class ClinicResponse {
+@RequiredArgsConstructor
+public class ClinicUpdateRequest {
 
-    Long id;
 
     private String name;
 
@@ -27,11 +25,12 @@ public class ClinicResponse {
 
     private String email;
 
-    private float latitude;
+    private Float latitude;
 
-    private float longitude;
+    private Float longitude;
 
     private String imageUrl;
 
     private LocalDateTime deletedAt;
 }
+

@@ -6,11 +6,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
-import semato.semato_med.model.User;
 import semato.semato_med.payload.ApiResponse;
-import semato.semato_med.payload.user.GetUserResponse;
-import semato.semato_med.payload.user.UserEditRequest;
-import semato.semato_med.payload.user.PhysicianAddingRequest;
+import semato.semato_med.payload.userMgmt.GetUserResponse;
+import semato.semato_med.payload.userMgmt.UserEditRequest;
+import semato.semato_med.payload.userMgmt.PhysicianAddingRequest;
 
 import semato.semato_med.repository.UserRepository;
 import semato.semato_med.service.UserManagementService;

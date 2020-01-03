@@ -4,10 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import semato.semato_med.model.Admin;
 import semato.semato_med.model.Notification;
-import semato.semato_med.payload.notification.NotificationResponse;
+import semato.semato_med.payload.notificationMgmt.NotificationResponse;
 import semato.semato_med.repository.NotificationRepository;
 
-import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;

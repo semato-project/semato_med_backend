@@ -1,34 +1,30 @@
-package semato.semato_med.payload.clinic;
+package semato.semato_med.payload.clinicMgmt;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 @Getter
-@RequiredArgsConstructor
-public class ClinicAddingRequest {
+@Setter
+@AllArgsConstructor
+public class ClinicResponse {
 
-    @NotBlank
+    Long id;
+
     private String name;
 
-    @NotBlank
     private String city;
 
-    @NotBlank
     private String country;
 
-    @NotBlank
     private String postalCode;
 
-    @NotBlank
     private String street;
 
-    @NotBlank
     private String houseNumber;
 
-    @NotBlank
     private String email;
 
     private float latitude;

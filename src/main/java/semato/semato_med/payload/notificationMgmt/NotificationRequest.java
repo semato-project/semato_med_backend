@@ -1,4 +1,4 @@
-package semato.semato_med.payload.notification;
+package semato.semato_med.payload.notificationMgmt;
 
 public class NotificationRequest {
     String note;

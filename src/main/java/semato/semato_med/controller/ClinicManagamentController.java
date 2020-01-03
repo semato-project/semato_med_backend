@@ -6,9 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import semato.semato_med.model.Clinic;
-import semato.semato_med.payload.clinic.ClinicResponse;
-import semato.semato_med.payload.clinic.ClinicUpdateRequest;
-import semato.semato_med.payload.clinic.ClinicAddingRequest;
+import semato.semato_med.payload.clinicMgmt.ClinicResponse;
+import semato.semato_med.payload.clinicMgmt.ClinicUpdateRequest;
+import semato.semato_med.payload.clinicMgmt.ClinicAddingRequest;
 import semato.semato_med.service.ClinicManagementService;
 
 

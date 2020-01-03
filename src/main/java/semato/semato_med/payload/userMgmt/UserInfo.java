@@ -1,4 +1,4 @@
-package semato.semato_med.payload.user;
+package semato.semato_med.payload.userMgmt;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

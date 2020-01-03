@@ -2,7 +2,7 @@ package semato.semato_med.controller;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import semato.semato_med.payload.user.UserInfo;
+import semato.semato_med.payload.userMgmt.UserInfo;
 import semato.semato_med.security.CurrentUser;
 import semato.semato_med.security.UserPrincipal;
 
