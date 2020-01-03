@@ -4,13 +4,16 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.lang.Nullable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import semato.semato_med.exception.ResourceNotFoundException;
 import semato.semato_med.model.*;
 import semato.semato_med.payload.visit.*;
 import semato.semato_med.repository.ClinicRepository;
 import semato.semato_med.repository.PhysicianRepository;
 import semato.semato_med.repository.SpecialityRepository;
+import semato.semato_med.repository.VisitRepository;
 import semato.semato_med.security.CurrentUser;
 import semato.semato_med.security.UserPrincipal;
 import semato.semato_med.service.EmailSender;
@@ -38,6 +41,9 @@ public class VisitController {
 
     @Autowired
     private EmailSender emailSender;
+
+    @Autowired
+    private VisitRepository visitRepository;
 
     @GetMapping("/speciality/list/get")
     @PreAuthorize("hasRole('PATIENT')")
@@ -115,4 +121,20 @@ public class VisitController {
         Visit visit = visitService.bookVisitWithParams(speciality, request.getDateTimeStart(), request.getDateTimeEnd(), clinic, physician, patient);
         emailSender.send(visitService.constructConfirmationVisitEmail(patient, visit));
     }
+
+    @DeleteMapping("/cancel")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasRole('PATIENT')")
+    public void cancelVisit(@RequestParam Long visitId) {
+
+        Optional<Visit> visitOptional = visitRepository.findById(visitId);
+
+        if (! visitOptional.isPresent()) {
+            throw new ResourceNotFoundException("Visit", "id", visitId);
+        }
+
+        visitService.cancel(visitOptional.get());
+    }
+
+
 }

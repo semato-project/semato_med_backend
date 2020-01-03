@@ -82,7 +82,7 @@ public class PhysicianLoader implements ApplicationRunner {
         speciality = specialityRepository.findByName("Ortopedia").get();
 
         addPhysician(
-                "lecter@example.com",
+                "house@example.com",
                 PASSWORD,
                 "Gregory",
                 "House",

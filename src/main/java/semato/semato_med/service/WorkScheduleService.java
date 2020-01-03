@@ -4,6 +4,7 @@ import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import semato.semato_med.model.Visit;
+import semato.semato_med.model.VisitStatus;
 import semato.semato_med.model.WorkSchedule;
 import semato.semato_med.util.Slotable;
 
@@ -56,11 +57,13 @@ public class WorkScheduleService {
                         "inner join fetch v.physician p " +
                         "where p.id = :physicianId " +
                         "and v.dateTimeStart >= :dateTimeStart " +
-                        "and v.dateTimeEnd <= :dateTimeEnd",
+                        "and v.dateTimeEnd <= :dateTimeEnd " +
+                        "and v.status = :status",
                 Visit.class)
                 .setParameter("physicianId", workSchedule.getPhysician().getId())
                 .setParameter("dateTimeStart", workSchedule.getDateTimeStart())
                 .setParameter("dateTimeEnd", workSchedule.getDateTimeEnd())
+                .setParameter("status", VisitStatus.RESERVED)
                 .getResultList();
 
         return visitList;
