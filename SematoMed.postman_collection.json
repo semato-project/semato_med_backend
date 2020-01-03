@@ -634,6 +634,636 @@
 			"protocolProfileBehavior": {}
 		},
 		{
+			"name": "notificationsMgmt",
+			"item": [
+				{
+					"name": "addNotification",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNTc3NDQ2MDM1LCJleHAiOjE1Nzk0NDYwMzV9.P8O4NfjTIZRww7RAg8Swl24nCuiRNNnCpXkvEa3Nb6lvzyllBhjKCDGdP_qqXcHkASVs62My_whzQMu111tvPw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"note\": \"Super tajna notka!!!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/notification/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"notification",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOneNotific",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNTc3NDQ2MDM1LCJleHAiOjE1Nzk0NDYwMzV9.P8O4NfjTIZRww7RAg8Swl24nCuiRNNnCpXkvEa3Nb6lvzyllBhjKCDGdP_qqXcHkASVs62My_whzQMu111tvPw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/notification/get/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"notification",
+								"get",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllNotification",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/notification/get",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"notification",
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "editNotification",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNTc3NTM2NTY4LCJleHAiOjE1Nzk1MzY1Njh9.hPBawpftmtuaVstMCf5QjEWZCrTwgPpiOoXWZOpsVmttyPQsWhd1uOR12cMC7oFWRrdu0LKEUiuFxl5amkhZQQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"note\" : \"Nowa notka 2323\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/notification/update/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"notification",
+								"update",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "usersMgmt",
+			"item": [
+				{
+					"name": "addPhysician",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNTc3NTQzMTU1LCJleHAiOjE1Nzk1NDMxNTV9.ZOweTUAzbVxNGgSAxjAUc6WAHlsKsn3gy4U_sBuBm-vvWFWdyEJsru4gy7TzcUPQb245RRZ5pV5Im3kl49eLAg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"firstName\" : \"Roman\",\n\t\"lastName\" : \"Doktorski\",\n\t\"email\" : \"doktorek@example.com\",\n\t\"password\" : \"DoktorkoweHaselko\",\n\t\"phone\" : \"999-999-999\",\n\t\"medicalDegrees\" : \"doktor\",\n\t\"title\" : \"Dr\",\n\t\"specialitiesIds\" : [\n\t\t\"1\",\n\t\t\"2\"\n\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/mgmt/user/physician/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"mgmt",
+								"user",
+								"physician",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllUsers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNTc3OTcyMTU2LCJleHAiOjE1Nzk5NzIxNTZ9.cf5DAOggH-bskVXCOBAmfCH9NiRCm4i3HkR4PXo_omXZxxS8GQ33aXg58utUgAJ0luSJvj6H6aeUZBbO4Vh5dg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/mgmt/user/get",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"mgmt",
+								"user",
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNTc3OTcyMTU2LCJleHAiOjE1Nzk5NzIxNTZ9.cf5DAOggH-bskVXCOBAmfCH9NiRCm4i3HkR4PXo_omXZxxS8GQ33aXg58utUgAJ0luSJvj6H6aeUZBbO4Vh5dg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"firstName\" : \"Doktorek\",\n\t\"lastName\" : \"Zmienialski\",\n\t\"phone\" : \"999-222-333\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/mgmt/user/edit/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"mgmt",
+								"user",
+								"edit",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "clinicsMgmt",
+			"item": [
+				{
+					"name": "getAll",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNTc3NTQzMTU1LCJleHAiOjE1Nzk1NDMxNTV9.ZOweTUAzbVxNGgSAxjAUc6WAHlsKsn3gy4U_sBuBm-vvWFWdyEJsru4gy7TzcUPQb245RRZ5pV5Im3kl49eLAg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/mgmt/clinic/get",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"mgmt",
+								"clinic",
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNTc3NTQzMTU1LCJleHAiOjE1Nzk1NDMxNTV9.ZOweTUAzbVxNGgSAxjAUc6WAHlsKsn3gy4U_sBuBm-vvWFWdyEJsru4gy7TzcUPQb245RRZ5pV5Im3kl49eLAg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/mgmt/clinic/get/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"mgmt",
+								"clinic",
+								"get",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNTc3NTQzMTU1LCJleHAiOjE1Nzk1NDMxNTV9.ZOweTUAzbVxNGgSAxjAUc6WAHlsKsn3gy4U_sBuBm-vvWFWdyEJsru4gy7TzcUPQb245RRZ5pV5Im3kl49eLAg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/mgmt/clinic/del/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"mgmt",
+								"clinic",
+								"del",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNTc3NTQzMTU1LCJleHAiOjE1Nzk1NDMxNTV9.ZOweTUAzbVxNGgSAxjAUc6WAHlsKsn3gy4U_sBuBm-vvWFWdyEJsru4gy7TzcUPQb245RRZ5pV5Im3kl49eLAg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"street\": \"Ofiar służby zdrowia\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/mgmt/clinic/update/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"mgmt",
+								"clinic",
+								"update",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addClinic",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNTc3OTcyMTU2LCJleHAiOjE1Nzk5NzIxNTZ9.cf5DAOggH-bskVXCOBAmfCH9NiRCm4i3HkR4PXo_omXZxxS8GQ33aXg58utUgAJ0luSJvj6H6aeUZBbO4Vh5dg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"name\": \"Klinika dla wyjątkowo zdrowych\",\r\n        \"city\": \"Kraków\",\r\n        \"country\": \"Polska\",\r\n        \"postalCode\": \"22-222\",\r\n        \"street\": \"Marzycielska\",\r\n        \"houseNumber\": \"7\",\r\n        \"email\": \"wyjatkowo-zdrowi@example.com\",\r\n        \"latitude\": 50.076056,\r\n        \"longitude\": 19.941803\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/mgmt/clinic/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"mgmt",
+								"clinic",
+								"add"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "visitMgmt",
+			"item": [
+				{
+					"name": "get all visits",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0IiwiaWF0IjoxNTc4MDQ0MzI4LCJleHAiOjE1ODAwNDQzMjh9.9lWN2EOPIB74xAW0q02bvlgaZhYfUGNYQ0nXmP0Oc_zIV2zBBqRBVRJkKuNX0DxZtufKeMz_CmB3YwA5uvJH4w",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/mgmt/visit/get",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"mgmt",
+								"visit",
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete visit",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0IiwiaWF0IjoxNTc4MDQ0MzI4LCJleHAiOjE1ODAwNDQzMjh9.9lWN2EOPIB74xAW0q02bvlgaZhYfUGNYQ0nXmP0Oc_zIV2zBBqRBVRJkKuNX0DxZtufKeMz_CmB3YwA5uvJH4w",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/mgmt/visit/delete/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"mgmt",
+								"visit",
+								"delete",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update visit",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0IiwiaWF0IjoxNTc4MDQ0MzI4LCJleHAiOjE1ODAwNDQzMjh9.9lWN2EOPIB74xAW0q02bvlgaZhYfUGNYQ0nXmP0Oc_zIV2zBBqRBVRJkKuNX0DxZtufKeMz_CmB3YwA5uvJH4w",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"status\" : \"ARCHIVAL\",\r\n\t\"dateTimeStart\" : \"2020-01-05T13:00:00\",\r\n\t\"dateTimeEnd\" : \"2020-01-05T13:30:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/mgmt/visit/update/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"mgmt",
+								"visit",
+								"update",
+								"10"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
 			"name": "notifications",
 			"item": [
 				{
