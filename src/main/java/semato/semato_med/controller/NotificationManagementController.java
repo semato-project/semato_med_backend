@@ -7,6 +7,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import semato.semato_med.model.Admin;
 import semato.semato_med.model.Notification;
+import semato.semato_med.payload.ApiResponse;
 import semato.semato_med.payload.notificationMgmt.NotificationRequest;
 import semato.semato_med.payload.notificationMgmt.NotificationResponse;
 import semato.semato_med.repository.AdminRepository;
@@ -24,6 +25,9 @@ import java.util.Optional;
 @RequestMapping("/api/mgmt/notification")
 public class NotificationManagementController {
 
+    private final ResponseEntity notFoundResponse = new ResponseEntity<>(new ApiResponse(false, "Notification not found!"), HttpStatus.NOT_FOUND);
+
+
     @Autowired
     private NotificationManagementService notificationService;
 
@@ -36,23 +40,18 @@ public class NotificationManagementController {
     @PutMapping("/add")
     public ResponseEntity<?> addNotification(@RequestBody NotificationRequest notificationRequest, @CurrentUser UserPrincipal userPrincipal) {
         Optional<Admin> admin = adminRepository.findById(userPrincipal.getUser().getId());
-        Notification notification = notificationService.addNote(notificationRequest.getNote(), admin.get());
-        if(notification != null) {
-            return ResponseEntity.status(HttpStatus.CREATED).build();
+        if(admin.isPresent()) {
+            notificationService.addNote(notificationRequest.getNote(), admin.get());
+            return new ResponseEntity<>(new ApiResponse(true, "Note has been added!"), HttpStatus.CREATED);
         }
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        return new ResponseEntity<>(new ApiResponse(false, "Something wrong happen!"), HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("/get/{notificationId}")
     public ResponseEntity<?> getNotificationById(@PathVariable Long notificationId){
         Optional<Notification> notification = notificationRepository.findById(notificationId);
-        if(notification.isPresent()){
-            NotificationResponse notificationResponse = notificationService.createNotificationResponse(notification.get());
-            return new ResponseEntity<>(notificationResponse, HttpStatus.OK);
-        }
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        return notification.map(value -> new ResponseEntity<>(new NotificationResponse(value), HttpStatus.OK)).orElse(notFoundResponse);
     }
 
     @GetMapping("/get")
@@ -63,14 +62,14 @@ public class NotificationManagementController {
     }
 
     @DeleteMapping("/del/{notificationId}")
-    public ResponseEntity<?> deleteNotyficationById(@PathVariable Long notificationId){
+    public ResponseEntity<?> deleteNotificationById(@PathVariable Long notificationId){
         Optional<Notification> notification = notificationRepository.findById(notificationId);
         if(notification.isPresent()){
             notificationService.deleteNotification(notification.get());
-            return ResponseEntity.ok().build();
+            return new ResponseEntity<>(new ApiResponse(true, "Notification has been deleted!"), HttpStatus.OK);
         }
 
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        return notFoundResponse;
     }
 
     @PostMapping("/update/{notificationId}")
@@ -78,12 +77,13 @@ public class NotificationManagementController {
             @PathVariable Long notificationId,
             @RequestBody NotificationRequest notificationRequest){
 
-        Notification notification = notificationService.updateNote(notificationRequest.getNote(), notificationId);
-        if(notification != null) {
-            return ResponseEntity.status(HttpStatus.OK).build();
+        Optional<Notification> notification = notificationRepository.findById(notificationId);
+        if(!notification.isPresent()) {
+            return notFoundResponse;
         }
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        notificationService.updateNote(notificationRequest.getNote(), notification.get());
+        return new ResponseEntity<>(new ApiResponse(true, "Notification has been updated!"), HttpStatus.OK);
     }
 }
 

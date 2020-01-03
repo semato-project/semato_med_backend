@@ -1,14 +1,12 @@
 package semato.semato_med.payload.notificationMgmt;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
+import semato.semato_med.model.Notification;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 
-@Setter
 @Getter
-@AllArgsConstructor
 public class NotificationResponse {
 
     private Long id;
@@ -26,5 +24,16 @@ public class NotificationResponse {
     private String userLastName;
 
     private String userPhone;
+
+    public NotificationResponse(Notification notification) {
+        this.id = notification.getId();
+        this.note = notification.getNote();
+        this.noteCreated = notification.getCreatedAt().atZone(ZoneId.systemDefault()).toLocalDate();
+        this.noteUpdated = notification.getUpdatedAt().atZone(ZoneId.systemDefault()).toLocalDate();
+        this.userEmail = notification.getCreatedBy().getUser().getEmail();
+        this.userName = notification.getCreatedBy().getUser().getFirstName();
+        this.userLastName = notification.getCreatedBy().getUser().getLastName();
+        this.userPhone = notification.getCreatedBy().getUser().getPhone();
+    }
 }
 

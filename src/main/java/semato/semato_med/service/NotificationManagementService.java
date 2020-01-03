@@ -7,10 +7,8 @@ import semato.semato_med.model.Notification;
 import semato.semato_med.payload.notificationMgmt.NotificationResponse;
 import semato.semato_med.repository.NotificationRepository;
 
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class NotificationManagementService {
@@ -18,29 +16,17 @@ public class NotificationManagementService {
     @Autowired
     private NotificationRepository notificationRepository;
 
-    public Notification addNote(String note, Admin admin){
+    public void addNote(String note, Admin admin){
         Notification notification = new Notification();
         notification.setNote(note);
         notification.setCreatedBy(admin);
-        return notificationRepository.save(notification);
-    }
-
-    public NotificationResponse createNotificationResponse(Notification notification){
-        return new NotificationResponse(
-                notification.getId(),
-                notification.getNote(),
-                notification.getCreatedAt().atZone(ZoneId.systemDefault()).toLocalDate(),
-                notification.getUpdatedAt().atZone(ZoneId.systemDefault()).toLocalDate(),
-                notification.getCreatedBy().getUser().getEmail(),
-                notification.getCreatedBy().getUser().getFirstName(),
-                notification.getCreatedBy().getUser().getLastName(),
-                notification.getCreatedBy().getUser().getPhone());
+        notificationRepository.save(notification);
     }
 
     public List<NotificationResponse> createNotificationResponseList(List<Notification> notifications){
         List<NotificationResponse> notificationResponseList = new ArrayList<>();
         for (Notification notification : notifications) {
-            notificationResponseList.add(createNotificationResponse(notification));
+            notificationResponseList.add(new NotificationResponse(notification));
         }
         return notificationResponseList;
     }
@@ -49,15 +35,8 @@ public class NotificationManagementService {
         notificationRepository.delete(notification);
     }
 
-    public Notification updateNote(String note, Long notificationId) {
-        Optional<Notification> notificationOptional = notificationRepository.findById(notificationId);
-        if(notificationOptional.isPresent()){
-            Notification notification = notificationOptional.get();
+    public void updateNote(String note, Notification notification) {
             notification.setNote(note);
             notificationRepository.save(notification);
-            return notification;
-        }
-
-        return null;
     }
 }
