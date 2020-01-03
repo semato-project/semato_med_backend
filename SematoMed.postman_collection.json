@@ -719,9 +719,20 @@
 					"name": "getAllNotification",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTc3MDEyMzYxLCJleHAiOjE1NzkwMTIzNjF9.6cZ5lYpaYfWnTcwmfUAbVNslSNHacg2eKr-p8g0_rD6Z7DcyuTlehG72rgcQOAGPXJt_wTuGyOs6Sb9G4zivNA",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "http://localhost:5000/api/notification/get",
+							"raw": "http://localhost:5000/api/mgmt/notification/get",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -729,6 +740,7 @@
 							"port": "5000",
 							"path": [
 								"api",
+								"mgmt",
 								"notification",
 								"get"
 							]
