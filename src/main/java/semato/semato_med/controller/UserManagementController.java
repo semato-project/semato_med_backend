@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import semato.semato_med.model.User;
 import semato.semato_med.payload.ApiResponse;
 import semato.semato_med.payload.user.GetUserResponse;
 import semato.semato_med.payload.user.UserEditRequest;
@@ -43,6 +44,16 @@ public class UserManagementController {
     public ResponseEntity<?> getAll() {
         List<GetUserResponse> all = userManagementService.getAll();
         return new ResponseEntity<>(all, HttpStatus.OK);
+    }
+
+    @GetMapping("/get/{userId}")
+    public ResponseEntity<?> getById(@PathVariable Long userId) {
+        if (!userRepository.existsById(userId)) {
+            return new ResponseEntity<>(new ApiResponse(false, "User not found!"), HttpStatus.NOT_FOUND);
+        }
+
+        GetUserResponse user = userManagementService.getById(userId);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PostMapping("/update/{userId}")

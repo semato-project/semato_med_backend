@@ -76,6 +76,12 @@ public class UserManagementService {
         return userList;
     }
 
+    public GetUserResponse getById(Long userId) {
+        Optional<User> user = userRepository.findById(userId);
+        return new GetUserResponse(user.get().getId(), user.get().getEmail(), user.get().getFirstName(), user.get().getLastName(), user.get().getPhone(), user.get().getRoles());
+    }
+
+
     public void edit(UserEditRequest request, Long userId) {
         Optional<User> userOptional = userRepository.findById(userId);
         if(userOptional.isPresent()){
@@ -85,4 +91,6 @@ public class UserManagementService {
             userRepository.save(userOptional.get());
         }
     }
+
+
 }
