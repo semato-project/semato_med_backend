@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import semato.semato_med.model.Clinic;
+import semato.semato_med.payload.ApiResponse;
 import semato.semato_med.payload.clinicMgmt.ClinicResponse;
 import semato.semato_med.payload.clinicMgmt.ClinicUpdateRequest;
 import semato.semato_med.payload.clinicMgmt.ClinicAddingRequest;
@@ -45,10 +46,10 @@ public class ClinicManagamentController {
     @DeleteMapping("/del/{clinicId}")
     public ResponseEntity<?> deleteClinicById(@PathVariable Long clinicId) {
         if (clinicService.delete(clinicId)) {
-            return ResponseEntity.ok().build();
+            return new ResponseEntity<>(new ApiResponse(true, "Clinic deleted successfully"), HttpStatus.OK);
         }
 
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        return new ResponseEntity<>(new ApiResponse(false, "Clinic has not been deleted"),HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/update/{clinicId}")
