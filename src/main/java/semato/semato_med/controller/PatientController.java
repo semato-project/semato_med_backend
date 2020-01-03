@@ -61,10 +61,10 @@ public class PatientController {
                 LocalDateTime now = LocalDateTime.now();
                 switch (mode.get()) {
                     case past:
-                        visitList = visitRepository.findByPatientBeforeDate(patient, now).get();
+                        visitList = visitRepository.findByPatientBeforeDate(patient, now, VisitStatus.CANCELED).get();
                         break;
                     case future:
-                        visitList = visitRepository.findByPatientAfterDate(patient, now).get();
+                        visitList = visitRepository.findByPatientAfterDate(patient, now, VisitStatus.CANCELED).get();
                         break;
                     default:
                         throw new ResourceNotFoundException("VisitListMode", "mode", mode.get());

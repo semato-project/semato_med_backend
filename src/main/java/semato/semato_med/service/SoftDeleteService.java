@@ -53,6 +53,4 @@ public class SoftDeleteService {
         userRepository.save(user);
     }
 
-
-
 }
