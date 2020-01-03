@@ -17,6 +17,10 @@ public class VisitListResponse {
 
         List<VisitResponse> response = new LinkedList<VisitResponse>();
 
+        if (visitListInternal == null) {
+            return response;
+        }
+
         for (Visit visit: visitListInternal) {
             response.add(new VisitResponse(visit));
         }
