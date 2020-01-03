@@ -3,13 +3,16 @@ package semato.semato_med.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import semato.semato_med.exception.ResourceNotFoundException;
 import semato.semato_med.model.*;
 import semato.semato_med.payload.ApiResponse;
 import semato.semato_med.payload.user.PatientUpdateRequest;
+import semato.semato_med.payload.user.SendFeedbackRequest;
 import semato.semato_med.payload.visit.*;
+import semato.semato_med.repository.AdminRepository;
 import semato.semato_med.repository.ClinicRepository;
 import semato.semato_med.repository.PatientRepository;
 import semato.semato_med.repository.VisitRepository;
@@ -19,11 +22,7 @@ import semato.semato_med.service.EmailSender;
 import semato.semato_med.service.SoftDeleteService;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-
-import java.util.NoSuchElementException;
-
-import java.util.Optional;
+import java.util.*;
 
 
 @RestController
@@ -46,9 +45,11 @@ public class PatientController {
     @Autowired
     private PatientRepository patientRepository;
 
+    @Autowired
+    private AdminRepository adminRepository;
+
     @GetMapping("/visit/list/get")
     public VisitListResponse getVisitList(@CurrentUser UserPrincipal userPrincipal, @RequestParam Optional<VisitListMode> mode) {
-
 
         Patient patient = userPrincipal.getUser().getPatient();
         ArrayList<Visit> visitList;
@@ -115,4 +116,24 @@ public class PatientController {
         Patient patient = userPrincipal.getUser().getPatient();
         softDeleteService.deletePatient(patient);
     }
+
+    @PutMapping("/feedback/send")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void sendFeedback(@RequestBody SendFeedbackRequest sendFeedbackRequest, @CurrentUser UserPrincipal userPrincipal) {
+
+        Patient patient = userPrincipal.getUser().getPatient();
+
+        SimpleMailMessage email = new SimpleMailMessage();
+        email.setSubject("Zgłoszenie użytkownika: " + patient.getUser().getEmail() + "; temat: " + sendFeedbackRequest.getSubject());
+        email.setText(sendFeedbackRequest.getContent());
+        email.setFrom("SematoMedClinic");
+
+        List<Admin> adminList = adminRepository.findAll();
+
+        for (Admin admin: adminList) {
+            email.setTo(admin.getUser().getEmail());
+                emailSender.send(email);
+        }
+    }
+
 }
