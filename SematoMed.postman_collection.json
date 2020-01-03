@@ -1708,6 +1708,49 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "send feedback",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTc3MDEyMzYxLCJleHAiOjE1NzkwMTIzNjF9.6cZ5lYpaYfWnTcwmfUAbVNslSNHacg2eKr-p8g0_rD6Z7DcyuTlehG72rgcQOAGPXJt_wTuGyOs6Sb9G4zivNA"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"subject\" : \"jest problem\",\n\t\"content\" : \"aplikacja działa zbyt bezbłędnie\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/patient/feedback/send",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"patient",
+								"feedback",
+								"send"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
