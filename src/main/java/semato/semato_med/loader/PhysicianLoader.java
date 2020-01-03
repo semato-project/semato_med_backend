@@ -42,6 +42,8 @@ public class PhysicianLoader implements ApplicationRunner {
     private PasswordEncoder passwordEncoder;
 
     public static final String EMAIL = "strange@example.com";
+    public static final String EMAIL2 = "lecter@example.com";
+    public static final String EMAIL3 = "house@example.com";
     public static final String PASSWORD = "qwerty";
 
     @Override
@@ -66,7 +68,7 @@ public class PhysicianLoader implements ApplicationRunner {
         speciality = specialityRepository.findByName("Stomatologia").get();
 
         addPhysician(
-                "lecter@example.com",
+                EMAIL2,
                 PASSWORD,
                 "Hannibal",
                 "Lecter",
@@ -82,7 +84,7 @@ public class PhysicianLoader implements ApplicationRunner {
         speciality = specialityRepository.findByName("Ortopedia").get();
 
         addPhysician(
-                "house@example.com",
+                EMAIL3,
                 PASSWORD,
                 "Gregory",
                 "House",
@@ -92,7 +94,7 @@ public class PhysicianLoader implements ApplicationRunner {
                 "Dr",
                 "https://upload.wikimedia.org/wikipedia/commons/b/bb/Hugh_Laurie_Actors_Guild.jpg",
                 speciality,
-                3
+                -2
         );
 
     }
