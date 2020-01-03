@@ -22,11 +22,14 @@ import java.util.List;
 @RequestMapping("/api/mgmt/user")
 public class UserManagementController {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private UserManagementService userManagementService;
+    private final UserManagementService userManagementService;
+
+    public UserManagementController(UserRepository userRepository, UserManagementService userManagementService) {
+        this.userRepository = userRepository;
+        this.userManagementService = userManagementService;
+    }
 
     @PutMapping("/physician/add")
     public ResponseEntity<?> addPhysician(@RequestBody PhysicianAddingRequest request) {

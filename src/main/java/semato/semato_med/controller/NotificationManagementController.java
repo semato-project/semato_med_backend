@@ -28,14 +28,17 @@ public class NotificationManagementController {
     private final ResponseEntity notFoundResponse = new ResponseEntity<>(new ApiResponse(false, "Notification not found!"), HttpStatus.NOT_FOUND);
 
 
-    @Autowired
-    private NotificationManagementService notificationService;
+    private final NotificationManagementService notificationService;
 
-    @Autowired
-    private NotificationRepository notificationRepository;
+    private final NotificationRepository notificationRepository;
 
-    @Autowired
-    private AdminRepository adminRepository;
+    private final AdminRepository adminRepository;
+
+    public NotificationManagementController(NotificationManagementService notificationService, NotificationRepository notificationRepository, AdminRepository adminRepository) {
+        this.notificationService = notificationService;
+        this.notificationRepository = notificationRepository;
+        this.adminRepository = adminRepository;
+    }
 
     @PutMapping("/add")
     public ResponseEntity<?> addNotification(@RequestBody NotificationRequest notificationRequest, @CurrentUser UserPrincipal userPrincipal) {

@@ -22,11 +22,14 @@ public class VisitManagementController {
 
     private final ResponseEntity<?> notFoundResponse = new ResponseEntity<>(new ApiResponse(false, "Visit not found"), HttpStatus.NOT_FOUND);
 
-    @Autowired
-    private VisitManagementService visitManagementService;
+    private final VisitManagementService visitManagementService;
 
-    @Autowired
-    private VisitRepository visitRepository;
+    private final VisitRepository visitRepository;
+
+    public VisitManagementController(VisitManagementService visitManagementService, VisitRepository visitRepository) {
+        this.visitManagementService = visitManagementService;
+        this.visitRepository = visitRepository;
+    }
 
     @GetMapping("/get/{visitId}")
     public ResponseEntity<?> getVisit(@PathVariable Long visitId) {

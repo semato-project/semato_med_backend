@@ -23,11 +23,14 @@ public class ClinicManagementController {
 
     private final ResponseEntity notFoundResponse = new ResponseEntity<>(new ApiResponse(false, "Clinic not found!"), HttpStatus.NOT_FOUND);
 
-    @Autowired
-    private ClinicManagementService clinicService;
+    private final ClinicManagementService clinicService;
 
-    @Autowired
-    private ClinicRepository clinicRepository;
+    private final ClinicRepository clinicRepository;
+
+    public ClinicManagementController(ClinicManagementService clinicService, ClinicRepository clinicRepository) {
+        this.clinicService = clinicService;
+        this.clinicRepository = clinicRepository;
+    }
 
     @PutMapping("/add")
     public ResponseEntity<?> addClinic(@RequestBody ClinicAddingRequest clinicAddingRequest) {
