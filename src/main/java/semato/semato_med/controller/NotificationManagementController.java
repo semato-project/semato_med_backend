@@ -57,6 +57,7 @@ public class NotificationManagementController {
         return notification.map(value -> new ResponseEntity<>(new NotificationResponse(value), HttpStatus.OK)).orElse(notFoundResponse);
     }
 
+    @Secured({"ROLE_ADMIN", "ROLE_PATIENT", "ROLE_PHYSICIAN"})
     @GetMapping("/get")
     public ResponseEntity<?> getAllNotification(){
         List<Notification> notifications = notificationRepository.findAll();
