@@ -18,20 +18,23 @@ import java.util.*;
 @Service
 public class UserManagementService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private PhysicianRepository physicianRepository;
+    private final PhysicianRepository physicianRepository;
 
-    @Autowired
-    private RoleRepository roleRepository;
+    private final RoleRepository roleRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private SpecialityRepository specialityRepository;
+    private final SpecialityRepository specialityRepository;
+
+    public UserManagementService(UserRepository userRepository, PhysicianRepository physicianRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, SpecialityRepository specialityRepository) {
+        this.userRepository = userRepository;
+        this.physicianRepository = physicianRepository;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.specialityRepository = specialityRepository;
+    }
 
     public void createPhysician(PhysicianAddingRequest request){
 
@@ -71,14 +74,15 @@ public class UserManagementService {
         List<User> all = userRepository.findAll();
         List<GetUserResponse> userList = new ArrayList<>();
         for (User user : all) {
-            userList.add(new GetUserResponse(user.getId(), user.getEmail(), user.getFirstName(), user.getLastName(), user.getPhone(), user.getRoles()));
+            userList.add(new GetUserResponse(user));
         }
         return userList;
     }
 
     public GetUserResponse getById(Long userId) {
         Optional<User> user = userRepository.findById(userId);
-        return new GetUserResponse(user.get().getId(), user.get().getEmail(), user.get().getFirstName(), user.get().getLastName(), user.get().getPhone(), user.get().getRoles());
+        return user.map(GetUserResponse::new).orElse(null);
+
     }
 
 
