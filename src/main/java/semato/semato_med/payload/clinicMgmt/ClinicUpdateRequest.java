@@ -9,8 +9,6 @@ import java.time.LocalDateTime;
 @Getter
 @RequiredArgsConstructor
 public class ClinicUpdateRequest {
-
-
     private String name;
 
     private String city;

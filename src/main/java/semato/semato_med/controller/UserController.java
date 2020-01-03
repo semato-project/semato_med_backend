@@ -6,8 +6,6 @@ import semato.semato_med.payload.userMgmt.UserInfo;
 import semato.semato_med.security.CurrentUser;
 import semato.semato_med.security.UserPrincipal;
 
-//TODO: edycja danych uzytkownika
-
 @RestController
 @RequestMapping("/api")
 public class UserController {
