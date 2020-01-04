@@ -57,4 +57,17 @@ public class VisitResponse {
     public VisitStatus getStatus() {
         return visit.getStatus();
     }
+
+    public Long getPatientId() {
+        return visit.getPatient().getId();
+    }
+
+    public String getPatientName() {
+        return visit.getPatient().getFullName();
+    }
+
+    public String getPatientPesel() {
+        return visit.getPatient().getPesel();
+    }
+
 }

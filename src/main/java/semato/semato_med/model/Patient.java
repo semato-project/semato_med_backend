@@ -50,4 +50,11 @@ public class Patient {
         this.street = street;
         this.houseNumber = houseNumber;
     }
+
+    public String getFullName() {
+        return
+            user.getFirstName()
+            + " " + user.getLastName()
+        ;
+    }
 }
