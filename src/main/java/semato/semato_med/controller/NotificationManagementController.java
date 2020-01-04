@@ -16,6 +16,7 @@ import semato.semato_med.security.CurrentUser;
 import semato.semato_med.security.UserPrincipal;
 import semato.semato_med.service.NotificationManagementService;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,7 +63,9 @@ public class NotificationManagementController {
     public ResponseEntity<?> getAllNotification(){
         List<Notification> notifications = notificationRepository.findAll();
         List<NotificationResponse> notificationResponseList = notificationService.createNotificationResponseList(notifications);
-        return new ResponseEntity<>(notificationResponseList, HttpStatus.OK);
+        HashMap<String, List<NotificationResponse>> responseMap = new HashMap<>();
+        responseMap.put("notificationList", notificationResponseList);
+        return new ResponseEntity<>(responseMap, HttpStatus.OK);
     }
 
     @DeleteMapping("/del/{notificationId}")
