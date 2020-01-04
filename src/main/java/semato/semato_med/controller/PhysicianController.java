@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import semato.semato_med.model.Patient;
 import semato.semato_med.model.Physician;
 import semato.semato_med.model.Visit;
+import semato.semato_med.model.VisitStatus;
 import semato.semato_med.payload.ApiResponse;
 import semato.semato_med.payload.user.PatientUpdateRequest;
 import semato.semato_med.payload.user.PhysicianUpdateRequest;
@@ -20,6 +21,7 @@ import semato.semato_med.security.CurrentUser;
 import semato.semato_med.security.UserPrincipal;
 import semato.semato_med.service.EmailSender;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -38,8 +40,10 @@ public class PhysicianController {
     @GetMapping("/visit/list/get")
     public VisitListResponse getVisitList(@CurrentUser UserPrincipal userPrincipal) {
 
+        LocalDateTime now = LocalDateTime.now();
+
         Physician physician = userPrincipal.getUser().getPhysician();
-        ArrayList<Visit> visitList = visitRepository.findByPhysician(physician).get();
+        ArrayList<Visit> visitList = visitRepository.findByPhysicianAfterDate(physician, now, VisitStatus.CANCELED).get();
 
         return new VisitListResponse(visitList);
     }
