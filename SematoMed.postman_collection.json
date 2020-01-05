@@ -1667,6 +1667,56 @@
 					"response": []
 				},
 				{
+					"name": "patient update",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTc3MDEyMzYxLCJleHAiOjE1NzkwMTIzNjF9.6cZ5lYpaYfWnTcwmfUAbVNslSNHacg2eKr-p8g0_rD6Z7DcyuTlehG72rgcQOAGPXJt_wTuGyOs6Sb9G4zivNA"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"firstName\" : \"Aleksander\",\n\t\"lastName\" : \"Lolkowski\",\n\t\"phone\" : \"999-999-999\",\n\t\"postalCode\" : \"67-667\",\n\t\"city\" : \"Murmańsk\",\n\t\"street\" : \"Skawińska\",\n\t\"houseNumber\" : \"78\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/patient/user/edit?",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"patient",
+								"user",
+								"edit"
+							],
+							"query": [
+								{
+									"key": "mode",
+									"value": "past",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "visit list future - patient",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -1902,6 +1952,56 @@
 								"api",
 								"user",
 								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "physician update",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiaWF0IjoxNTc3NTQ1NTkyLCJleHAiOjE1Nzk1NDU1OTJ9.adJOlHJk5HPwpk01_ESbqX4jW5ZsXHuoEjOos70jH2Stjb2uLP6WuX5WH6CcIu_iQSZF_bi89UxvB6iKoTe8kQ"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"firstName\" : \"Harold\",\n\t\"lastName\" : \"Kumar\",\n\t\"phone\" : \"999-999-999\",\n\t\"medicalDegrees\" : \"doktor habilitowany\",\n\t\"title\" : \"dr n. med.\",\n\t\"node\" : \"Szalony, brawurowy i nieprzewidywalny.\",\n\t\"image_url\" : \"https://thumbs.dreamstime.com/z/smiling-indian-doctor-21622672.jpg\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/physician/user/edit?",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"physician",
+								"user",
+								"edit"
+							],
+							"query": [
+								{
+									"key": "mode",
+									"value": "past",
+									"disabled": true
+								}
 							]
 						}
 					},
