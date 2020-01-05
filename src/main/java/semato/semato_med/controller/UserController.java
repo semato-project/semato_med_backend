@@ -2,6 +2,7 @@ package semato.semato_med.controller;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import semato.semato_med.model.User;
 import semato.semato_med.payload.userMgmt.UserInfo;
 import semato.semato_med.security.CurrentUser;
 import semato.semato_med.security.UserPrincipal;
@@ -13,6 +14,7 @@ public class UserController {
     @GetMapping("/user/me")
     @PreAuthorize("hasRole('PATIENT') or hasRole('PHYSICIAN')")
     public UserInfo getCurrentUser(@CurrentUser UserPrincipal currentUser) {
-        return new UserInfo(currentUser.getEmail(), currentUser.getName(), currentUser.getSurname(), currentUser.getUser().getRoles());
+        User user = currentUser.getUser();
+        return new UserInfo(user);
     }
 }

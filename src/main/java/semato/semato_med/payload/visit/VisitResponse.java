@@ -59,14 +59,26 @@ public class VisitResponse {
     }
 
     public Long getPatientId() {
+        if (visit.getPatient() == null) {
+            return null;
+        }
+
         return visit.getPatient().getId();
     }
 
     public String getPatientName() {
+        if (visit.getPatient() == null) {
+            return null;
+        }
+
         return visit.getPatient().getFullName();
     }
 
     public String getPatientPesel() {
+        if (visit.getPatient() == null) {
+            return null;
+        }
+
         return visit.getPatient().getPesel();
     }
 
