@@ -134,6 +134,7 @@ public class VisitController {
         }
 
         visitService.cancel(visitOptional.get());
+        emailSender.send(visitService.constructCancelVisitEmail(visitOptional.get().getPatient(), visitOptional.get()));
     }
 
 
