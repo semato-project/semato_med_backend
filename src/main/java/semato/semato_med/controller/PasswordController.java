@@ -1,7 +1,9 @@
 package semato.semato_med.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -66,11 +68,27 @@ public class PasswordController {
             return new ResponseEntity<>(new ApiResponse(false, result), HttpStatus.UNAUTHORIZED);
         }
 
-        return ResponseEntity.ok(new ApiResponse(true, "Confirm successfully"));
+        String content ="<form style=\"padding: 20px\" action=\"http://localhost:5000/api/user/resetPassword\" method=\"post\">\n" +
+                "  <center>Wprowadz nowe haslo, a nastepnie zatwierdz.<br>" +
+                "   Nowe haslo:<br>\n" +
+                "  <input type=\"text\" name=\"newPassword\" value=\"\"><br>\n" +
+                "  <input type=\"hidden\" name=\"id\" value=\""+id+"\">"+
+                "  <input type=\"hidden\" name=\"token\" value=\""+token+"\">" +
+                "<input type=\"submit\" value=\"Zatwierdz\">\n" +
+                "</form></center>";
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.setContentType(MediaType.TEXT_HTML);
+
+
+        return new ResponseEntity<>(content, responseHeaders, HttpStatus.OK);
     }
 
     @PostMapping("/user/resetPassword")
-    public ResponseEntity<?> resetPassword(@RequestBody ResetPasswordRequest resetPasswordRequest) {
+    public ResponseEntity<?> resetPassword(@RequestParam("id") Long id,
+                                           @RequestParam("token") String token,
+                                           @RequestParam("newPassword") String newPassword) {
+
+        ResetPasswordRequest resetPasswordRequest = new ResetPasswordRequest(id, token, newPassword);
 
         Optional<User> user = userRepository.findById(resetPasswordRequest.getId());
 
