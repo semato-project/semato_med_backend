@@ -1,0 +1,2104 @@
+{
+	"info": {
+		"_postman_id": "f91fe7d7-650a-486c-9c9a-3948c287d63a",
+		"name": "SematoMed",
+		"description": "Dokumentacja części serwerowej aplikacji. Umieszczone są tu wszystkie zapytania wykonywane po stronie klienckiej (w zależności od uprawnień).",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Autoryzacja",
+			"item": [
+				{
+					"name": "Rejestracja",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"firstName\" : \"Stanisław\",\n\t\"lastName\" : \"Tajny\",\n\t\"phone\" : \"000-333-111\",\n\t\"name\" : \"Stanislaw Tajny\",\n\t\"email\" : \"tajniak@example.com\",\n\t\"password\" : \"TajneHaslo111!\",\n\t\"pesel\" : \"930722332233\",\n\t\"birthDate\" : \"2001-03-03\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth/singup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth",
+								"singup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login - patient",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\" : \"aleklolek@example.com\",\n\t\"password\" : \"qwerty\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth/signin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login - physician",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\" : \"aleklolek@example.com\",\n\t\"password\" : \"qwerty\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth/signin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login - admin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\t\"email\" : \"superadmin@example.com\",\n\t\"password\" : \"TajneHaslo!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth/signin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pobierz dane o uzytkowniku",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTc3NTM0NzYzLCJleHAiOjE1Nzk1MzQ3NjN9.KtTROBHCrEm5_-xWuLVbvRFqM2ZJ3GTveAivK8BtkGxFh-ZnWJPKeCl34rtysMXrwKoHc9_X2Pv9vqZMV2IiMA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/user/me",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Zmień hasło",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTczMzE4MjAwLCJleHAiOjE1NzQzMTgyMDB9.haG8_SxIlYeIjQs9-1j0IKcJ0xEjmhUEVaMXGUVZt8fsj_tvL5IJTxWqykimFMZ6cWJVdSzdyDeeQWyNNfw_eg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"oldPassword\" : \"123\",\n\t\"newPassword\" : \"123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/user/changePassword",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user",
+								"changePassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Zapomniałem hasła",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/user/forgotPassword?email=tajniak@example.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user",
+								"forgotPassword"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "tajniak@example.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Potwierdzenie tokena do resetu hasła",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/user/confirmPassword?id=1&token=",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user",
+								"confirmPassword"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								},
+								{
+									"key": "token",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset hasła",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTczMzI5MjE4LCJleHAiOjE1NzQzMjkyMTh9.WVOqhoOEoF4ZBm-nsN4p1AY6mvco8mv9AT_bDhV8wBcTl2FQZcy93Rapei5VT7bv73tkxZZh15LIximC3AQAuw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\" : 1,\n\t\"token\": \"07df511a-e27a-4486-88f4-7fc3cb4e926e\",\n\t\"newPassword\" : \"dupaJasia\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/user/resetPassword",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user",
+								"resetPassword"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Zapytania związane z autoryzacją oraz autentykacją użytkownika, a także zapytania związane z zmianą hasła. ",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d83a5b22-761f-419a-be01-051f507ac5e6",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "bc95327e-f1ec-415c-a8fc-3704a0301c0f",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Wizyty",
+			"item": [
+				{
+					"name": "Pobierz listę specjalizacji",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTc3MDEyMzYxLCJleHAiOjE1NzkwMTIzNjF9.6cZ5lYpaYfWnTcwmfUAbVNslSNHacg2eKr-p8g0_rD6Z7DcyuTlehG72rgcQOAGPXJt_wTuGyOs6Sb9G4zivNA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/visit/speciality/list/get",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"visit",
+								"speciality",
+								"list",
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pobierz listę klinik według danej specjalizacji",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTc3MDEyMzYxLCJleHAiOjE1NzkwMTIzNjF9.6cZ5lYpaYfWnTcwmfUAbVNslSNHacg2eKr-p8g0_rD6Z7DcyuTlehG72rgcQOAGPXJt_wTuGyOs6Sb9G4zivNA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/visit/clinic/list/by/speciality/get?specialityId=5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"visit",
+								"clinic",
+								"list",
+								"by",
+								"speciality",
+								"get"
+							],
+							"query": [
+								{
+									"key": "specialityId",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Anuluj wizytę",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTc3MDEyMzYxLCJleHAiOjE1NzkwMTIzNjF9.6cZ5lYpaYfWnTcwmfUAbVNslSNHacg2eKr-p8g0_rD6Z7DcyuTlehG72rgcQOAGPXJt_wTuGyOs6Sb9G4zivNA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/visit/cancel?visitId=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"visit",
+								"cancel"
+							],
+							"query": [
+								{
+									"key": "visitId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pobierz listę lekarzy na podstawie specjalizacji i kliniki",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTc3MDEyMzYxLCJleHAiOjE1NzkwMTIzNjF9.6cZ5lYpaYfWnTcwmfUAbVNslSNHacg2eKr-p8g0_rD6Z7DcyuTlehG72rgcQOAGPXJt_wTuGyOs6Sb9G4zivNA"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/visit/physician/list/by/speciality/and/clinic/get?specialityId=5&clinicId=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"visit",
+								"physician",
+								"list",
+								"by",
+								"speciality",
+								"and",
+								"clinic",
+								"get"
+							],
+							"query": [
+								{
+									"key": "specialityId",
+									"value": "5"
+								},
+								{
+									"key": "clinicId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pobierz listę dostępnych wizyt na podstawie specjalizacji, kliniki, lekarza oraz czasu.",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTc3MDEyMzYxLCJleHAiOjE1NzkwMTIzNjF9.6cZ5lYpaYfWnTcwmfUAbVNslSNHacg2eKr-p8g0_rD6Z7DcyuTlehG72rgcQOAGPXJt_wTuGyOs6Sb9G4zivNA"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/visit/available/list/get?specialityId=5&clinicId=1&physicianId=2&periodStart=2019-11-27&periodEnd=2019-12-31",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"visit",
+								"available",
+								"list",
+								"get"
+							],
+							"query": [
+								{
+									"key": "specialityId",
+									"value": "5"
+								},
+								{
+									"key": "clinicId",
+									"value": "1"
+								},
+								{
+									"key": "physicianId",
+									"value": "2"
+								},
+								{
+									"key": "periodStart",
+									"value": "2019-11-27"
+								},
+								{
+									"key": "periodEnd",
+									"value": "2019-12-31"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Rezerwuj wizytę",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTc3NTQ2MzUyLCJleHAiOjE1Nzk1NDYzNTJ9.OBZWTIV2lQWFBHJYyFToe29b_8RSLj5eazvkOopxb94C3fjbUdKoxWKoMITsamqCyWS-JNeEDlhi-SsjUKenDw"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"specialityId\" : 5,\n\t\"clinicId\" : 1,\n\t\"physicianId\" : 2,\n\t\"dateTimeEnd\" : \"2019-12-23T08:30:00\",\n\t\"dateTimeStart\" : \"2019-12-23T08:00:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/visit/book",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"visit",
+								"book"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Zapytania związane z wizytami.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "694752cb-bf85-43f8-b65a-7c1f57cbe91b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "07d09bf4-8c5f-45db-8d54-718baeb50f30",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Pacjenci",
+			"item": [
+				{
+					"name": "Pobierz listę lekarzy według danej specjalizacji",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTc3MDEyMzYxLCJleHAiOjE1NzkwMTIzNjF9.6cZ5lYpaYfWnTcwmfUAbVNslSNHacg2eKr-p8g0_rD6Z7DcyuTlehG72rgcQOAGPXJt_wTuGyOs6Sb9G4zivNA"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/visit/physician/list/by/speciality/and/clinic/get?specialityId=5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"visit",
+								"physician",
+								"list",
+								"by",
+								"speciality",
+								"and",
+								"clinic",
+								"get"
+							],
+							"query": [
+								{
+									"key": "specialityId",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pobierz listę klinik",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTc3MDEyMzYxLCJleHAiOjE1NzkwMTIzNjF9.6cZ5lYpaYfWnTcwmfUAbVNslSNHacg2eKr-p8g0_rD6Z7DcyuTlehG72rgcQOAGPXJt_wTuGyOs6Sb9G4zivNA"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/patient/clinic/list/get",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"patient",
+								"clinic",
+								"list",
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pobierz listę wizyt z przeszłości",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTc3MDEyMzYxLCJleHAiOjE1NzkwMTIzNjF9.6cZ5lYpaYfWnTcwmfUAbVNslSNHacg2eKr-p8g0_rD6Z7DcyuTlehG72rgcQOAGPXJt_wTuGyOs6Sb9G4zivNA"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/patient/visit/list/get?mode=past",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"patient",
+								"visit",
+								"list",
+								"get"
+							],
+							"query": [
+								{
+									"key": "mode",
+									"value": "past"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pobierz listę przyszłych wizyt",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTc3MDEyMzYxLCJleHAiOjE1NzkwMTIzNjF9.6cZ5lYpaYfWnTcwmfUAbVNslSNHacg2eKr-p8g0_rD6Z7DcyuTlehG72rgcQOAGPXJt_wTuGyOs6Sb9G4zivNA"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/patient/visit/list/get?mode=future",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"patient",
+								"visit",
+								"list",
+								"get"
+							],
+							"query": [
+								{
+									"key": "mode",
+									"value": "future"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pobierz listę wszystkich wizyt pacjenta",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTc3MDEyMzYxLCJleHAiOjE1NzkwMTIzNjF9.6cZ5lYpaYfWnTcwmfUAbVNslSNHacg2eKr-p8g0_rD6Z7DcyuTlehG72rgcQOAGPXJt_wTuGyOs6Sb9G4zivNA"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/patient/visit/list/get",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"patient",
+								"visit",
+								"list",
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Wyślij zgłoszenie",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTc3MDEyMzYxLCJleHAiOjE1NzkwMTIzNjF9.6cZ5lYpaYfWnTcwmfUAbVNslSNHacg2eKr-p8g0_rD6Z7DcyuTlehG72rgcQOAGPXJt_wTuGyOs6Sb9G4zivNA"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"subject\" : \"jest problem\",\n\t\"content\" : \"aplikacja działa zbyt bezbłędnie\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/patient/feedback/send",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"patient",
+								"feedback",
+								"send"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuń konto (softdelete)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTc3MDEyMzYxLCJleHAiOjE1NzkwMTIzNjF9.6cZ5lYpaYfWnTcwmfUAbVNslSNHacg2eKr-p8g0_rD6Z7DcyuTlehG72rgcQOAGPXJt_wTuGyOs6Sb9G4zivNA"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/patient/account/delete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"patient",
+								"account",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Aktualizuj konto",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTc3MDEyMzYxLCJleHAiOjE1NzkwMTIzNjF9.6cZ5lYpaYfWnTcwmfUAbVNslSNHacg2eKr-p8g0_rD6Z7DcyuTlehG72rgcQOAGPXJt_wTuGyOs6Sb9G4zivNA"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"firstName\" : \"Aleksander\",\n\t\"lastName\" : \"Lolkowski\",\n\t\"phone\" : \"999-999-999\",\n\t\"postalCode\" : \"67-667\",\n\t\"city\" : \"Murmańsk\",\n\t\"street\" : \"Skawińska\",\n\t\"houseNumber\" : \"78\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/patient/user/edit?",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"patient",
+								"user",
+								"edit"
+							],
+							"query": [
+								{
+									"key": "mode",
+									"value": "past",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Wszystkie zapytania związane z pacjentem.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "245a44b9-9a6d-44a2-aeb3-31a85fac1d9e",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "f710280e-83b6-4c2f-8a22-87bc728ef52d",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Lekarze",
+			"item": [
+				{
+					"name": "Pobierz listę wizyt (dla lekarza)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiaWF0IjoxNTc3NTQ1NTkyLCJleHAiOjE1Nzk1NDU1OTJ9.adJOlHJk5HPwpk01_ESbqX4jW5ZsXHuoEjOos70jH2Stjb2uLP6WuX5WH6CcIu_iQSZF_bi89UxvB6iKoTe8kQ"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/physician/visit/list/get",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"physician",
+								"visit",
+								"list",
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Aktualizuj konto",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiaWF0IjoxNTc3NTQ1NTkyLCJleHAiOjE1Nzk1NDU1OTJ9.adJOlHJk5HPwpk01_ESbqX4jW5ZsXHuoEjOos70jH2Stjb2uLP6WuX5WH6CcIu_iQSZF_bi89UxvB6iKoTe8kQ"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"firstName\" : \"Harold\",\n\t\"lastName\" : \"Kumar\",\n\t\"phone\" : \"999-999-999\",\n\t\"medicalDegrees\" : \"doktor habilitowany\",\n\t\"title\" : \"dr n. med.\",\n\t\"node\" : \"Szalony, brawurowy i nieprzewidywalny.\",\n\t\"image_url\" : \"https://thumbs.dreamstime.com/z/smiling-indian-doctor-21622672.jpg\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/physician/user/edit?",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"physician",
+								"user",
+								"edit"
+							],
+							"query": [
+								{
+									"key": "mode",
+									"value": "past",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Wszystkie zapytania związane z lekarzem.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "835106cd-aa16-43ef-9969-d705b1bc419d",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "ed6a2188-59b4-4780-b017-00fcba5ab6bd",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Zarządzanie notyfikacjami",
+			"item": [
+				{
+					"name": "Pobierz notyfikację po ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNTc3NDQ2MDM1LCJleHAiOjE1Nzk0NDYwMzV9.P8O4NfjTIZRww7RAg8Swl24nCuiRNNnCpXkvEa3Nb6lvzyllBhjKCDGdP_qqXcHkASVs62My_whzQMu111tvPw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/notification/get/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"notification",
+								"get",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pobierz wszystkie notyfikacje",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTc3MDEyMzYxLCJleHAiOjE1NzkwMTIzNjF9.6cZ5lYpaYfWnTcwmfUAbVNslSNHacg2eKr-p8g0_rD6Z7DcyuTlehG72rgcQOAGPXJt_wTuGyOs6Sb9G4zivNA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/mgmt/notification/get",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"mgmt",
+								"notification",
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Dodaj notyfikację",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNTc3NDQ2MDM1LCJleHAiOjE1Nzk0NDYwMzV9.P8O4NfjTIZRww7RAg8Swl24nCuiRNNnCpXkvEa3Nb6lvzyllBhjKCDGdP_qqXcHkASVs62My_whzQMu111tvPw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"note\": \"Super tajna notka!!!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/notification/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"notification",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edytuj notyfikacje",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNTc3NTM2NTY4LCJleHAiOjE1Nzk1MzY1Njh9.hPBawpftmtuaVstMCf5QjEWZCrTwgPpiOoXWZOpsVmttyPQsWhd1uOR12cMC7oFWRrdu0LKEUiuFxl5amkhZQQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"note\" : \"Nowa notka 2323\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/notification/update/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"notification",
+								"update",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Zapytania API dla admina do zarządzania notyfikacjami, należy pamiętać by wcześniej użyć zapytania do logowania admina, oraz uzupełnić token autoryzacyjny (Bearer)",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "41f0ed76-62b9-404e-b502-74224f455195",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "d5bf5a9b-d6a8-48d3-a0ac-056294e0d396",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Zarządzanie użytkownikami",
+			"item": [
+				{
+					"name": "Pobierz użytkownika po ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI1IiwiaWF0IjoxNTc4NTk4MjQyLCJleHAiOjE1ODA1OTgyNDJ9.Y00sOE-ps0rQcPzJkoeJbUk9Yia3rDajLr7mPNCyGpvq9YvkOe8OHyDt9RLu_ylwRjFVOb3KdNVTk-NwuhDzxg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/mgmt/user/get/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"mgmt",
+								"user",
+								"get",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pobierz wszystkich użytkowników",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI1IiwiaWF0IjoxNTc4NTk4MjQyLCJleHAiOjE1ODA1OTgyNDJ9.Y00sOE-ps0rQcPzJkoeJbUk9Yia3rDajLr7mPNCyGpvq9YvkOe8OHyDt9RLu_ylwRjFVOb3KdNVTk-NwuhDzxg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/mgmt/user/get",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"mgmt",
+								"user",
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Dodaj lekarza",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNTc3NTQzMTU1LCJleHAiOjE1Nzk1NDMxNTV9.ZOweTUAzbVxNGgSAxjAUc6WAHlsKsn3gy4U_sBuBm-vvWFWdyEJsru4gy7TzcUPQb245RRZ5pV5Im3kl49eLAg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"firstName\" : \"Roman\",\n\t\"lastName\" : \"Doktorski\",\n\t\"email\" : \"doktorek@example.com\",\n\t\"password\" : \"DoktorkoweHaselko\",\n\t\"phone\" : \"999-999-999\",\n\t\"medicalDegrees\" : \"doktor\",\n\t\"title\" : \"Dr\",\n\t\"specialitiesIds\" : [\n\t\t\"1\",\n\t\t\"2\"\n\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/mgmt/user/physician/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"mgmt",
+								"user",
+								"physician",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Aktualizuj użytkownika",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNTc3OTcyMTU2LCJleHAiOjE1Nzk5NzIxNTZ9.cf5DAOggH-bskVXCOBAmfCH9NiRCm4i3HkR4PXo_omXZxxS8GQ33aXg58utUgAJ0luSJvj6H6aeUZBbO4Vh5dg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"firstName\" : \"Doktorek\",\n\t\"lastName\" : \"Zmienialski\",\n\t\"phone\" : \"999-222-333\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/mgmt/user/edit/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"mgmt",
+								"user",
+								"edit",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Zapytania API dla admina do zarządzania użytkownikami, należy pamiętać by wcześniej użyć zapytania do logowania admina, oraz uzupełnić token autoryzacyjny (Bearer)",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "45c836aa-a860-4568-828c-a8e02a41d6f8",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "1fda3259-8a72-4a67-99b4-53ccd9baf076",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Zarządzanie klinikami",
+			"item": [
+				{
+					"name": "Pobierz klinikę o ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNTc3NTQzMTU1LCJleHAiOjE1Nzk1NDMxNTV9.ZOweTUAzbVxNGgSAxjAUc6WAHlsKsn3gy4U_sBuBm-vvWFWdyEJsru4gy7TzcUPQb245RRZ5pV5Im3kl49eLAg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/mgmt/clinic/get/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"mgmt",
+								"clinic",
+								"get",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pobierz wszystkie kliniki",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNTc3NTQzMTU1LCJleHAiOjE1Nzk1NDMxNTV9.ZOweTUAzbVxNGgSAxjAUc6WAHlsKsn3gy4U_sBuBm-vvWFWdyEJsru4gy7TzcUPQb245RRZ5pV5Im3kl49eLAg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/mgmt/clinic/get",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"mgmt",
+								"clinic",
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Dodaj klinikę",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNTc3OTcyMTU2LCJleHAiOjE1Nzk5NzIxNTZ9.cf5DAOggH-bskVXCOBAmfCH9NiRCm4i3HkR4PXo_omXZxxS8GQ33aXg58utUgAJ0luSJvj6H6aeUZBbO4Vh5dg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"name\": \"Klinika dla wyjątkowo zdrowych\",\r\n        \"city\": \"Kraków\",\r\n        \"country\": \"Polska\",\r\n        \"postalCode\": \"22-222\",\r\n        \"street\": \"Marzycielska\",\r\n        \"houseNumber\": \"7\",\r\n        \"email\": \"wyjatkowo-zdrowi@example.com\",\r\n        \"latitude\": 50.076056,\r\n        \"longitude\": 19.941803\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/mgmt/clinic/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"mgmt",
+								"clinic",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Aktualizuj klinikę",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNTc3NTQzMTU1LCJleHAiOjE1Nzk1NDMxNTV9.ZOweTUAzbVxNGgSAxjAUc6WAHlsKsn3gy4U_sBuBm-vvWFWdyEJsru4gy7TzcUPQb245RRZ5pV5Im3kl49eLAg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"street\": \"Ofiar służby zdrowia\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/mgmt/clinic/update/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"mgmt",
+								"clinic",
+								"update",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuń klinikę (soft delete)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNTc3NTQzMTU1LCJleHAiOjE1Nzk1NDMxNTV9.ZOweTUAzbVxNGgSAxjAUc6WAHlsKsn3gy4U_sBuBm-vvWFWdyEJsru4gy7TzcUPQb245RRZ5pV5Im3kl49eLAg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/mgmt/clinic/del/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"mgmt",
+								"clinic",
+								"del",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Zapytania API dla admina do zarządzania klinikami, należy pamiętać by wcześniej użyć zapytania do logowania admina, oraz uzupełnić token autoryzacyjny (Bearer)",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7b0efae0-852c-4b25-87af-3800dd4f7242",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "49edd86f-5c98-40ef-8398-b4275f8c2af4",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Zarządzanie wizytami",
+			"item": [
+				{
+					"name": "Pobierz wizytę po ID",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "a9298283-0fed-4884-afbb-0f7a3b4023bb",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI1IiwiaWF0IjoxNTc4NTkwODI0LCJleHAiOjE1ODA1OTA4MjR9.E-K4XoDdNdhWDda8EihrKF7D4HK8kN3c64PjQ9Q9r9kRnnJgOouocsPMEXLQTOKWwgVgshz7XGH5DzoQc1h1cw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/mgmt/visit/get/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"mgmt",
+								"visit",
+								"get",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pobierz wszystkie wizyty",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0IiwiaWF0IjoxNTc4MDQ0MzI4LCJleHAiOjE1ODAwNDQzMjh9.9lWN2EOPIB74xAW0q02bvlgaZhYfUGNYQ0nXmP0Oc_zIV2zBBqRBVRJkKuNX0DxZtufKeMz_CmB3YwA5uvJH4w",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/mgmt/visit/get",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"mgmt",
+								"visit",
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuń wizytę",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0IiwiaWF0IjoxNTc4MDQ0MzI4LCJleHAiOjE1ODAwNDQzMjh9.9lWN2EOPIB74xAW0q02bvlgaZhYfUGNYQ0nXmP0Oc_zIV2zBBqRBVRJkKuNX0DxZtufKeMz_CmB3YwA5uvJH4w",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/mgmt/visit/delete/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"mgmt",
+								"visit",
+								"delete",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Aktualizuj wizytę",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0IiwiaWF0IjoxNTc4MDQ0MzI4LCJleHAiOjE1ODAwNDQzMjh9.9lWN2EOPIB74xAW0q02bvlgaZhYfUGNYQ0nXmP0Oc_zIV2zBBqRBVRJkKuNX0DxZtufKeMz_CmB3YwA5uvJH4w",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"status\" : \"ARCHIVAL\",\r\n\t\"dateTimeStart\" : \"2020-01-05T13:00:00\",\r\n\t\"dateTimeEnd\" : \"2020-01-05T13:30:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/mgmt/visit/update/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"mgmt",
+								"visit",
+								"update",
+								"10"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Zapytania API dla admina do zarządzania wizytami, należy pamiętać by wcześniej użyć zapytania do logowania admina, oraz uzupełnić token autoryzacyjny (Bearer)",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "be0bfccc-9d5e-4132-b59d-fdd9979f5170",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "badf4a2f-9863-438e-8a8e-e72d98f50b25",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "0ecc948e-9aa1-44b4-814b-d32bacca6c38",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "c8920f1d-c8dd-4c6b-93c8-222098ac54b4",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
