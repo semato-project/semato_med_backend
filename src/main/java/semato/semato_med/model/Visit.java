@@ -11,7 +11,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(indexes=@Index(columnList="dateTimeStart,dateTimeEnd"))
 public class Visit extends DateAudit implements Slotable {
+
+
 
     public static final int VISIT_LENGHT_SECONDS = 60 * 30;
 

@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(indexes=@Index(columnList="dateTimeStart,dateTimeEnd"))
 public class WorkSchedule extends DateAudit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
