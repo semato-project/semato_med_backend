@@ -17,6 +17,8 @@ import java.util.Optional;
 @Service
 public class MailerThread extends Thread {
 
+    private static final int ONE_MINUTE = 60000;
+
     @Autowired
     private VisitRepository visitRepository;
 
@@ -50,7 +52,7 @@ public class MailerThread extends Thread {
             }
 
             try {
-                Thread.sleep(1000);
+                Thread.sleep(ONE_MINUTE);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
