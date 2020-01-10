@@ -28,7 +28,7 @@ public class Physician {
 
     private String image_url;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn (name = "id", referencedColumnName = "id")
     @MapsId
     @NonNull

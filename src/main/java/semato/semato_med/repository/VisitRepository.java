@@ -28,4 +28,7 @@ public interface VisitRepository extends JpaRepository<Visit, Long> {
     @Query("SELECT v FROM Visit v WHERE v.patient = :patient AND v.dateTimeStart > :dateTime AND v.status <> :omitStatus")
     Optional<ArrayList<Visit>> findByPatientAfterDate(@Param("patient") Patient patient, @Param("dateTime") LocalDateTime dateTime, @Param("omitStatus") VisitStatus omitStatus);
 
+    @Query("SELECT v FROM Visit v WHERE v.dateTimeStart >= :timeFrameStart AND v.dateTimeStart <= :timeFrameEnd AND v.status = :status")
+    Optional<ArrayList<Visit>> findVisitsByStartTimeFrameAndStatus(@Param("timeFrameStart") LocalDateTime timeFrameStart, @Param("timeFrameEnd") LocalDateTime timeFrameEnd, @Param("status") VisitStatus status);
+
 }
