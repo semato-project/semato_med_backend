@@ -226,6 +226,20 @@ public class VisitService {
         return email;
     }
 
+    public SimpleMailMessage constructVisitReminderEmail(Patient patient, Visit visit){
+        SimpleMailMessage email = new SimpleMailMessage();
+        email.setSubject("Visit reminder");
+        email.setText("Your medical appointment is scheduled tomorrow: " + System.getProperty("line.separator") +
+                "Doctor: " + visit.getPhysician().getFullName() + System.getProperty("line.separator") +
+                "Date and time: " + visit.getDateTimeStart() + System.getProperty("line.separator") +
+                "Clinic: " + visit.getClinic().getName() + System.getProperty("line.separator") +
+                "Localization: " + visit.getClinic().getCountry() + " " + visit.getClinic().getCity() + " "
+                + visit.getClinic().getStreet() + " " + visit.getClinic().getHouseNumber());
+        email.setTo(patient.getUser().getEmail());
+        email.setFrom("SematoMedClinic");
+        return email;
+    }
+
     public void cancel(Visit visit) {
         visit.setStatus(VisitStatus.CANCELED);
         visitRepository.save(visit);
