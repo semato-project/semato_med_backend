@@ -4,6 +4,8 @@ import lombok.*;
 import semato.semato_med.model.audit.DateAudit;
 import semato.semato_med.util.Slotable;
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
 
 @Getter
@@ -13,8 +15,6 @@ import java.time.LocalDateTime;
 @Entity
 @Table(indexes=@Index(columnList="dateTimeStart,dateTimeEnd"))
 public class Visit extends DateAudit implements Slotable {
-
-
 
     public static final int VISIT_LENGHT_SECONDS = 60 * 30;
 
@@ -41,6 +41,10 @@ public class Visit extends DateAudit implements Slotable {
     private LocalDateTime dateTimeStart;
 
     private LocalDateTime dateTimeEnd;
+
+    @Min(1)
+    @Max(5)
+    private Integer rating;
 
     private VisitStatus status;
 

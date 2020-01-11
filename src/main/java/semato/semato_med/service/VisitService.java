@@ -244,4 +244,9 @@ public class VisitService {
         visit.setStatus(VisitStatus.CANCELED);
         visitRepository.save(visit);
     }
+
+    public void rate(Visit visit, int rating) {
+        visit.setRating(rating);
+        visitRepository.save(visit);
+    }
 }

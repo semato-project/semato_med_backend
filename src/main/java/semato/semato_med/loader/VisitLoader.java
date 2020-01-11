@@ -94,6 +94,14 @@ public class VisitLoader implements ApplicationRunner {
                 clinicRepository.findByEmail(ClinicLoader.EMAIL).get()
         );
 
+        addVisit(
+                workSchedule.getDateTimeStart().plusSeconds(7 * Visit.VISIT_LENGHT_SECONDS),
+                physician,
+                physician.getSpecialitySet().iterator().next(),
+                patient,
+                clinicRepository.findByEmail(ClinicLoader.EMAIL).get()
+        );
+
         physician = query.getResultList().get(0);
 
         workSchedule = workScheduleRepository.findOneByPhysician(physician).get();

@@ -4,11 +4,13 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import semato.semato_med.exception.ResourceNotFoundException;
 import semato.semato_med.model.*;
+import semato.semato_med.payload.ApiResponse;
 import semato.semato_med.payload.visit.*;
 import semato.semato_med.repository.ClinicRepository;
 import semato.semato_med.repository.PhysicianRepository;
@@ -17,10 +19,12 @@ import semato.semato_med.repository.VisitRepository;
 import semato.semato_med.security.CurrentUser;
 import semato.semato_med.security.UserPrincipal;
 import semato.semato_med.service.EmailSender;
+import semato.semato_med.service.RatingCounterService;
 import semato.semato_med.service.VisitService;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @RestController
@@ -44,6 +48,9 @@ public class VisitController {
 
     @Autowired
     private VisitRepository visitRepository;
+
+    @Autowired
+    private RatingCounterService ratingCounterService;
 
     @GetMapping("/speciality/list/get")
     @PreAuthorize("hasRole('PATIENT')")
@@ -71,7 +78,8 @@ public class VisitController {
             visitService.getPhysicianListBySpecialityAndClinic(
                 specialityRepository.findById(specialityId).get(),
                 clinic
-            )
+            ),
+            ratingCounterService
         );
     }
 
@@ -137,5 +145,27 @@ public class VisitController {
         emailSender.send(visitService.constructCancelVisitEmail(visitOptional.get().getPatient(), visitOptional.get()));
     }
 
+    @PostMapping("/rate")
+    @PreAuthorize("hasRole('PATIENT')")
+    public ResponseEntity rateVisit(@RequestBody RateVisitRequest request, @CurrentUser UserPrincipal userPrincipal) {
+
+        Optional<Visit> visitOptional = visitRepository.findById(request.getVisitId());
+
+        if (!visitOptional.isPresent()){
+            return new ResponseEntity<>(new ApiResponse(false, "Visit not found!"), HttpStatus.NOT_FOUND);
+        }
+
+        if(!userPrincipal.getUser().getEmail().equals(visitOptional.get().getPatient().getUser().getEmail())) {
+            return new ResponseEntity<>(new ApiResponse(false, "You can rate only yours visit!"), HttpStatus.BAD_REQUEST);
+        }
+
+        if(visitOptional.get().getDateTimeEnd().isAfter(LocalDateTime.now())){
+            return new ResponseEntity<>(new ApiResponse(false, "You cannot rate not finished visit!"), HttpStatus.BAD_REQUEST);
+        }
+
+        visitService.rate(visitOptional.get(), request.getRating());
+        return new ResponseEntity<>(new ApiResponse(true, "Visit has been rated"), HttpStatus.OK);
+
+    }
 
 }

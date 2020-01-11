@@ -19,6 +19,8 @@ public interface VisitRepository extends JpaRepository<Visit, Long> {
     Optional<ArrayList<Visit>> findByPatient(Patient patient);
     Optional<ArrayList<Visit>> findByPhysician(Physician physician);
 
+    ArrayList<Visit> findByPhysicianAndRatingIsNotNull(Physician physician);
+
     @Query("SELECT v FROM Visit v WHERE v.physician = :physician AND v.dateTimeEnd > :dateTime AND v.status <> :omitStatus")
     Optional<ArrayList<Visit>> findByPhysicianAfterDate(@Param("physician") Physician physician, @Param("dateTime") LocalDateTime dateTime,  @Param("omitStatus") VisitStatus omitStatus);
 
