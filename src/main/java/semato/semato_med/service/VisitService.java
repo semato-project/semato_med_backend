@@ -38,7 +38,7 @@ public class VisitService {
     public List<Clinic> getClinicListBySpeciality(Speciality speciality) {
 
         List<Clinic> clinicList = entityManager.createQuery(
-                "select c " +
+                "select distinct c " +
                         "from Clinic c " +
                         "inner join fetch c.workScheduleSet ws " +
                         "inner join fetch ws.physician p " +
@@ -56,7 +56,7 @@ public class VisitService {
     public List<Physician> getPhysicianListBySpecialityAndClinic(Speciality speciality, @Nullable Clinic clinic) {
 
         String jpql =
-                "select p " +
+                "select distinct p " +
                 "from Physician p " +
                 "inner join fetch p.workScheduleSet ws " +
                 "inner join fetch ws.clinic c " +
