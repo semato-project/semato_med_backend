@@ -12,7 +12,7 @@ import semato.semato_med.repository.NotificationRepository;
 
 @Component
 @Order(5)
-public class NotificationLoader /*implements ApplicationRunner*/ {
+public class NotificationLoader implements ApplicationRunner {
 
     @Autowired
     private NotificationRepository notificationRepository;
@@ -20,6 +20,7 @@ public class NotificationLoader /*implements ApplicationRunner*/ {
     @Autowired
     private AdminRepository adminRepository;
 
+    @Override
     public void run(ApplicationArguments args) {
 
         Admin admin = adminRepository.findAll().get(0);

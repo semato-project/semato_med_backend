@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import semato.semato_med.exception.BookingException;
 import semato.semato_med.loader.ClinicLoader;
+import semato.semato_med.loader.PatientLoader;
+import semato.semato_med.loader.PhysicianLoader;
 import semato.semato_med.model.*;
 import semato.semato_med.repository.*;
 
@@ -46,7 +48,7 @@ class VisitServiceTest {
     void getPhysicianListBySpecialityAndClinic() {
         List<Physician> physicianList =  visitService.getPhysicianListBySpecialityAndClinic(
                 specialityRepository.findByName("Neurochirurgia").get(),
-                clinicRepository.findByEmail(ClinicLoader.CENTRUM_ZDROWIA_SZCZESCIA_I_POMYSLNOSCI_EXAMPLE_EMAIL).get()
+                clinicRepository.findByEmail(ClinicLoader.EMAIL).get()
         );
         assertEquals( 1, physicianList.size());
 

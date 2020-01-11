@@ -11,11 +11,12 @@ import semato.semato_med.repository.RoleRepository;
 
 @Component
 @Order(1)
-public class RoleLoader  /*implements ApplicationRunner*/ {
+public class RoleLoader implements ApplicationRunner {
 
     @Autowired
     private RoleRepository roleRepository;
 
+    @Override
     public void run(ApplicationArguments args) {
         if(! roleRepository.findByName(RoleName.ROLE_PATIENT).isPresent()) {
             roleRepository.save(new Role(RoleName.ROLE_PATIENT));

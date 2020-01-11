@@ -1,26 +1,33 @@
 package semato.semato_med.loader;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.annotation.Order;
+import org.springframework.data.jpa.repository.query.Jpa21Utils;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 import semato.semato_med.model.*;
 import semato.semato_med.repository.*;
-import semato.semato_med.service.VisitService;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
+import javax.persistence.TypedQuery;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.time.LocalTime;
+import java.util.List;
 
 @Component
-@Transactional
 @Order(3)
-public class VisitLoader /*implements ApplicationRunner*/ {
+public class VisitLoader implements ApplicationRunner {
 
     @Autowired
     private WorkScheduleRepository workScheduleRepository;
+
+    @Autowired
+    private PhysicianRepository physicianRepository;
 
     @Autowired
     private PatientRepository patientRepository;
@@ -29,104 +36,96 @@ public class VisitLoader /*implements ApplicationRunner*/ {
     private ClinicRepository clinicRepository;
 
     @Autowired
-    private PhysicianRepository physicianRepository;
-
-    @Autowired
-    private VisitService visitService;
+    private VisitRepository visitRepository;
 
     @Autowired
     EntityManager entityManager;
 
+    @Override
     public void run(ApplicationArguments args) {
 
+        String jpgl =
+                "select p " +
+                        "from Physician p " +
+                        "inner join p.user u " +
+                        "inner join fetch p.specialitySet s " +
+                        "where u.email = :email "
+                ;
 
+        TypedQuery<Physician> query = entityManager.createQuery(
+                jpgl,
+                Physician.class)
+                .setParameter("email", PhysicianLoader.EMAIL)
+        ;
 
-        Random random = new Random();
+        Physician physician = query.getResultList().get(0);
 
-        Optional<Physician> strange = physicianRepository.findOneByEmail(PhysicianLoader.STRANGE_EXAMPLE_EMAIL);
-        Optional<Physician> house = physicianRepository.findOneByEmail(PhysicianLoader.HOUSE_EXAMPLE_EMAIL);
-        Optional<Physician> lecter = physicianRepository.findOneByEmail(PhysicianLoader.LECTER_EXAMPLE_EMAIL);
-        Optional<Physician> najlepszy = physicianRepository.findOneByEmail(PhysicianLoader.NAJLEPSZY_EXAMPLE_EMAIL);
+        Patient patient = patientRepository.findOneByEmail(PatientLoader.EMAIL).get();
 
-        List<Physician> physicians = new ArrayList<>();
-        physicians.add(strange.get());
-        physicians.add(house.get());
-        physicians.add(lecter.get());
-        physicians.add(najlepszy.get());
+        WorkSchedule workSchedule = workScheduleRepository.findOneByPhysician(physician).get();
 
-        List<WorkSchedule> strangeWorkSchedule = workScheduleRepository.findByPhysician(strange.get());
-        List<WorkSchedule> houseWorkSchedule = workScheduleRepository.findByPhysician(house.get());
-        List<WorkSchedule> lecterWorkSchedule = workScheduleRepository.findByPhysician(lecter.get());
-        List<WorkSchedule> najlepszyWorkSchedule = workScheduleRepository.findByPhysician(najlepszy.get());
+        addVisit(
+                workSchedule.getDateTimeStart().plusSeconds(Visit.VISIT_LENGHT_SECONDS),
+                physician,
+                physician.getSpecialitySet().iterator().next(),
+                patient,
+                clinicRepository.findByEmail(ClinicLoader.EMAIL).get()
+        );
 
-        List<List<WorkSchedule>> workSchedules = new ArrayList<>();
-        workSchedules.add(strangeWorkSchedule);
-        workSchedules.add(houseWorkSchedule);
-        workSchedules.add(lecterWorkSchedule);
-        workSchedules.add(najlepszyWorkSchedule);
+        addVisit(
+                workSchedule.getDateTimeStart().plusSeconds(4 * Visit.VISIT_LENGHT_SECONDS),
+                physician,
+                physician.getSpecialitySet().iterator().next(),
+                patient,
+                clinicRepository.findByEmail(ClinicLoader.EMAIL).get()
+        );
 
-        Patient alekLolek = patientRepository.findOneByEmail(PatientLoader.ALEK_OLEK_EXAMPLE_EMAIL).get();
-        Patient tristanPakistanczyk = patientRepository.findOneByEmail(PatientLoader.TRISTAN_PAKISTANCZYK_EXAMPLE_EMAIL).get();
-        Patient paulinaRekin = patientRepository.findOneByEmail(PatientLoader.PAULINA_REKIN_EXAMPLE_EMAIL).get();
-        Patient romekBromek = patientRepository.findOneByEmail(PatientLoader.ROMEK_BROMEK_EXAMPLE_EMAIL).get();
-        Patient kasiaZpodlasia = patientRepository.findOneByEmail(PatientLoader.KASIA_ZPODLASIA_EXAMPLE_EMAIL).get();
-        Patient waclawKumaty = patientRepository.findOneByEmail(PatientLoader.WACLAW_KUMATY_EXAMPLE_EMAIL).get();
+        query = entityManager.createQuery(
+                jpgl,
+                Physician.class)
+                .setParameter("email", PhysicianLoader.EMAIL3)
+        ;
 
-        List<Patient> patients = new ArrayList<>();
-        patients.add(alekLolek);
-        patients.add(tristanPakistanczyk);
-        patients.add(paulinaRekin);
-        patients.add(romekBromek);
-        patients.add(kasiaZpodlasia);
-        patients.add(waclawKumaty);
+        addVisit(
+                workSchedule.getDateTimeStart().plusSeconds(7 * Visit.VISIT_LENGHT_SECONDS),
+                physician,
+                physician.getSpecialitySet().iterator().next(),
+                patient,
+                clinicRepository.findByEmail(ClinicLoader.EMAIL).get()
+        );
 
-        List<Clinic> clinics = clinicRepository.findAll();
+        physician = query.getResultList().get(0);
 
-        for(int i=0;i<40;i++){
-            int doctorsAndHisWorkScheduleIndexInArray = random.nextInt(physicians.size());
-            List<WorkSchedule> workScheduleList = workSchedules.get(doctorsAndHisWorkScheduleIndexInArray);
-            addVisit(
-                    workScheduleList.get(random.nextInt(workScheduleList.size())).getDateTimeStart().plusSeconds(random.nextInt(14)*Visit.VISIT_LENGHT_SECONDS),
-                    physicians.get(doctorsAndHisWorkScheduleIndexInArray),
-                    physicians.get(doctorsAndHisWorkScheduleIndexInArray).getSpecialitySet(),
-                    patients.get(random.nextInt(patients.size())),
-                    clinics.get(random.nextInt(clinics.size()))
-            );
-        }
+        workSchedule = workScheduleRepository.findOneByPhysician(physician).get();
 
+        addVisit(
+                workSchedule.getDateTimeStart().plusSeconds(7 * Visit.VISIT_LENGHT_SECONDS),
+                physician,
+                physician.getSpecialitySet().iterator().next(),
+                patient,
+                clinicRepository.findByEmail(ClinicLoader.EMAIL).get()
+        );
 
     }
 
     private void addVisit(
             LocalDateTime dateTimeStart,
             Physician physician,
-            Set<Speciality> speciality,
+            Speciality speciality,
             Patient patient,
             Clinic clinic
     ) {
 
-        List<Speciality> specialities = new ArrayList<>(speciality);
+        Visit visit = new Visit();
+        visit.setDateTimeStart(dateTimeStart);
+        visit.setDateTimeEnd(dateTimeStart.plusSeconds(Visit.VISIT_LENGHT_SECONDS));
+        visit.setPhysician(physician);
+        visit.setSpeciality(speciality);
+        visit.setPatient(patient);
+        visit.setClinic(clinic);
+        visit.setStatus(VisitStatus.RESERVED);
 
-//        Visit visit = new Visit();
-//        visit.setDateTimeStart(dateTimeStart);
-//        visit.setDateTimeEnd(dateTimeStart.plusSeconds(Visit.VISIT_LENGHT_SECONDS));
-//        visit.setPhysician(physician);
-//        visit.setSpeciality(specialities.get(0));
-//        visit.setPatient(patient);
-//        visit.setClinic(clinic);
-//        visit.setStatus(VisitStatus.RESERVED);
-//        visitRepository.save(visit);
-
-        Random random = new Random();
-        visitService.bookVisitWithParams(
-                specialities.get(random.nextInt(specialities.size())),
-                dateTimeStart,
-                dateTimeStart.plusSeconds(Visit.VISIT_LENGHT_SECONDS),
-                clinic,
-                physician,
-                patient);
-
-
+        visitRepository.save(visit);
     }
 
 }

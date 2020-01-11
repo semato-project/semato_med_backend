@@ -10,7 +10,7 @@ import semato.semato_med.repository.SpecialityRepository;
 
 @Component
 @Order(1)
-public class SpecialityLoader /*implements ApplicationRunner*/ {
+public class SpecialityLoader implements ApplicationRunner {
 
     public static final String[] specialityArray = {
             "Kardiologia",
@@ -23,6 +23,7 @@ public class SpecialityLoader /*implements ApplicationRunner*/ {
     @Autowired
     private SpecialityRepository specialityRepository;
 
+    @Override
     public void run(ApplicationArguments args) {
 
         for (String specialityName: specialityArray) {
