@@ -34,33 +34,122 @@ public class PatientLoader implements ApplicationRunner {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public static final String EMAIL = "aleklolek@example.com";
-    public static final String PASSWORD = "qwerty";
+    public static final String TRISTAN_PAKISTANCZYK_EXAMPLE_EMAIL = "tristanpakistanczyk@example.com";
+    public static final String PAULINA_REKIN_EXAMPLE_EMAIL = "paulinarekin@example.com";
+    public static final String ALEK_OLEK_EXAMPLE_EMAIL = "aleklolek@example.com";
+    public static final String ROMEK_BROMEK_EXAMPLE_EMAIL = "romekbromek@example.com";
+    public static final String KASIA_ZPODLASIA_EXAMPLE_EMAIL = "kasiazpodlasia@example.com";
+    public static final String WACLAW_KUMATY_EXAMPLE_EMAIL = "waclawkumaty@example.com";
+    public static final String TEMP_PASSWORD = "qwerty";
+
 
     @Override
     public void run(ApplicationArguments args) {
 
-        if(! userRepository.findByEmail(EMAIL).isPresent()) {
+        if (!userRepository.findByEmail(ALEK_OLEK_EXAMPLE_EMAIL).isPresent()) {
 
-            User user = new User();
-            user.setFirstName("Alek");
-            user.setLastName("Lolek");
-            user.setEmail(EMAIL);
-            user.setPhone("123-123-123");
-            user.setPassword(passwordEncoder.encode(PASSWORD));
-            Role userRole = roleRepository.findByName(RoleName.ROLE_PATIENT).orElseThrow(() -> new AppException("User Role not set."));
-            user.setRoles(Collections.singleton(userRole));
+            saveUser("Alek",
+                    "Lolek",
+                    ALEK_OLEK_EXAMPLE_EMAIL,
+                    "123-123-123",
+                    TEMP_PASSWORD,
+                    LocalDate.of(1999, 1, 1),
+                    "Kraków",
+                    "2",
+                    "12345678901",
+                    "33-333",
+                    "Misiewizca");
 
-            Patient patient = new Patient();
-            patient.setBirthDate(LocalDate.of(1999,1,1));
-            patient.setCity("Kraków");
-            patient.setHouseNumber("2");
-            patient.setPesel("12345678901");
-            patient.setPostalCode("33-333");
-            patient.setStreet("Misiewicza");
-            patient.setUser(user);
-            patientRepository.save(patient);
+            saveUser("Romek",
+                    "Bromek",
+                    ROMEK_BROMEK_EXAMPLE_EMAIL,
+                    "321-321-321",
+                    TEMP_PASSWORD,
+                    LocalDate.of(1989, 1, 1),
+                    "Kraków",
+                    "5",
+                    "09123123231",
+                    "22-222",
+                    "Tuska");
 
+            saveUser("Kasia",
+                    "Zpodlasia",
+                    KASIA_ZPODLASIA_EXAMPLE_EMAIL,
+                    "333-222-111",
+                    TEMP_PASSWORD,
+                    LocalDate.of(1975, 1, 1),
+                    "Kraków",
+                    "8",
+                    "19231223234",
+                    "11-111",
+                    "Kaczyńska");
+
+            saveUser("Wacław",
+                    "Kumaty",
+                    WACLAW_KUMATY_EXAMPLE_EMAIL,
+                    "333-222-999",
+                    TEMP_PASSWORD,
+                    LocalDate.of(1964, 1, 1),
+                    "Kraków",
+                    "15",
+                    "19231222224",
+                    "91-231",
+                    "Grodzka");
+
+            saveUser("Tristan",
+                    "Pakistanczyk",
+                    TRISTAN_PAKISTANCZYK_EXAMPLE_EMAIL,
+                    "333-999-111",
+                    TEMP_PASSWORD,
+                    LocalDate.of(1965, 1, 1),
+                    "Kraków",
+                    "66",
+                    "66661223234",
+                    "23-323",
+                    "Różowa");
+
+            saveUser("Paulina",
+                    "Rekin",
+                    PAULINA_REKIN_EXAMPLE_EMAIL,
+                    "393-999-111",
+                    TEMP_PASSWORD,
+                    LocalDate.of(1992, 1, 1),
+                    "Kraków",
+                    "11",
+                    "92233232341",
+                    "84-343",
+                    "Schetyńska");
         }
+    }
+
+    private void saveUser(String firstName,
+                          String lastName,
+                          String email,
+                          String phone,
+                          String password,
+                          LocalDate birthDate,
+                          String city,
+                          String houseNumber,
+                          String pesel,
+                          String postalCode,
+                          String street) {
+        User user = new User();
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setEmail(email);
+        user.setPhone(phone);
+        user.setPassword(passwordEncoder.encode(password));
+        Role userRole = roleRepository.findByName(RoleName.ROLE_PATIENT).orElseThrow(() -> new AppException("User Role not set."));
+        user.setRoles(Collections.singleton(userRole));
+
+        Patient patient = new Patient();
+        patient.setBirthDate(birthDate);
+        patient.setCity(city);
+        patient.setHouseNumber(houseNumber);
+        patient.setPesel(pesel);
+        patient.setPostalCode(postalCode);
+        patient.setStreet(street);
+        patient.setUser(user);
+        patientRepository.save(patient);
     }
 }
