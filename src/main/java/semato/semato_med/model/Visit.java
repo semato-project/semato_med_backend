@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @Table(indexes=@Index(columnList="dateTimeStart,dateTimeEnd"))
-public class Visit extends DateAudit implements Slotable {
+public class Visit extends DateAudit implements Slotable, Comparable<Visit> {
 
     public static final int VISIT_LENGHT_SECONDS = 60 * 30;
 
@@ -47,5 +47,11 @@ public class Visit extends DateAudit implements Slotable {
     private Integer rating;
 
     private VisitStatus status;
+
+    @Override
+    public int compareTo(Visit d) {
+        int result = getDateTimeStart().compareTo(d.getDateTimeStart());
+        return result;
+    }
 
 }

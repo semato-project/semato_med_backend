@@ -10,6 +10,7 @@ import semato.semato_med.exception.BookingException;
 import semato.semato_med.model.*;
 import semato.semato_med.repository.VisitRepository;
 import semato.semato_med.security.CurrentUser;
+import semato.semato_med.util.VisitComparator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -145,6 +146,8 @@ public class VisitService {
                 availableVisitList.add(virtualVisit);
             }
         }
+
+        availableVisitList.sort(new VisitComparator());
 
         return availableVisitList;
     }

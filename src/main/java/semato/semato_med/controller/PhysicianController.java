@@ -20,6 +20,7 @@ import semato.semato_med.repository.VisitRepository;
 import semato.semato_med.security.CurrentUser;
 import semato.semato_med.security.UserPrincipal;
 import semato.semato_med.service.EmailSender;
+import semato.semato_med.util.VisitComparator;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -44,6 +45,8 @@ public class PhysicianController {
 
         Physician physician = userPrincipal.getUser().getPhysician();
         ArrayList<Visit> visitList = visitRepository.findByPhysicianAfterDate(physician, now, VisitStatus.CANCELED).get();
+
+        visitList.sort(new VisitComparator());
 
         return new VisitListResponse(visitList);
     }

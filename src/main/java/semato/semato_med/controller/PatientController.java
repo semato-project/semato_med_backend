@@ -20,6 +20,7 @@ import semato.semato_med.security.CurrentUser;
 import semato.semato_med.security.UserPrincipal;
 import semato.semato_med.service.EmailSender;
 import semato.semato_med.service.SoftDeleteService;
+import semato.semato_med.util.VisitComparator;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -71,6 +72,8 @@ public class PatientController {
                         throw new ResourceNotFoundException("VisitListMode", "mode", mode.get());
                 }
             }
+
+            visitList.sort(new VisitComparator());
 
         } catch (NoSuchElementException e) {
             visitList = null;
