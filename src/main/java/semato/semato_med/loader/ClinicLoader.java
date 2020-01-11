@@ -10,7 +10,7 @@ import semato.semato_med.repository.ClinicRepository;
 
 @Component
 @Order(1)
-public class ClinicLoader implements ApplicationRunner {
+public class ClinicLoader /*implements ApplicationRunner*/ {
 
     public static final String CENTRUM_ZDROWIA_SZCZESCIA_I_POMYSLNOSCI_EXAMPLE_EMAIL = "centrum_zdrowia_szczescia_i_pomyslnosci@example.com";
     public static final String ARKHAM_EMAIL= "arhkamemail@example.com";
@@ -20,7 +20,6 @@ public class ClinicLoader implements ApplicationRunner {
     @Autowired
     private ClinicRepository clinicRepository;
 
-    @Override
     public void run(ApplicationArguments args) {
 
         addClinic(

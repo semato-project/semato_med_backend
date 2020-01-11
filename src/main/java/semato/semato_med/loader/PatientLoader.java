@@ -20,7 +20,7 @@ import java.util.Collections;
 
 @Component
 @Order(2)
-public class PatientLoader implements ApplicationRunner {
+public class PatientLoader /*implements ApplicationRunner*/ {
 
     @Autowired
     private UserRepository userRepository;
@@ -42,8 +42,6 @@ public class PatientLoader implements ApplicationRunner {
     public static final String WACLAW_KUMATY_EXAMPLE_EMAIL = "waclawkumaty@example.com";
     public static final String TEMP_PASSWORD = "qwerty";
 
-
-    @Override
     public void run(ApplicationArguments args) {
 
         if (!userRepository.findByEmail(ALEK_OLEK_EXAMPLE_EMAIL).isPresent()) {

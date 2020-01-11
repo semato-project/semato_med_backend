@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 @Component
 @Order(2)
-public class PhysicianLoader implements ApplicationRunner {
+public class PhysicianLoader /*implements ApplicationRunner*/ {
 
     @Autowired
     private UserRepository userRepository;
@@ -47,7 +47,6 @@ public class PhysicianLoader implements ApplicationRunner {
     public static final String NAJLEPSZY_EXAMPLE_EMAIL = "najlepszy@example.com";
     public static final String PASSWORD = "qwerty";
 
-    @Override
     public void run(ApplicationArguments args) {
 
         Speciality neurochirurgia = specialityRepository.findByName("Neurochirurgia").get();

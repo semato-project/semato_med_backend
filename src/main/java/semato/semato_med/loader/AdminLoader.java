@@ -16,7 +16,7 @@ import java.util.Collections;
 
 @Component
 @Order(3)
-public class AdminLoader implements ApplicationRunner {
+public class AdminLoader /*implements ApplicationRunner*/ {
 
     @Autowired
     private UserRepository userRepository;
@@ -33,7 +33,6 @@ public class AdminLoader implements ApplicationRunner {
     public static final String EMAIL = "superadmin@example.com";
     public static final String PASSWORD = "TajneHaslo!";
 
-    @Override
     public void run(ApplicationArguments args) {
 
         if(! userRepository.findByEmail(EMAIL).isPresent()) {

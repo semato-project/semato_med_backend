@@ -17,7 +17,7 @@ import java.util.*;
 @Component
 @Transactional
 @Order(3)
-public class VisitLoader implements ApplicationRunner {
+public class VisitLoader /*implements ApplicationRunner*/ {
 
     @Autowired
     private WorkScheduleRepository workScheduleRepository;
@@ -37,7 +37,6 @@ public class VisitLoader implements ApplicationRunner {
     @Autowired
     EntityManager entityManager;
 
-    @Override
     public void run(ApplicationArguments args) {
 
 
@@ -83,7 +82,7 @@ public class VisitLoader implements ApplicationRunner {
 
         List<Clinic> clinics = clinicRepository.findAll();
 
-        for(int i=0;i<25;i++){
+        for(int i=0;i<40;i++){
             int doctorsAndHisWorkScheduleIndexInArray = random.nextInt(physicians.size());
             List<WorkSchedule> workScheduleList = workSchedules.get(doctorsAndHisWorkScheduleIndexInArray);
             addVisit(
