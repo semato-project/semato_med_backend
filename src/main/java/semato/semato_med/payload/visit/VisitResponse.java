@@ -1,11 +1,9 @@
 package semato.semato_med.payload.visit;
 
 import lombok.AllArgsConstructor;
-import semato.semato_med.model.Clinic;
 import semato.semato_med.model.Visit;
 import semato.semato_med.model.VisitStatus;
 
-import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -57,6 +55,8 @@ public class VisitResponse {
     public VisitStatus getStatus() {
         return visit.getStatus();
     }
+
+    public Integer getRating() { return visit.getRating(); }
 
     public Long getPatientId() {
         if (visit.getPatient() == null) {

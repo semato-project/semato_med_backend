@@ -1,6 +1,5 @@
 package semato.semato_med.payload.visit;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import semato.semato_med.model.Physician;
 import semato.semato_med.service.RatingCounterService;
 
@@ -22,8 +21,6 @@ public class PhysicianListResponse {
 
 
     public List<PhysicianResponse> getPhysicianList() {
-
-//        RatingCounterService ratingCounterService = new RatingCounterService();
 
         List<PhysicianResponse> response = new LinkedList<>();
 

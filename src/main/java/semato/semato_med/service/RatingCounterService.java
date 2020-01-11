@@ -15,9 +15,13 @@ public class RatingCounterService {
     private VisitRepository visitRepository;
 
     public int countRatingForPhysician(Physician physician){
-        ArrayList<Visit> physicianVisitLists = visitRepository.findByRatingIsNotNullAndPhysician(physician);
+        ArrayList<Visit> physicianVisitList = visitRepository.findByPhysicianAndRatingIsNotNull(physician);
+        System.out.println(physicianVisitList);
+        for (Visit visit : physicianVisitList) {
+            System.out.println(visit.getRating());
+        }
 
-        return (int) Math.round(physicianVisitLists.stream().mapToDouble(Visit::getRating).average().orElse(Double.NaN));
+        return (int) Math.round(physicianVisitList.stream().mapToDouble(Visit::getRating).average().orElse(Double.NaN));
 
     }
 }
