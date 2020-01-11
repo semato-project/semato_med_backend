@@ -19,6 +19,7 @@ import semato.semato_med.repository.VisitRepository;
 import semato.semato_med.security.CurrentUser;
 import semato.semato_med.security.UserPrincipal;
 import semato.semato_med.service.EmailSender;
+import semato.semato_med.service.RatingCounterService;
 import semato.semato_med.service.VisitService;
 
 import javax.validation.Valid;
@@ -48,6 +49,9 @@ public class VisitController {
     @Autowired
     private VisitRepository visitRepository;
 
+    @Autowired
+    private RatingCounterService ratingCounterService;
+
     @GetMapping("/speciality/list/get")
     @PreAuthorize("hasRole('PATIENT')")
     public SpecialityListResponse getSpecialityList() {
@@ -74,7 +78,8 @@ public class VisitController {
             visitService.getPhysicianListBySpecialityAndClinic(
                 specialityRepository.findById(specialityId).get(),
                 clinic
-            )
+            ),
+            ratingCounterService
         );
     }
 
