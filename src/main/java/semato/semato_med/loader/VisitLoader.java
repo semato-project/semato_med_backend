@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import semato.semato_med.model.*;
 import semato.semato_med.repository.*;
+import semato.semato_med.service.VisitService;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
@@ -31,7 +32,7 @@ public class VisitLoader implements ApplicationRunner {
     private PhysicianRepository physicianRepository;
 
     @Autowired
-    private VisitRepository visitRepository;
+    private VisitService visitService;
 
     @Autowired
     EntityManager entityManager;
@@ -107,16 +108,26 @@ public class VisitLoader implements ApplicationRunner {
 
         List<Speciality> specialities = new ArrayList<>(speciality);
 
-        Visit visit = new Visit();
-        visit.setDateTimeStart(dateTimeStart);
-        visit.setDateTimeEnd(dateTimeStart.plusSeconds(Visit.VISIT_LENGHT_SECONDS));
-        visit.setPhysician(physician);
-        visit.setSpeciality(specialities.get(0));
-        visit.setPatient(patient);
-        visit.setClinic(clinic);
-        visit.setStatus(VisitStatus.RESERVED);
+//        Visit visit = new Visit();
+//        visit.setDateTimeStart(dateTimeStart);
+//        visit.setDateTimeEnd(dateTimeStart.plusSeconds(Visit.VISIT_LENGHT_SECONDS));
+//        visit.setPhysician(physician);
+//        visit.setSpeciality(specialities.get(0));
+//        visit.setPatient(patient);
+//        visit.setClinic(clinic);
+//        visit.setStatus(VisitStatus.RESERVED);
+//        visitRepository.save(visit);
 
-        visitRepository.save(visit);
+        Random random = new Random();
+        visitService.bookVisitWithParams(
+                specialities.get(random.nextInt(specialities.size())),
+                dateTimeStart,
+                dateTimeStart.plusSeconds(Visit.VISIT_LENGHT_SECONDS),
+                clinic,
+                physician,
+                patient);
+
+
     }
 
 }
