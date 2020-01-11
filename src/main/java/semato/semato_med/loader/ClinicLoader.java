@@ -12,7 +12,10 @@ import semato.semato_med.repository.ClinicRepository;
 @Order(1)
 public class ClinicLoader implements ApplicationRunner {
 
-    public static final String EMAIL = "centrum_zdrowia_szczescia_i_pomyslnosci@example.com";
+    public static final String CENTRUM_ZDROWIA_SZCZESCIA_I_POMYSLNOSCI_EXAMPLE_EMAIL = "centrum_zdrowia_szczescia_i_pomyslnosci@example.com";
+    public static final String ARKHAM_EMAIL= "centrum_zdrowia_szczescia_i_pomyslnosci@example.com";
+    public static final String LESNA_GORA_EMAIL= "lesna_gora@example.com";
+
 
     @Autowired
     private ClinicRepository clinicRepository;
@@ -23,7 +26,7 @@ public class ClinicLoader implements ApplicationRunner {
         addClinic(
                 "Kraków",
                 "Polska",
-                EMAIL,
+                CENTRUM_ZDROWIA_SZCZESCIA_I_POMYSLNOSCI_EXAMPLE_EMAIL,
                 "Centrum zdrowia, szczęścia i pomyślności w Krakowie",
                 "22",
                 "Ofiar służby zdrowia",
@@ -36,7 +39,7 @@ public class ClinicLoader implements ApplicationRunner {
         addClinic(
                 "Kraków",
                 "Polska",
-                "arkham@example.com",
+                ARKHAM_EMAIL,
                 "Azyl Arkham",
                 "66",
                 "Jamesa Gordona",
@@ -49,13 +52,13 @@ public class ClinicLoader implements ApplicationRunner {
         addClinic(
                 "Kraków",
                 "Polska",
-                "szpitalwlesnejgorzeoddzialkrakow@example.com",
+                LESNA_GORA_EMAIL,
                 "Szpital w Leśnej Górze oddział Kraków",
                 "67",
                 "Leśnogórska",
                 "https://i.iplsc.com/elewacja-po-zmianach-tak-wyglada-szpital-kliniczny-w-lesnej-/0004E6OPAJUPXL78-C122-F4.jpg",
-                50.0394343F,
-                19.9414305F,
+                50.0333321F,
+                19.9434231F,
                 "77-777"
         );
     }
