@@ -3,14 +3,16 @@ package semato.semato_med.loader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import semato.semato_med.model.Clinic;
 import semato.semato_med.repository.ClinicRepository;
 
+@Profile("dev")
 @Component
 @Order(1)
-public class ClinicLoader /*implements ApplicationRunner*/ {
+public class ClinicLoader implements ApplicationRunner {
 
     public static final String CENTRUM_ZDROWIA_SZCZESCIA_I_POMYSLNOSCI_EXAMPLE_EMAIL = "centrum_zdrowia_szczescia_i_pomyslnosci@example.com";
     public static final String ARKHAM_EMAIL= "arhkamemail@example.com";

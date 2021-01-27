@@ -54,4 +54,18 @@ public class Visit extends DateAudit implements Slotable, Comparable<Visit> {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "Visit{" +
+                "id=" + id +
+                ", patient=" + patient +
+                ", physician=" + physician +
+                ", clinic=" + clinic +
+                ", speciality=" + speciality +
+                ", dateTimeStart=" + dateTimeStart +
+                ", dateTimeEnd=" + dateTimeEnd +
+                ", rating=" + rating +
+                ", status=" + status +
+                '}';
+    }
 }

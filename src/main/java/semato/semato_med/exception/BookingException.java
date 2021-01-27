@@ -6,4 +6,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.CONFLICT)
 public class BookingException extends RuntimeException {
 
+    public BookingException(String var1) {
+        super(var1);
+    }
+
 }

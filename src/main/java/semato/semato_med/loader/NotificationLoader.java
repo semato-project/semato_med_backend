@@ -3,6 +3,7 @@ package semato.semato_med.loader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import semato.semato_med.model.Admin;
@@ -10,9 +11,10 @@ import semato.semato_med.model.Notification;
 import semato.semato_med.repository.AdminRepository;
 import semato.semato_med.repository.NotificationRepository;
 
+@Profile("dev")
 @Component
 @Order(5)
-public class NotificationLoader /*implements ApplicationRunner*/ {
+public class NotificationLoader implements ApplicationRunner {
 
     @Autowired
     private NotificationRepository notificationRepository;

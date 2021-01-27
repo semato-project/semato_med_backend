@@ -3,16 +3,22 @@ package semato.semato_med.service;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import semato.semato_med.exception.BookingException;
-import semato.semato_med.loader.ClinicLoader;
+import org.springframework.test.annotation.DirtiesContext;
+import semato.semato_med.exception.AppException;
 import semato.semato_med.model.*;
+import semato.semato_med.mother.ClinicMother;
+import semato.semato_med.mother.PhysicianMother;
 import semato.semato_med.repository.*;
 
-import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class VisitServiceTest {
 
     @Autowired
@@ -36,97 +42,156 @@ class VisitServiceTest {
     @Autowired
     VisitRepository visitRepository;
 
+    @Autowired
+    RoleRepository roleRepository;
+
+    @Autowired
+    PhysicianMother physicianMother;
+
+    @Autowired
+    ClinicMother clinicMother;
+
     @Test
-    void getClinicListBySpeciality() {
-        List<Clinic> clinicList =  visitService.getClinicListBySpeciality(specialityRepository.findByName("Neurochirurgia").get());
-        assertEquals( 1, clinicList.size());
+    void finds_clinic_by_speciality_when_clinic_with_proper_speciality_exists() {
+        Speciality speciality = new Speciality();
+        speciality.setName("Neurochirurgia");
+        specialityRepository.save(speciality);
+        assumeClinicWithSpecialityExists(speciality);
+
+        List<Clinic> clinicListContains =  visitService.getClinicListBySpeciality(specialityRepository.findByName("Neurochirurgia").get());
+
+        assertEquals( 1, clinicListContains.size());
     }
 
     @Test
-    void getPhysicianListBySpecialityAndClinic() {
-        List<Physician> physicianList =  visitService.getPhysicianListBySpecialityAndClinic(
-                specialityRepository.findByName("Neurochirurgia").get(),
-                clinicRepository.findByEmail(ClinicLoader.CENTRUM_ZDROWIA_SZCZESCIA_I_POMYSLNOSCI_EXAMPLE_EMAIL).get()
-        );
-        assertEquals( 1, physicianList.size());
+    void finds_no_clinic_by_speciality_when_clinic_with_searched_speciality_does_not_exist() {
+        Speciality assignedSpeciality = new Speciality();
+        assignedSpeciality.setName("Stomatologia");
+        specialityRepository.save(assignedSpeciality);
+        assumeClinicWithSpecialityExists(assignedSpeciality);
 
-        physicianList =  visitService.getPhysicianListBySpecialityAndClinic(
-                specialityRepository.findByName("Neurochirurgia").get(),
-                null
-        );
-        assertEquals( 1, physicianList.size());
+        Speciality notAssignedSpeciality = new Speciality();
+        notAssignedSpeciality.setName("Kosmetologia");
+        specialityRepository.save(notAssignedSpeciality);
 
+        List<Clinic> clinicListContains =  visitService.getClinicListBySpeciality(specialityRepository.findByName("Kosmetologia").get());
+
+        assertEquals( 0, clinicListContains.size());
     }
 
     @Test
-    void bookVisitWithParams() {
-        Visit visit = visitRepository.findAll().get(0);
+    void finds_physician_by_speciality_and_clinic_when_exists() {
+        Speciality speciality = new Speciality();
+        speciality.setName("Neurochirurgia");
+        specialityRepository.save(speciality);
+        Clinic clinic = assumeClinicWithSpecialityExists(speciality);
 
-        assertThrows(BookingException.class, () -> {
-            visitService.bookVisitWithParams(
-                    visit.getSpeciality(),
-                    visit.getDateTimeStart(),
-                    visit.getDateTimeEnd(),
-                    visit.getClinic(),
-                    visit.getPhysician(),
-                    visit.getPatient()
-            );
-        });
+        List<Physician> physicianList =  visitService.getPhysicianListBySpecialityAndClinic(speciality, clinic);
+        assertEquals( 1, physicianList.size());
+    }
 
-        assertThrows(BookingException.class, () -> {
-            visitService.bookVisitWithParams(
-                    visit.getSpeciality(),
-                    visit.getDateTimeStart().minusSeconds(Visit.VISIT_LENGHT_SECONDS / 2),
-                    visit.getDateTimeEnd().minusSeconds(Visit.VISIT_LENGHT_SECONDS / 2),
-                    visit.getClinic(),
-                    visit.getPhysician(),
-                    visit.getPatient()
-            );
-        });
+    @Test
+    void finds_no_physician_by_speciality_and_clinic_when_does_not_exist() {
+        Speciality assignedSpeciality = new Speciality();
+        assignedSpeciality.setName("Kardiologia");
+        specialityRepository.save(assignedSpeciality);
+        Clinic clinic = assumeClinicWithSpecialityExists(assignedSpeciality);
 
-        assertThrows(BookingException.class, () -> {
-            visitService.bookVisitWithParams(
-                    visit.getSpeciality(),
-                    visit.getDateTimeStart().plusSeconds(Visit.VISIT_LENGHT_SECONDS / 2),
-                    visit.getDateTimeEnd().plusSeconds(Visit.VISIT_LENGHT_SECONDS / 2),
-                    visit.getClinic(),
-                    visit.getPhysician(),
-                    visit.getPatient()
-            );
-        });
+        Speciality notAssignedSpeciality = new Speciality();
+        notAssignedSpeciality.setName("Astrologia");
+        specialityRepository.save(notAssignedSpeciality);
 
-        Visit bookedVisit1 = visitService.bookVisitWithParams(
-                visit.getSpeciality(),
-                visit.getDateTimeStart().minusSeconds(Visit.VISIT_LENGHT_SECONDS),
-                visit.getDateTimeEnd().minusSeconds(Visit.VISIT_LENGHT_SECONDS),
-                visit.getClinic(),
-                visit.getPhysician(),
-                visit.getPatient()
-        );
+        List<Physician> physicianList =  visitService.getPhysicianListBySpecialityAndClinic(notAssignedSpeciality, clinic);
+        assertEquals( 0, physicianList.size());
+    }
 
-        assertTrue(bookedVisit1 instanceof Visit);
+//    @Test
+//    void bookVisitWithParams() {
+//        Visit visit = visitRepository.findAll().get(0);
+//
+//        assertThrows(BookingException.class, () -> {
+//            visitService.bookVisitWithParams(
+//                    visit.getSpeciality(),
+//                    visit.getDateTimeStart(),
+//                    visit.getDateTimeEnd(),
+//                    visit.getClinic(),
+//                    visit.getPhysician(),
+//                    visit.getPatient()
+//            );
+//        });
+//
+//        assertThrows(BookingException.class, () -> {
+//            visitService.bookVisitWithParams(
+//                    visit.getSpeciality(),
+//                    visit.getDateTimeStart().minusSeconds(Visit.VISIT_LENGHT_SECONDS / 2),
+//                    visit.getDateTimeEnd().minusSeconds(Visit.VISIT_LENGHT_SECONDS / 2),
+//                    visit.getClinic(),
+//                    visit.getPhysician(),
+//                    visit.getPatient()
+//            );
+//        });
+//
+//        assertThrows(BookingException.class, () -> {
+//            visitService.bookVisitWithParams(
+//                    visit.getSpeciality(),
+//                    visit.getDateTimeStart().plusSeconds(Visit.VISIT_LENGHT_SECONDS / 2),
+//                    visit.getDateTimeEnd().plusSeconds(Visit.VISIT_LENGHT_SECONDS / 2),
+//                    visit.getClinic(),
+//                    visit.getPhysician(),
+//                    visit.getPatient()
+//            );
+//        });
+//
+//        Visit bookedVisit1 = visitService.bookVisitWithParams(
+//                visit.getSpeciality(),
+//                visit.getDateTimeStart().minusSeconds(Visit.VISIT_LENGHT_SECONDS),
+//                visit.getDateTimeEnd().minusSeconds(Visit.VISIT_LENGHT_SECONDS),
+//                visit.getClinic(),
+//                visit.getPhysician(),
+//                visit.getPatient()
+//        );
+//
+//        assertTrue(bookedVisit1 instanceof Visit);
+//
+//        Visit bookedVisit2 = visitService.bookVisitWithParams(
+//                visit.getSpeciality(),
+//                visit.getDateTimeStart().plusSeconds(Visit.VISIT_LENGHT_SECONDS),
+//                visit.getDateTimeEnd().plusSeconds(Visit.VISIT_LENGHT_SECONDS),
+//                visit.getClinic(),
+//                visit.getPhysician(),
+//                visit.getPatient()
+//        );
+//
+//        assertTrue(bookedVisit2 instanceof Visit);
+//
+//        Visit bookedVisit3 = visitService.bookVisitWithParams(
+//                visit.getSpeciality(),
+//                visit.getDateTimeStart().plusSeconds(Visit.VISIT_LENGHT_SECONDS * 4),
+//                visit.getDateTimeEnd().plusSeconds(Visit.VISIT_LENGHT_SECONDS * 4),
+//                visit.getClinic(),
+//                visit.getPhysician(),
+//                visit.getPatient()
+//        );
+//
+//        assertTrue(bookedVisit3 instanceof Visit);
+//    }
 
-        Visit bookedVisit2 = visitService.bookVisitWithParams(
-                visit.getSpeciality(),
-                visit.getDateTimeStart().plusSeconds(Visit.VISIT_LENGHT_SECONDS),
-                visit.getDateTimeEnd().plusSeconds(Visit.VISIT_LENGHT_SECONDS),
-                visit.getClinic(),
-                visit.getPhysician(),
-                visit.getPatient()
-        );
+    private Clinic assumeClinicWithSpecialityExists(Speciality speciality) {
 
-        assertTrue(bookedVisit2 instanceof Visit);
+        Clinic clinic = clinicMother.get();
+        clinicRepository.save(clinic);
 
-        Visit bookedVisit3 = visitService.bookVisitWithParams(
-                visit.getSpeciality(),
-                visit.getDateTimeStart().plusSeconds(Visit.VISIT_LENGHT_SECONDS * 4),
-                visit.getDateTimeEnd().plusSeconds(Visit.VISIT_LENGHT_SECONDS * 4),
-                visit.getClinic(),
-                visit.getPhysician(),
-                visit.getPatient()
-        );
+        Physician physician = physicianMother.createWithSpeciality(speciality, roleRepository);
+        physicianRepository.save(physician);
 
-        assertTrue(bookedVisit3 instanceof Visit);
+        WorkSchedule workScheduleEntry = new WorkSchedule();
+        workScheduleEntry.setPhysician(physician);
+        workScheduleEntry.setClinic(clinic);
+        workScheduleEntry.setDateTimeStart(LocalDateTime.of(LocalDate.now().plusDays(1), LocalTime.NOON.minusHours(4)));
+        workScheduleEntry.setDateTimeEnd(LocalDateTime.of(LocalDate.now().plusDays(1), LocalTime.NOON.plusHours(4)));
+        workScheduleRepository.save(workScheduleEntry);
+
+        return clinic;
     }
 
 }

@@ -3,6 +3,7 @@ package semato.semato_med.loader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -14,9 +15,10 @@ import semato.semato_med.repository.UserRepository;
 
 import java.util.Collections;
 
+@Profile("dev")
 @Component
 @Order(3)
-public class AdminLoader /*implements ApplicationRunner*/ {
+public class AdminLoader implements ApplicationRunner {
 
     @Autowired
     private UserRepository userRepository;

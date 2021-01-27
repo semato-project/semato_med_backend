@@ -3,6 +3,7 @@ package semato.semato_med.loader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,10 +15,11 @@ import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.util.*;
 
+@Profile("dev")
 @Component
 @Transactional
-@Order(3)
-public class VisitLoader /*implements ApplicationRunner*/ {
+@Order(4)
+public class VisitLoader implements ApplicationRunner {
 
     @Autowired
     private WorkScheduleRepository workScheduleRepository;
@@ -38,8 +40,6 @@ public class VisitLoader /*implements ApplicationRunner*/ {
     EntityManager entityManager;
 
     public void run(ApplicationArguments args) {
-
-
 
         Random random = new Random();
 
@@ -82,11 +82,14 @@ public class VisitLoader /*implements ApplicationRunner*/ {
 
         List<Clinic> clinics = clinicRepository.findAll();
 
-        for(int i=0;i<40;i++){
+        for(int i=0;i<16;i++){
             int doctorsAndHisWorkScheduleIndexInArray = random.nextInt(physicians.size());
             List<WorkSchedule> workScheduleList = workSchedules.get(doctorsAndHisWorkScheduleIndexInArray);
             addVisit(
-                    workScheduleList.get(random.nextInt(workScheduleList.size())).getDateTimeStart().plusSeconds(random.nextInt(14)*Visit.VISIT_LENGHT_SECONDS),
+                    workScheduleList
+                            .get(random.nextInt(workScheduleList.size()))
+                            .getDateTimeStart()
+                            .plusSeconds(i * Visit.VISIT_LENGHT_SECONDS),
                     physicians.get(doctorsAndHisWorkScheduleIndexInArray),
                     physicians.get(doctorsAndHisWorkScheduleIndexInArray).getSpecialitySet(),
                     patients.get(random.nextInt(patients.size())),
@@ -106,16 +109,6 @@ public class VisitLoader /*implements ApplicationRunner*/ {
     ) {
 
         List<Speciality> specialities = new ArrayList<>(speciality);
-
-//        Visit visit = new Visit();
-//        visit.setDateTimeStart(dateTimeStart);
-//        visit.setDateTimeEnd(dateTimeStart.plusSeconds(Visit.VISIT_LENGHT_SECONDS));
-//        visit.setPhysician(physician);
-//        visit.setSpeciality(specialities.get(0));
-//        visit.setPatient(patient);
-//        visit.setClinic(clinic);
-//        visit.setStatus(VisitStatus.RESERVED);
-//        visitRepository.save(visit);
 
         Random random = new Random();
         visitService.bookVisitWithParams(

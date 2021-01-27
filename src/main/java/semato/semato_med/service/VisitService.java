@@ -179,7 +179,7 @@ public class VisitService {
         Visit virtualVisit = createVirtualVisit(speciality, dateTimeStart, dateTimeEnd, clinic, physician, patient);
 
         if (! visitFits(virtualVisit)) {
-            throw new BookingException();
+            throw new BookingException(virtualVisit.toString());
         }
 
         virtualVisit.setStatus(VisitStatus.RESERVED);
