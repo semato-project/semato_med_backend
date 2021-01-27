@@ -31,7 +31,7 @@ public class WorkScheduleService {
         }
      }
 
-    private List<Slot> getAllPossibleSlotList(WorkSchedule workSchedule) {
+    public List<Slot> getAllPossibleSlotList(WorkSchedule workSchedule) {
 
         List<Slot> allPossibleSlotList = new LinkedList<Slot>();
 
@@ -69,13 +69,13 @@ public class WorkScheduleService {
         return visitList;
     }
 
-    public boolean isBeforeOrEquals(LocalDateTime d1, LocalDateTime d2) {
+    private boolean isBeforeOrEquals(LocalDateTime d1, LocalDateTime d2) {
         if (d1.isBefore(d2)) return true;
         if (d1.isEqual(d2)) return true;
         return false;
     }
 
-    public boolean isAfterOrEquals(LocalDateTime d1, LocalDateTime d2) {
+    private boolean isAfterOrEquals(LocalDateTime d1, LocalDateTime d2) {
         if (d1.isAfter(d2)) return true;
         if (d1.isEqual(d2)) return true;
         return false;
@@ -102,7 +102,7 @@ public class WorkScheduleService {
         return slotableFits(slotable, existingVisitList);
     }
 
-    private boolean slotableFits(Slotable slotable, List<Visit> existingVisitList) {
+    public boolean slotableFits(Slotable slotable, List<Visit> existingVisitList) {
 
         for (Visit existingVisit: existingVisitList) {
 

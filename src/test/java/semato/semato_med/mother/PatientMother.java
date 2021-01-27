@@ -7,22 +7,21 @@ import semato.semato_med.exception.AppException;
 import semato.semato_med.model.*;
 import semato.semato_med.repository.RoleRepository;
 
+import java.time.LocalDate;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 
 @Service
-public class PhysicianMother {
+public class PatientMother {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public Physician getWithSpeciality(Speciality speciality, RoleRepository roleRepository) {
+    public Patient get(RoleRepository roleRepository) {
 
         UUID uuid = UUID.randomUUID();
 
-        Role userRole = roleRepository.findByName(RoleName.ROLE_PHYSICIAN).orElseThrow(() -> new AppException("Phisician Role not set."));
+        Role userRole = roleRepository.findByName(RoleName.ROLE_PATIENT).orElseThrow(() -> new AppException("Patient Role not set."));
 
         User user = new User();
         user.setFirstName("firstName");
@@ -32,17 +31,17 @@ public class PhysicianMother {
         user.setPassword(passwordEncoder.encode("password"));
         user.setRoles(Collections.singleton(userRole));
 
-        Physician physician = new Physician();
-        physician.setMedicalDegrees("medicalDegrees");
-        physician.setNote("note");
-        physician.setTitle("title");
-        physician.setImage_url("imageUrl");
+        Patient patient = new Patient();
+        patient.setBirthDate(LocalDate.now());
+        patient.setCity("city");
+        patient.setHouseNumber("houseNumber");
+        patient.setPesel(uuid.toString());
+        patient.setPostalCode("postalCode");
+        patient.setStreet("street");
+        patient.setUser(user);
 
-        Set<Speciality> specialitySet = new HashSet<>();
-        specialitySet.add(speciality);
-        physician.setSpecialitySet(specialitySet);
+        return patient;
 
-        physician.setUser(user);
-        return physician;
+
     }
 }
