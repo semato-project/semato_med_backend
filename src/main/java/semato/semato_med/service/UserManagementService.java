@@ -62,7 +62,7 @@ public class UserManagementService {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        Role userRole = roleRepository.findByName(RoleName.ROLE_PHYSICIAN).orElseThrow(() -> new AppException("User Role not set."));
+        Role userRole = roleRepository.findByName(RoleName.ROLE_PHYSICIAN).orElseThrow(() -> new AppException("Physician Role not set."));
 
         user.setRoles(Collections.singleton(userRole));
 

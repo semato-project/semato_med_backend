@@ -45,12 +45,11 @@ public class AdminLoader implements ApplicationRunner {
             user.setEmail(EMAIL);
             user.setPhone("007-007-007");
             user.setPassword(passwordEncoder.encode(PASSWORD));
-            Role userRole = roleRepository.findByName(RoleName.ROLE_ADMIN).orElseThrow(() -> new AppException("User Role not set."));
+            Role userRole = roleRepository.findByName(RoleName.ROLE_ADMIN).orElseThrow(() -> new AppException("Admnin Role not set."));
             user.setRoles(Collections.singleton(userRole));
 
             Admin admin = new Admin(user);
             adminRepository.save(admin);
-
         }
     }
 }
